@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sketch Pen</string>
+    <string name="action_reset">Cancella tutto</string>
+    <string name="action_save_image">Salva l\'immagine</string>
+    <string name="action_view_image">Vedere le foto</string>
+    <string name="action_save_and_share_image">Salvare e condividere</string>
+    <string name="alert_reset_image_title">Ripristina immagine</string>
+    <string name="alert_reset_image_body">Sei sicuro di voler ripristinare l\'immagine?</string>
+    <string name="dialogue_scanning_media_title">scansione media</string>
+    <string name="dialogue_scanning_media_body">attendere prego&#8230;</string>
+    <string name="toast_scanning_media_not_found">Nessuna immagine salvata trovata</string>
+    <string name="share_image_text">Questa immagine è generata da Sketch Pen.\nUn peso applicazione Android libero e leggero.\nSi prega di visitare sotto il collegamento per installare&#8230;\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
+	<string name="chooser_share_title">quota</string>
+	<string name="toast_save_image_error">Si è verificato un errore durante il salvataggio dell\'immagine</string>
+	<string name="toast_save_image_success">immagine salvata</string>
+	
+	<string name="action_settings">impostazioni</string>
+	<string name="label_forecolor">Fore Colore</string>
+	<string name="label_show_circle">Mostra cerchio</string>
+	<string name="label_backcolor">Colore Indietro</string>
+	<string name="label_default_size">12</string>
+	<string name="button_label_default">Ripristinare le impostazioni</string>
+	
+	<string name="alert_rate_title">Vota questa app</string>
+	<string name="alert_rate_body">Vuoi votare questa app?</string>
+	
+	<string name="alert_close_app_title">Chiudere questa applicazione</string>
+	<string name="alert_close_app_body">Vuoi chiudere questa applicazione?</string>
+	
+	<string name="action_insert_image">Inserisci immagine</string>
+	
+	<!-- Slider menu start  -->
+	<string name="action_rate">Valutazione e revisione</string>
+	<string name="action_eraser">gomma</string>
+	<string name="eraser_active">attivo</string>
+	<string name="eraser_inactive">inattivo</string>
+	<string name="toast_message_file_not_found">Nessuna immagine salvata viene trovato</string>
+	<string name="label_size">dimensioni del tratto</string>
+    <string name="label_eraser">dimensione della gomma</string>
+    <string name="label_default_eraser_size">12</string>
+	
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >@string/action_settings</item>
+        <item >@string/action_view_image</item>
+        <item >@string/action_save_image</item>
+        <item >@string/action_save_and_share_image</item>
+        <item >@string/action_insert_image</item>
+        <item >@string/action_eraser</item>
+        <item >@string/action_reset</item>
+        <item >@string/action_rate</item>
+    </string-array>
+    
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_view_picture</item>
+        <item>@drawable/ic_action_save</item>
+        <item>@drawable/ic_action_share</item>
+        <item>@drawable/ic_action_insert</item>
+        
+        <item>@drawable/ic_action_save</item>
+        
+        <item>@drawable/ic_action_reset</item>
+        <item>@drawable/ic_action_rate</item>
+    </array>
+</resources>

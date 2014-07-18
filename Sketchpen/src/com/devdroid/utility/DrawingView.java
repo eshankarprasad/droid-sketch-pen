@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -13,7 +12,6 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
 import android.os.SystemClock;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -137,9 +135,7 @@ public class DrawingView extends View {
 	
 	public void setBackgroundBitmap(Bitmap bitmap) {
 		
-		Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
+		Point size = Utils.getScreenSize((Activity)context);
 		int width = size.x;
 		int height = size.y;
 		//Log.d(TAG, "Resolution: " + bitmap.getWidth() + " / " + bitmap.getHeight());

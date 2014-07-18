@@ -54,6 +54,7 @@
         <item >@string/action_eraser</item>
         <item >@string/action_reset</item>
         <item >@string/action_rate</item>
+        <item >@string/action_like</item>
     </string-array>
     
     <!-- Nav Drawer List Item Icons -->
@@ -64,10 +65,12 @@
         <item>@drawable/ic_action_save</item>
         <item>@drawable/ic_action_share</item>
         <item>@drawable/ic_action_insert</item>
-        
-        <item>@drawable/ic_action_save</item>
-        
+        <item>@drawable/ic_action_eraser</item>
         <item>@drawable/ic_action_reset</item>
         <item>@drawable/ic_action_rate</item>
+        <item>@drawable/ic_action_like</item>
     </array>
+    
+    <string name="action_like">เช่นเดียวกับเรา</string>
+    <string name="label_message_eraser">เลือกตัวเลือกนี้อีกครั้งเพื่อปิดการใช้ยางลบ</string>
 </resources>

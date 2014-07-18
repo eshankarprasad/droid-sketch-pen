@@ -22,7 +22,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
@@ -36,20 +35,19 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.devdroid.utility.Constants;
@@ -98,12 +96,22 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	private ProgressDialog progress;
 	private MediaScannerConnection conn;
 	private boolean eraserEnabled;
+	private int sdk;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		sdk = android.os.Build.VERSION.SDK_INT;
+		
+		if(sdk <= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+	            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		}
+		
 		setContentView(R.layout.activity_main);
-
+		
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -119,15 +127,20 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 		navDrawerItems = new ArrayList<NavDrawerItem>();
 
 		// adding nav drawer items to array
+		
 		// Settings
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+		
 		// View images
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+		
 		// Save imag
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+		
 		// Save and share
 		//navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+		
 		// Insert image
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		
@@ -140,6 +153,9 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 		
 		// Rating and review
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+		
+		// Like us
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
 
 		// Recycle the typed array
 		navMenuIcons.recycle();
@@ -151,35 +167,33 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 				navDrawerItems);
 		mDrawerList.setAdapter(adapter);
 
-		// enabling action bar app icon and behaving it as toggle button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, // nav menu toggle icon
-				R.string.app_name, // nav drawer open - description for
-									// accessibility
-				R.string.app_name // nav drawer close - description for
-									// accessibility
-		) {
-			public void onDrawerClosed(View view) {
-				getActionBar().setTitle(mTitle);
-				// calling onPrepareOptionsMenu() to show action bar icons
-				invalidateOptionsMenu();
-			}
-
-			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle(mDrawerTitle);
-				// calling onPrepareOptionsMenu() to hide action bar icons
-				invalidateOptionsMenu();
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			// enabling action bar app icon and behaving it as toggle button
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+			getActionBar().setHomeButtonEnabled(true);
+		
+			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+					R.drawable.ic_drawer, // nav menu toggle icon
+					R.string.app_name, // nav drawer open - description for
+										// accessibility
+					R.string.app_name // nav drawer close - description for
+										// accessibility
+			) {
+				public void onDrawerClosed(View view) {
+					getActionBar().setTitle(mTitle);
+					// calling onPrepareOptionsMenu() to show action bar icons
+					invalidateOptionsMenu();
+				}
+	
+				public void onDrawerOpened(View drawerView) {
+					getActionBar().setTitle(mDrawerTitle);
+					// calling onPrepareOptionsMenu() to hide action bar icons
+					invalidateOptionsMenu();
+				}
+			};
+			mDrawerLayout.setDrawerListener(mDrawerToggle);
+		}
 		loadDrawingView();
-		/*if (savedInstanceState == null) {
-			// on first time display view for first nav item
-			performAction(0);
-		}*/
 	}
 
 	
@@ -205,17 +219,15 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
 		// toggle nav drawer on selecting action bar app icon/title
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
+		if (sdk >= android.os.Build.VERSION_CODES.HONEYCOMB && mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle action bar actions click
-		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+		
+		performAction(item.getOrder());
+		
+		return super.onOptionsItemSelected(item);
 	}
 
 	/* *
@@ -225,7 +237,11 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
 		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(false);
+		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			for (int i = 0; i < menu.size(); i++) {
+				menu.getItem(i).setVisible(false);
+			}
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -360,6 +376,7 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	                	       mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 	                	       mPaint.setAntiAlias(true);
 	                	       eraserEnabled = true;
+	                	       Utils.showToast(MainActivity.this, getResources().getString(R.string.label_message_eraser));
 	                	   }
 	                   }
 	                 }, 0);
@@ -403,15 +420,36 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	            }
 	        });
 			break;
+			
+		case 8:
+			// Like us
+			runOnUiThread(new Runnable() {
+
+	            @Override
+	            public void run() {
+	                 final Handler handler = new Handler();
+	                 handler.postDelayed(new Runnable() {
+	                   @Override
+	                   public void run() {
+	                	   // Rating window will be opened after 0.3 second 
+	                	   like();
+	                   }
+	                 }, 300);
+	            }
+	        });
+			break;
 		default:
 			break;
 		}
 
-		// update selected item and title, then close the drawer
-		mDrawerList.setItemChecked(position, true);
+		
 		//mDrawerList.setSelection(position);
 		//setTitle(navMenuTitles[position]);
-		mDrawerLayout.closeDrawer(mDrawerList);
+		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			// update selected item and title, then close the drawer
+			mDrawerList.setItemChecked(position, true);
+			mDrawerLayout.closeDrawer(mDrawerList);
+		}
 		
 		runOnUiThread(new Runnable() {
 
@@ -421,8 +459,10 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
                  handler.postDelayed(new Runnable() {
                    @Override
                    public void run() {
-                	   // item will be unselected after 0.5 second 
-                	   mDrawerList.setItemChecked(position, false);
+                	   if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                		   // item will be unselected after 0.5 second 
+                		   mDrawerList.setItemChecked(position, false);
+                	   }
                    }
                  }, 500);
             }
@@ -449,7 +489,9 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	@Override
 	public void setTitle(CharSequence title) {
 		mTitle = title;
-		getActionBar().setTitle(mTitle);
+		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			getActionBar().setTitle(mTitle);
+		}
 	}
 
 	/**
@@ -461,14 +503,18 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
+		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			mDrawerToggle.syncState();
+		}
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
-		mDrawerToggle.onConfigurationChanged(newConfig);
+		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
 	}
 	
 	private void loadDrawingView() {
@@ -550,6 +596,25 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 					}).setIcon(android.R.drawable.ic_dialog_info).show();
 		}
 		
+	}
+	
+	private void like() {
+		
+		String facebookUrl = "https://www.facebook.com/sketchpen000";
+		try {
+		        int versionCode = getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+		        if (versionCode >= 3002850) {
+		            Uri uri = Uri.parse("fb://facewebmodal/f?href=" + facebookUrl);
+		            startActivity(new Intent(Intent.ACTION_VIEW, uri));
+		        } else {
+		        	getPackageManager().getPackageInfo("com.facebook.katana", 0);
+		        	startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb:/profile/334200140064180")));
+		        }
+		        
+		} catch (Exception e) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse(facebookUrl)));
+		}
 	}
 	
 	private void rate() {
@@ -636,12 +701,20 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 		
 		int bgColor = Utils.getIntegerPreferences(this, Constants.KEY_BG_COLOR);
 		int foreColor = Utils.getIntegerPreferences(this, Constants.KEY_FORE_COLOR);
-		int size = Utils.getIntegerPreferences(this, Constants.KEY_STROKE_SIZE);
-		int eraserSize = Utils.getIntegerPreferences(MainActivity.this, Constants.KEY_ERASER_SIZE);
+		final int size = Utils.getIntegerPreferences(this, Constants.KEY_STROKE_SIZE);
+		final int eSize = Utils.getIntegerPreferences(MainActivity.this, Constants.KEY_ERASER_SIZE);
 		int showCircle = Utils.getIntegerPreferences(this, Constants.KEY_SHOW_CIRCLE);
 		
-		final Switch switchShowCircle = (Switch) dialog.findViewById(R.id.switch_show_circle);
-		switchShowCircle.setChecked(showCircle == 1);
+		final Button buttonShowCircle = (Button) dialog.findViewById(R.id.button_show_circle);
+		buttonShowCircle.setText(showCircle == 1 ? "ON" : "OFF");
+		
+		buttonShowCircle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				buttonShowCircle.setText("ON".equals(buttonShowCircle.getText().toString()) ? "OFF" : "ON");
+			}
+		});
 		
 		final Button buttonForeColor = (Button) dialog.findViewById(R.id.button_forecolor);
 		
@@ -755,15 +828,21 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 			}
 		});
 		
-		final NumberPicker numberPickerSize = (NumberPicker) dialog.findViewById(R.id.numberpicker_size);
+		final EditText editTextStrokeSize = (EditText) dialog.findViewById(R.id.edittext_stroke_size);
+		editTextStrokeSize.setText(size == 0 ? 12+"" : size+"");
+		
+		/*final NumberPicker numberPickerSize = (NumberPicker) dialog.findViewById(R.id.numberpicker_size);
 		numberPickerSize.setMaxValue(50);
 		numberPickerSize.setMinValue(1);
-		numberPickerSize.setValue(size == 0 ? 12 : size);
+		numberPickerSize.setValue(size == 0 ? 12 : size);*/
 		
-		final NumberPicker numberPickerEraser = (NumberPicker) dialog.findViewById(R.id.numberpicker_eraser);
+		final EditText editTextEraserSize = (EditText) dialog.findViewById(R.id.edittext_eraser_size);
+		editTextEraserSize.setText(eSize == 0 ? 12+"" : eSize+"");
+		
+		/*final NumberPicker numberPickerEraser = (NumberPicker) dialog.findViewById(R.id.numberpicker_eraser);
 		numberPickerEraser.setMaxValue(50);
 		numberPickerEraser.setMinValue(1);
-		numberPickerEraser.setValue(eraserSize == 0 ? 12 : eraserSize);
+		numberPickerEraser.setValue(eraserSize == 0 ? 12 : eraserSize);*/
 		
 		final Button buttonResetSettings = (Button) dialog.findViewById(R.id.button_default);
 		buttonResetSettings.setOnClickListener(new OnClickListener() {
@@ -775,10 +854,10 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 				MainActivity.this.drawingView.setBackgroundColor(Color.WHITE);
 				buttonForeColor.setBackgroundColor(Color.BLACK);
 				buttonBackColor.setBackgroundColor(Color.WHITE);
-				switchShowCircle.setChecked(false);
-				numberPickerSize.setValue(Integer.parseInt(getResources().getString(R.string.label_default_size)));
+				buttonShowCircle.setText("OFF");
+				editTextStrokeSize.setText(getResources().getString(R.string.label_default_size));
 				MainActivity.this.mPaint.setStrokeWidth(Integer.parseInt(getResources().getString(R.string.label_default_size)));
-				numberPickerEraser.setValue(Integer.parseInt(getResources().getString(R.string.label_default_eraser_size)));
+				editTextEraserSize.setText(getResources().getString(R.string.label_default_eraser_size));
 				
 				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_SHOW_CIRCLE, 0);
 				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_FORE_COLOR, 0);
@@ -793,17 +872,36 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 			@Override
 			public void onDismiss(DialogInterface dialog) {
 				
+				int strokeSize = size;
+				int eraserSize = eSize;
 				
-				drawingView.setShowCircle(switchShowCircle.isChecked());
-				if(eraserEnabled) {
-					MainActivity.this.mPaint.setStrokeWidth(numberPickerEraser.getValue());
-				} else {
-					MainActivity.this.mPaint.setStrokeWidth(numberPickerSize.getValue());
+				try {
+					strokeSize = Integer.parseInt(editTextStrokeSize.getText().toString().trim().equals("") ? "12" : editTextStrokeSize.getText().toString().trim());
+					eraserSize = Integer.parseInt(editTextEraserSize.getText().toString().trim().equals("") ? "12" : editTextEraserSize.getText().toString().trim());
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
 				}
 				
-				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_SHOW_CIRCLE, switchShowCircle.isChecked() ? 1 : 0);
-				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_STROKE_SIZE, numberPickerSize.getValue());
-				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_ERASER_SIZE, numberPickerEraser.getValue());
+				if(strokeSize > 100 || strokeSize < 1) {
+					Utils.showToast(MainActivity.this, "0 < " + getResources().getString(R.string.label_size) + " < 101");
+					strokeSize = size;
+				}
+				
+				if(eraserSize > 100 || eraserSize < 1) {
+					Utils.showToast(MainActivity.this, "0 < " + getResources().getString(R.string.label_eraser) + " < 101");
+					eraserSize = eSize;
+				}
+				
+				drawingView.setShowCircle("ON".equals(buttonShowCircle.getText().toString()));
+				if(eraserEnabled) {
+					MainActivity.this.mPaint.setStrokeWidth(eraserSize);
+				} else {
+					MainActivity.this.mPaint.setStrokeWidth(strokeSize);
+				}
+				
+				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_SHOW_CIRCLE, "ON".equals(buttonShowCircle.getText().toString()) ? 1 : 0);
+				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_STROKE_SIZE, strokeSize);
+				Utils.saveIntegerPreferences(MainActivity.this, Constants.KEY_ERASER_SIZE, eraserSize);
 			}
 		});
 	}
@@ -948,7 +1046,8 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 		dialog.setTitle(getResources().getString(R.string.alert_reset_image_title));
 		dialog.setMessage(getResources().getString(R.string.alert_reset_image_body));
 		dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
+
+			public void onClick(DialogInterface dialog, int which) { 
 	            // continue with delete
 	        	dialog.cancel();
 	        	/*Intent intent = getIntent();
@@ -957,7 +1056,7 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	            finish();
 	            startActivityForResult(intent, 0);*/
 	        	drawingView.clear();
-	        	int sdk = android.os.Build.VERSION.SDK_INT;
+	        	
                 if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 	drawingView.setBackgroundDrawable(null);
                 } else {

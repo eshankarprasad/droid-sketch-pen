@@ -1,8 +1,10 @@
 package com.devdroid.utility;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Point;
@@ -25,7 +27,7 @@ public class Utils {
 		editor.putLong(key, value);
 		editor.commit();
 	}
-	
+
 	public static void saveIntegerPreferences(Context context, String key,
 			Integer value) {
 		SharedPreferences sPrefs = PreferenceManager
@@ -80,7 +82,7 @@ public class Utils {
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 	
-	public static String getRealPathFromURI(Context context, Uri contentUri) {
+	/*public static String getRealPathFromURI(Context context, Uri contentUri) {
 
 		String[] proj = { MediaStore.Images.Media.DATA };
 
@@ -95,12 +97,23 @@ public class Utils {
 				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
-	}
+	}*/
 	
+	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
 	public static Point getScreenSize(Activity activity) {
 		Display display = activity.getWindowManager().getDefaultDisplay();
 		Point size = new Point();
-		display.getSize(size);
+		
+		int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB_MR2) {
+        	int width = display.getWidth();
+    		int height = display.getHeight();
+    		
+    		size.set(width, height);
+        } else {
+        	display.getSize(size);
+        }
 		return size;
 	}
 	
@@ -109,8 +122,7 @@ public class Utils {
 		// Calculate ActionBar height
 		TypedValue tv = new TypedValue();
 		int actionBarHeight = 0;
-		if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
-		{
+		if (activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
 		    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, activity.getResources().getDisplayMetrics());
 		}
 		
@@ -124,5 +136,5 @@ public class Utils {
 	          result = activity.getResources().getDimensionPixelSize(resourceId);
 	      } 
 	      return result;
-	} 
+	}
 }

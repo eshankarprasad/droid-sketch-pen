@@ -14,28 +14,32 @@
         android:gravity="center_vertical"
         android:text="@string/label_show_circle" />
 
-    <Switch
-        android:id="@+id/switch_show_circle"
+    <Button
+        android:id="@+id/button_show_circle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_marginBottom="10dp"
+        android:paddingLeft="0dp"
         android:layout_marginRight="@dimen/number_picker_margin"
-        android:layout_alignParentRight="true" />
+        android:background="@drawable/button_selector"
+        android:textColor="@color/list_item_title"
+        android:layout_alignParentRight="true"
+        android:text="OFF" />
 
     <TextView
         android:id="@+id/label_forecolor"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginLeft="@dimen/number_picker_margin"
-        android:layout_below="@id/switch_show_circle"
+        android:layout_below="@id/button_show_circle"
         android:gravity="center_vertical"
         android:text="@string/label_forecolor" />
 
     <LinearLayout
         android:id="@+id/layout_forecolor"
-        android:layout_width="54dp"
+        android:layout_width="64dp"
         android:layout_height="44dp"
-        android:layout_below="@id/switch_show_circle"
+        android:layout_below="@id/button_show_circle"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="@dimen/number_picker_margin"
         android:layout_alignParentRight="true"
@@ -44,7 +48,7 @@
 
         <Button
             android:id="@+id/button_forecolor"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:background="@android:color/black" />
     </LinearLayout>
@@ -60,7 +64,7 @@
 
     <LinearLayout
         android:id="@+id/layout_backcolor"
-        android:layout_width="54dp"
+        android:layout_width="64dp"
         android:layout_height="44dp"
         android:layout_below="@id/layout_forecolor"
         android:layout_marginBottom="10dp"
@@ -71,70 +75,72 @@
 
         <Button
             android:id="@+id/button_backcolor"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="40dp"
             android:background="@android:color/white" />
     </LinearLayout>
 
-    <NumberPicker
-        android:id="@+id/numberpicker_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_backcolor"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="@dimen/number_picker_margin"
-        android:background="@android:color/background_light"
-        android:text="@string/label_default_size" />
-
     <TextView
         android:id="@+id/label_size"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/numberpicker_size"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_below="@id/layout_backcolor"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/number_picker_margin"
-        android:gravity="center_vertical"
         android:text="@string/label_size" />
-    
-    <NumberPicker
-        android:id="@+id/numberpicker_eraser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_backcolor"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="20dp"
+
+    <EditText
+        android:id="@+id/edittext_stroke_size"
+        android:layout_width="60dp"
+        android:layout_height="44dp"
         android:layout_alignParentRight="true"
+        android:layout_below="@id/layout_backcolor"
+        android:ems="10"
+        android:text="@string/label_default_size"
         android:layout_marginRight="@dimen/number_picker_margin"
-        android:background="@android:color/background_light"
-        android:text="@string/label_default_size" />
+        android:inputType="number" >
+        
+    </EditText>
+    
 
     <TextView
         android:id="@+id/label_eraser"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/numberpicker_eraser"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="@dimen/number_picker_margin"
-        android:layout_alignParentRight="true"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
+        android:layout_below="@id/label_size"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/number_picker_margin"
         android:text="@string/label_eraser" />
     
+    <EditText
+        android:id="@+id/edittext_eraser_size"
+        android:layout_width="60dp"
+        android:layout_height="44dp"
+        android:layout_below="@id/edittext_stroke_size"
+        android:layout_marginRight="@dimen/number_picker_margin"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:inputType="number"
+        android:text="@string/label_default_eraser_size" />
+	
     <View
         android:id="@+id/seperator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/label_size" />
+        android:layout_below="@id/label_eraser" />
 
     <Button
         android:id="@+id/button_default"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_selector"
-        android:textColor="@color/list_item_title"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:layout_below="@id/seperator"
-        android:layout_centerInParent="true"
+        android:background="@drawable/button_selector"
         android:text="@string/button_label_default"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/list_item_title" />
 
 </RelativeLayout>

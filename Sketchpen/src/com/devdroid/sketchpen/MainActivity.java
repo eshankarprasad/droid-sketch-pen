@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -28,6 +29,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -104,7 +106,9 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 		
 		sdk = android.os.Build.VERSION.SDK_INT;
 		
-		if(sdk <= android.os.Build.VERSION_CODES.HONEYCOMB) {
+		if(sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+			
+			// Enabling full screen mode
 			requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 	            WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -168,9 +172,14 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 		mDrawerList.setAdapter(adapter);
 
 		if(sdk >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+			
 			// enabling action bar app icon and behaving it as toggle button
 			getActionBar().setDisplayHomeAsUpEnabled(true);
-			getActionBar().setHomeButtonEnabled(true);
+			
+			if(sdk >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+				// This code will work only with Ice Cream Sandwitch or above version
+				getActionBar().setHomeButtonEnabled(true);
+			}
 		
 			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 					R.drawable.ic_drawer, // nav menu toggle icon
@@ -1062,8 +1071,9 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
                 } else {
                 	drawingView.setBackground(null);
                 }
-	        	
-	        	drawingView.setBackgroundColor(Color.WHITE);
+
+                int bgColor = Utils.getIntegerPreferences(MainActivity.this, Constants.KEY_BG_COLOR);
+                drawingView.setBackgroundColor(bgColor);
 	        }
 	     });
 		dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -1079,56 +1089,6 @@ public class MainActivity extends Activity implements MediaScannerConnectionClie
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
         if (resultCode == RESULT_OK) {
-            /*if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                
-                Bitmap bitmap = BitmapFactory.decodeFile(Utils.getRealPathFromURI(this, selectedImageUri));
-                
-                try {
-                    File f = new File(Utils.getRealPathFromURI(this, selectedImageUri));
-                    ExifInterface exif = new ExifInterface(f.getPath());
-                    int orientation = exif.getAttributeInt(
-                            ExifInterface.TAG_ORIENTATION,
-                            ExifInterface.ORIENTATION_NORMAL);
-
-                    int angle = 0;
-                    if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                        angle = 90;
-                    } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                        angle = 180;
-                    } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                        angle = 270;
-                    }
-
-                    Matrix mat = new Matrix();
-                    mat.postRotate(angle);
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 2;
-
-                    Bitmap bmp = BitmapFactory.decodeStream(new FileInputStream(f),
-                            null, options);
-                    bitmap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(),
-                            bmp.getHeight(), mat, true);
-                    ByteArrayOutputStream outstudentstreamOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outstudentstreamOutputStream);
-                    
-                    
-                    
-                    Point p = Utils.getScreenSize(MainActivity.this);
-                    bitmap = ScalingUtilities.createScaledBitmap(bitmap, p.x, p.y - Utils.getActioBarHeight(MainActivity.this), ScalingLogic.FIT);
-                    int sdk = android.os.Build.VERSION.SDK_INT;
-                    if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    	drawingView.setBackgroundDrawable(new BitmapDrawable(bitmap));
-                    } else {
-                    	drawingView.setBackground(new BitmapDrawable(bitmap));
-                    }
-
-                } catch (IOException e) {
-                    Log.w("TAG", "-- Error in setting image");
-                } catch (OutOfMemoryError oom) {
-                    Log.w("TAG", "-- OOM Error in setting image");
-                }
-            }*/
         	
         	if (requestCode == SELECT_PICTURE) {
     			Bundle extras2 = data.getExtras();

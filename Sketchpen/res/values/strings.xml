@@ -33,7 +33,6 @@
 	
 
 	<!-- Slider menu start  -->
-	
 	<string name="action_rate">Rating and review</string>
 	<string name="action_eraser">Eraser</string>
 	<string name="eraser_active">Active</string>
@@ -46,6 +45,8 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     
+    <string name="action_buy_ad_free">Buy Ad free</string>
+    
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >@string/action_settings</item>
@@ -55,6 +56,7 @@
         <item >@string/action_insert_image</item>
         <item >@string/action_eraser</item>
         <item >@string/action_reset</item>
+        <item >@string/action_buy_ad_free</item>
         <item >@string/action_rate</item>
         <item >@string/action_like</item>
     </string-array>
@@ -69,6 +71,7 @@
         <item>@drawable/ic_action_insert</item>
         <item>@drawable/ic_action_eraser</item>
         <item>@drawable/ic_action_reset</item>
+        <item>@drawable/ic_action_rate</item>
         <item>@drawable/ic_action_rate</item>
         <item>@drawable/ic_action_like</item>
     </array>

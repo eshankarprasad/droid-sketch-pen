@@ -25,7 +25,7 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.devdroid.utility;
+package com.devdroid.sketchpen.utility;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

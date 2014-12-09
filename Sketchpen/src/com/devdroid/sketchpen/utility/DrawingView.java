@@ -1,4 +1,4 @@
-package com.devdroid.utility;
+package com.devdroid.sketchpen.utility;
 
 import android.app.Activity;
 import android.content.Context;

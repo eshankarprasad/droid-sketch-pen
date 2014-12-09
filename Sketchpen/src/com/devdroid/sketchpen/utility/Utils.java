@@ -1,4 +1,4 @@
-package com.devdroid.utility;
+package com.devdroid.sketchpen.utility;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.widget.Toast;
@@ -136,5 +137,13 @@ public class Utils {
 	          result = activity.getResources().getDimensionPixelSize(resourceId);
 	      } 
 	      return result;
+	}
+
+	public static void eLog(String string) {
+		Log.e(Constants.TAG, string);
+	}
+	
+	public static void dLog(String string) {
+		Log.d(Constants.TAG, string);
 	}
 }

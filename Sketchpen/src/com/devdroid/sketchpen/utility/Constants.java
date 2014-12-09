@@ -1,4 +1,4 @@
-package com.devdroid.utility;
+package com.devdroid.sketchpen.utility;
 
 public class Constants {
 
@@ -11,4 +11,5 @@ public class Constants {
 	public static final String KEY_RATE_YOUR_APP_TIME = "time";
 	public static final String FILE_TYPE = "image/png";
 	public static final String KEY_ERASER_SIZE = "eraser_size";
+	public static final String KEY_ITEM_PURCHASED = "item_purchased";
 }

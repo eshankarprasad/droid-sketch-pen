@@ -7,7 +7,6 @@
     <string name="action_view_image">Lihat gambar</string>
     <string name="action_save_and_share_image">Simpan dan berbagi</string>
     <string name="alert_reset_image_title">Gambar ulang</string>
-    <string name="alert_reset_image_body">Apakah Anda yakin ingin me-reset gambar?</string>
     <string name="dialogue_scanning_media_title">Scanning Media</string>
     <string name="dialogue_scanning_media_body">Please wait&#8230;</string>
     <string name="toast_scanning_media_not_found">Tidak ada gambar yang disimpan ditemukan</string>
@@ -78,4 +77,11 @@
     
     <string name="action_like">seperti kita</string>
     <string name="label_message_eraser">Pilih opsi ini lagi untuk menonaktifkan penghapus</string>
+    
+    <string name="msg_external_storage_error">Cobalah untuk memilih gambar dari telepon atau memori eksternal</string>
+    <string name="msg_general_error">Tindakan ini tidak didukung oleh perangkat Anda</string>
+    
+    <string name="label_reset_foreground">Ulang latar hanya</string>
+    <string name="label_reset_background">Ulang latar belakang hanya</string>
+    <string name="label_reset_all">Ulang semua</string>
 </resources>

@@ -17,6 +17,8 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -165,7 +167,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		
 		// Eraser
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, getResources().getString(R.string.eraser_inactive)));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, getString(R.string.eraser_inactive)));
 		
 		// Erase all
 		//navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
@@ -326,7 +328,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 	                   public void run() {
 	                	   // Images will be shaved after 0.3 second 
 	                	   if(!"".equals(saveImage())) {
-	                		   Utils.showToast(SketchPenActivity.this, getResources().getString(R.string.toast_save_image_success));
+	                		   Utils.showToast(SketchPenActivity.this, getString(R.string.toast_save_image_success));
 	                       }
 	                   }
 	                 }, 300);
@@ -381,8 +383,8 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 	                   @Override
 	                   public void run() {
 	                	   // Eraser will be active after 0.2 second 
-	                	   if(getResources().getString(R.string.eraser_active).equals(navDrawerItems.get(position).getCount())) {
-	                		   navDrawerItems.get(position).setCount(getResources().getString(R.string.eraser_inactive));
+	                	   if(getString(R.string.eraser_active).equals(navDrawerItems.get(position).getCount())) {
+	                		   navDrawerItems.get(position).setCount(getString(R.string.eraser_inactive));
 	                		   int foreColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_FORE_COLOR);
 	                		   int width = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_STROKE_SIZE);
 	                		   int showCircle = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_SHOW_CIRCLE);
@@ -395,14 +397,14 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 	                		   eraserEnabled = false;
 	                		   
 	                	   } else {
-	                		   navDrawerItems.get(position).setCount(getResources().getString(R.string.eraser_active));
+	                		   navDrawerItems.get(position).setCount(getString(R.string.eraser_active));
 	                		   int eraserSize = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_ERASER_SIZE);
 	                		   mPaint.setStrokeWidth(eraserSize);
 	                		   drawingView.setShowCircle(true);
 	                	       mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 	                	       mPaint.setAntiAlias(true);
 	                	       eraserEnabled = true;
-	                	       Utils.showToast(SketchPenActivity.this, getResources().getString(R.string.label_message_eraser));
+	                	       Utils.showToast(SketchPenActivity.this, getString(R.string.label_message_eraser));
 	                	   }
 	                   }
 	                 }, 0);
@@ -603,6 +605,9 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 	    mPaint.setStrokeWidth(width);
 	    drawingView.setCanvasPaint(mPaint);
 	    
+	    FrameLayout container = (FrameLayout) findViewById(R.id.frame_container);
+		container.addView(drawingView);
+	    
 		String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjZM5vjXLYn/blsGe6QMxgSboBY8eGShG8ppUMTOCfl7XQMbQpIxkhpF+nKoiw2wp/ExVyfxycvgswfkb2sZet11whecvWx8Va672GIVXJSxLXHjYTVTy1mdmGTGO67C5E9k+tO2lklcZxxjEGQcfAUeh0v7pxf7iKk1J5SLKDoS0fOnyxbQ0JP8mg83TQBAUR6OB1GYCo/bYgnvH8izoCbW86kKiSoAWcZIO97lMm3+x85AcDzLQbw9QkRLQ95EOaLiUqS6zOOg+5ZGGWWstVS6VC6/XfO4QXnM9VMCVkdrdTHuc7IPlhOqNdgX8CjKhwN4F8qNHV/3wvUkWLlvSOQIDAQAB";
 
 		mHelper = new IabHelper(this, base64EncodedPublicKey);
@@ -650,8 +655,8 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		if(difference > (24 * 60 * 60) * 3) {
 		//if(difference > 10) { // 10 seconds for testing app
 			new AlertDialog.Builder(SketchPenActivity.this)
-				.setTitle(getResources().getString(R.string.alert_rate_title))
-				.setMessage(getResources().getString(R.string.alert_rate_body))
+				.setTitle(getString(R.string.alert_rate_title))
+				.setMessage(getString(R.string.alert_rate_body))
 				.setPositiveButton(android.R.string.yes,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,
@@ -744,11 +749,8 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 			});
 		}
 		
-		FrameLayout container = (FrameLayout) findViewById(R.id.frame_container);
-		container.addView(drawingView);
-		
 		FrameLayout  layout = (FrameLayout) drawingView.getParent();		
-		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 		layout.addView(adView, params);
 	}
@@ -765,7 +767,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		
 		final Dialog dialog = new Dialog(SketchPenActivity.this);
 		//dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setTitle(getResources().getString(R.string.action_settings));
+		dialog.setTitle(getString(R.string.action_settings));
 		dialog.setContentView(R.layout.dialog_setting);
 		dialog.show();
 		
@@ -797,7 +799,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 				foreColor = foreColor == 0 ? foreColor = Color.BLACK : foreColor;
 				
 				final Dialog dialogColorPicker = new Dialog(SketchPenActivity.this);
-				dialogColorPicker.setTitle(getResources().getString(R.string.label_forecolor));
+				dialogColorPicker.setTitle(getString(R.string.label_forecolor));
 				dialogColorPicker.setContentView(R.layout.dialog_color_picker);
 				
 				final ColorPicker picker = (ColorPicker) dialogColorPicker.findViewById(R.id.picker);
@@ -854,7 +856,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 				bgColor = bgColor == 0 ? bgColor = Color.WHITE : bgColor;
 				
 				final Dialog dialogColorPicker = new Dialog(SketchPenActivity.this);
-				dialogColorPicker.setTitle(getResources().getString(R.string.label_backcolor));
+				dialogColorPicker.setTitle(getString(R.string.label_backcolor));
 				dialogColorPicker.setContentView(R.layout.dialog_color_picker);
 				final ColorPicker picker = (ColorPicker) dialogColorPicker.findViewById(R.id.picker);
 				SVBar svBar = (SVBar) dialogColorPicker.findViewById(R.id.svbar);
@@ -891,7 +893,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		});
 		
 		final TextView textViewStrokeSize = (TextView) dialog.findViewById(R.id.label_size);
-		textViewStrokeSize.setText(getResources().getString(R.string.label_size) + ": " + (size == 0 ? 12 : size));
+		textViewStrokeSize.setText(getString(R.string.label_size) + ": " + (size == 0 ? 12 : size));
 		
 		final SeekBar seekBarStrokeSize = (SeekBar) dialog.findViewById(R.id.seekbar_stroke_size);
 		seekBarStrokeSize.setProgress(size == 0 ? 12 : size);
@@ -908,7 +910,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				textViewStrokeSize.setText(getResources().getString(R.string.label_size) + ": " + (progress == 0 ? 1 : progress));
+				textViewStrokeSize.setText(getString(R.string.label_size) + ": " + (progress == 0 ? 1 : progress));
 				if(progress == 0) {
 					seekBar.setProgress(1);
 				}
@@ -916,7 +918,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		});
 		
 		final TextView textViewEraserSize = (TextView) dialog.findViewById(R.id.label_eraser);
-		textViewEraserSize.setText(getResources().getString(R.string.label_eraser) + ": " + (eSize == 0 ? 12 : eSize));
+		textViewEraserSize.setText(getString(R.string.label_eraser) + ": " + (eSize == 0 ? 12 : eSize));
 		
 		final SeekBar seekBarEraserSize = (SeekBar) dialog.findViewById(R.id.seekbar_eraser_size);
 		seekBarEraserSize.setProgress(eSize == 0 ? 12 : eSize);
@@ -933,7 +935,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				textViewEraserSize.setText(getResources().getString(R.string.label_eraser) + ": " + (progress == 0 ? 1 : progress));
+				textViewEraserSize.setText(getString(R.string.label_eraser) + ": " + (progress == 0 ? 1 : progress));
 				if(progress == 0) {
 					seekBar.setProgress(1);
 				}
@@ -951,15 +953,23 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 				buttonForeColor.setBackgroundColor(Color.BLACK);
 				buttonBackColor.setBackgroundColor(Color.WHITE);
 				buttonShowCircle.setChecked(false);
-				seekBarStrokeSize.setProgress(Integer.parseInt(getResources().getString(R.string.label_default_size)));
-				SketchPenActivity.this.mPaint.setStrokeWidth(Integer.parseInt(getResources().getString(R.string.label_default_size)));
-				seekBarEraserSize.setProgress(Integer.parseInt(getResources().getString(R.string.label_default_eraser_size)));
+				seekBarStrokeSize.setProgress(Integer.parseInt(getString(R.string.label_default_size)));
+				SketchPenActivity.this.mPaint.setStrokeWidth(Integer.parseInt(getString(R.string.label_default_size)));
+				seekBarEraserSize.setProgress(Integer.parseInt(getString(R.string.label_default_eraser_size)));
 				
 				Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_SHOW_CIRCLE, 0);
 				Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_FORE_COLOR, 0);
 				Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, 0);
 			}
 		});
+		
+		try {
+			TextView textViewAppVersion = (TextView) dialog.findViewById(R.id.label_app_version);
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			textViewAppVersion.setText("V" + pInfo.versionName);
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 		dialog.setOnDismissListener(new OnDismissListener() {
 			
@@ -994,7 +1004,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		File folder = new File(folderPath);
 		
 		if(!folder.exists()) {
-			Utils.showToast(SketchPenActivity.this, getResources().getString(R.string.toast_message_file_not_found));
+			Utils.showToast(SketchPenActivity.this, getString(R.string.toast_message_file_not_found));
 			return;
 		}
 		
@@ -1003,16 +1013,16 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		if(allFiles.length > 0) {
 			mediaScanFilePath = Environment.getExternalStorageDirectory().toString()+"/sketchpen/"+allFiles[allFiles.length-1];
 		} else {
-			Utils.showToast(SketchPenActivity.this, getResources().getString(R.string.toast_message_file_not_found));
+			Utils.showToast(SketchPenActivity.this, getString(R.string.toast_message_file_not_found));
 			return;
 		}
         if(allFiles.length > 0) {
         	progress = ProgressDialog.show(this, 
-        			getResources().getString(R.string.dialogue_scanning_media_title), 
-        			getResources().getString(R.string.dialogue_scanning_media_body));
+        			getString(R.string.dialogue_scanning_media_title), 
+        			getString(R.string.dialogue_scanning_media_body));
         	startScan();
         } else {
-        	Toast.makeText(this, getResources().getString(R.string.toast_scanning_media_not_found), Toast.LENGTH_SHORT).show();
+        	Toast.makeText(this, getString(R.string.toast_scanning_media_not_found), Toast.LENGTH_SHORT).show();
         }
 	}
 	
@@ -1066,7 +1076,7 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
        } catch( Exception e ) {
     	   imagePath = "";
     	   e.printStackTrace();
-    	   Toast.makeText(this, getResources().getString(R.string.toast_save_image_error), Toast.LENGTH_SHORT).show();
+    	   Toast.makeText(this, getString(R.string.toast_save_image_error), Toast.LENGTH_SHORT).show();
     	   Utils.saveIntegerPreferences(this, Constants.KEY_IMAGE_COUNTER, newImageCount-1);
        }
        return imagePath;
@@ -1078,8 +1088,8 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("image/png");
 		intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + imagePath));
-		intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_image_text));
-		startActivityForResult(Intent.createChooser(intent , getResources().getString(R.string.chooser_share_title)),0);
+		intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_image_text));
+		startActivityForResult(Intent.createChooser(intent , getString(R.string.chooser_share_title)),0);
 	}
 	
 	private void insertImage() {
@@ -1090,75 +1100,77 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 		Log.d(TAG, "width : " + width);
 		Log.d(TAG, "height : " + height);
 		
-		// Code for crop image
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null)
-        .setType("image/*")
-        .putExtra("crop", "true")
-        .putExtra("aspectX", width)
-        .putExtra("aspectY", height)
-        .putExtra("outputX", width)
-        .putExtra("outputY", height)
-        .putExtra("scale", true)
-        .putExtra("scaleUpIfNeeded", true)
-        .putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-
+		//Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		//startActivityForResult(Intent.createChooser(intent,"Select Picture"), SELECT_PICTURE);
+		
 		try {
+			// Code for crop image
+			//Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null)
+			Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+	        .putExtra("crop", "true")
+	        .putExtra("aspectX", width)
+	        .putExtra("aspectY", height)
+	        .putExtra("outputX", width)
+	        .putExtra("outputY", height)
+	        .putExtra("scale", true)
+	        .putExtra("scaleUpIfNeeded", true)
+	        .putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
 			intent.putExtra("return-data", true);
 			startActivityForResult(Intent.createChooser(intent,
-					getResources().getString(R.string.action_insert_image)), SELECT_PICTURE);
+					getString(R.string.action_insert_image)), SELECT_PICTURE);
 
 		} catch (ActivityNotFoundException e) {
-			
-			// Code for select image
-	        intent.removeExtra("crop");
-	        intent.removeExtra("aspectX");
-	        intent.removeExtra("aspectY");
-	        intent.removeExtra("outputX");
-	        intent.removeExtra("outputY");
-	        intent.removeExtra("scale");
-	        intent.removeExtra("scaleUpIfNeeded");
-	        intent.removeExtra("outputFormat");
-	        
-	        intent.setAction(Intent.ACTION_GET_CONTENT);
-	        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.action_insert_image)), SELECT_PICTURE);
+			e.printStackTrace();
+			Utils.showToast(SketchPenActivity.this, getString(R.string.msg_general_error));
 		}
 		
 	}
 	
 	private void resetImage() {
 		
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		dialog.setTitle(getResources().getString(R.string.alert_reset_image_title));
-		dialog.setMessage(getResources().getString(R.string.alert_reset_image_body));
-		dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(SketchPenActivity.this);
+		builder.setTitle(getString(R.string.alert_reset_image_title));
+	    builder.setItems(new CharSequence[]
+	            {getString(R.string.label_reset_foreground), getString(R.string.label_reset_background), getString(R.string.label_reset_all)},
+	            new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int which) {
+	                    // The 'which' argument contains the index position
+	                    // of the selected item
+	                    switch (which) {
+	                        case 0:
+	                        	// Reset forground
+	                        	drawingView.clear();
+	                            break;
+	                        case 1:
+	                        	// Reset background
+	                        	if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				                	drawingView.setBackgroundDrawable(null);
+				                } else {
+				                	drawingView.setBackground(null);
+				                }
 
-			public void onClick(DialogInterface dialog, int which) { 
-	            // continue with delete
-	        	dialog.cancel();
-	        	/*Intent intent = getIntent();
-	        	intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            finish();
-	            startActivityForResult(intent, 0);*/
-	        	drawingView.clear();
-	        	
-                if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                	drawingView.setBackgroundDrawable(null);
-                } else {
-                	drawingView.setBackground(null);
-                }
+				                Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, 0);
+				                int bgColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR);
+				                drawingView.setBackgroundColor(bgColor);
+	                            break;
+	                        case 2:
+	                        	// Reset both
+	                        	drawingView.clear();
+				                if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+				                	drawingView.setBackgroundDrawable(null);
+				                } else {
+				                	drawingView.setBackground(null);
+				                }
 
-                int bgColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR);
-                drawingView.setBackgroundColor(bgColor);
-	        }
-	     });
-		dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	        	dialog.cancel();
-	        }
-	     });
-	    
-		dialog.show();
+				                Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, 0);
+				                int backColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR);
+				                drawingView.setBackgroundColor(backColor);
+	                            break;
+	                    }
+	                }
+	            });
+	    builder.create().show();
 	}
 	
 	@Override
@@ -1169,7 +1181,9 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
         	if (requestCode == SELECT_PICTURE) {
         		
     			Bundle extras2 = data.getExtras();
-    			if (extras2 != null) {
+    			if (extras2 == null) {
+    				Utils.showToast(SketchPenActivity.this, getString(R.string.msg_external_storage_error));
+    			} else {
     				
     				Bitmap photo = extras2.getParcelable("data");
     				int sdk = android.os.Build.VERSION.SDK_INT;
@@ -1192,7 +1206,14 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 			
 			flagAdFree = false;
 			if (result.isFailure()) {
-				Utils.eLog(result.getMessage());
+				// TODO : future
+				if(result.getResponse() == -1005) {
+					Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_canceled));
+					
+				} else if(result.getResponse() == -1008) {
+					Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_refunded));
+				}
+				
 				return;
 			} else if (purchase.getSku().equals(ITEM_SKU)) {
 				consumeItem();
@@ -1214,8 +1235,9 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 				Inventory inventory) {
 
 			if (result.isFailure()) {
-				Utils.eLog(result.getMessage());
+				Utils.showToast(SketchPenActivity.this, result.getMessage());
 			} else {
+				
 				mHelper.consumeAsync(inventory.getPurchase(ITEM_SKU),
 						mConsumeFinishedListener);
 			}
@@ -1224,14 +1246,15 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 
 	IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
 		public void onConsumeFinished(Purchase purchase, IabResult result) {
-
+			
 			if (result.isSuccess()) {
-				Utils.showToast(SketchPenActivity.this, result.getMessage());
+				
+				Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_done));
 				Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_ITEM_PURCHASED, 1);
 				finish();
 				startActivity(getIntent());
 			} else {
-				Utils.showToast(SketchPenActivity.this, "Payment failled");
+				Utils.showToast(SketchPenActivity.this, result.getMessage());
 			}
 		}
 	};
@@ -1258,8 +1281,8 @@ public class SketchPenActivity extends Activity implements MediaScannerConnectio
 	public void onBackPressed() {
 		
 		new AlertDialog.Builder(this)
-		.setTitle(getResources().getString(R.string.alert_close_app_title))
-		.setMessage(getResources().getString(R.string.alert_close_app_body))
+		.setTitle(getString(R.string.alert_close_app_title))
+		.setMessage(getString(R.string.alert_close_app_body))
 		.setPositiveButton(android.R.string.yes,
 			new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog,

@@ -7,7 +7,6 @@
     <string name="action_view_image">ดูภาพ</string>
     <string name="action_save_and_share_image">บันทึกและแบ่งปัน</string>
     <string name="alert_reset_image_title">ตั้งค่าภาพ</string>
-    <string name="alert_reset_image_body">คุณแน่ใจหรือว่าต้องการที่จะตั้งค่าภาพ?</string>
     <string name="dialogue_scanning_media_title">สแกนสื่อ</string>
     <string name="dialogue_scanning_media_body">กรุณารอสักครู่&#8230;</string>
     <string name="toast_scanning_media_not_found">ไม่มีภาพที่บันทึกไว้พบว่า</string>
@@ -77,4 +76,11 @@
     
     <string name="action_like">เช่นเดียวกับเรา</string>
     <string name="label_message_eraser">เลือกตัวเลือกนี้อีกครั้งเพื่อปิดการใช้ยางลบ</string>
+    
+    <string name="msg_external_storage_error">พยายามที่จะเลือกภาพจากโทรศัพท์หรือหน่วยความจำภายนอก</string>
+    <string name="msg_general_error">การดำเนินการนี้จะไม่ได้รับการสนับสนุนโดยอุปกรณ์ของคุณ</string>
+    
+    <string name="label_reset_foreground">รีเซ็ตเบื้องหน้าเท่านั้น</string>
+    <string name="label_reset_background">พื้นหลังรีเซ็ตเท่านั้น</string>
+    <string name="label_reset_all">รีเซ็ตทั้งหมด</string>
 </resources>

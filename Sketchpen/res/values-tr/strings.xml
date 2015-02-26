@@ -7,7 +7,6 @@
     <string name="action_view_image">görüntüleri</string>
     <string name="action_save_and_share_image">Kaydetmek ve paylaşmak</string>
     <string name="alert_reset_image_title">Resmi sıfırla</string>
-    <string name="alert_reset_image_body">Eğer resmi sıfırlamak istediğinizden emin misiniz?</string>
     <string name="dialogue_scanning_media_title">Tarama Medya</string>
     <string name="dialogue_scanning_media_body">Lütfen bekleyin&#8230;</string>
     <string name="toast_scanning_media_not_found">Bulunamadı kaydedilen bir görüntü</string>
@@ -75,4 +74,10 @@
     
     <string name="action_like">bizim gibi</string>
     <string name="label_message_eraser">Silgi devre dışı bırakmak için bu seçeneği tekrar seçin</string>
+    <string name="msg_external_storage_error">Telefona veya harici bellekten görüntüyü seçmek için çalışın</string>
+    <string name="msg_general_error">Bu eylem cihazınız tarafından desteklenmiyor</string>
+    
+    <string name="label_reset_foreground">Sıfırlama sadece ön plana</string>
+    <string name="label_reset_background">Sıfırlama yalnızca arka plan</string>
+    <string name="label_reset_all">Tümünü sıfırla</string>
 </resources>

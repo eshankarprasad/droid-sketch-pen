@@ -7,7 +7,6 @@
     <string name="action_view_image">Просмотр изображений</string>
     <string name="action_save_and_share_image">Сохранить и поделиться</string>
     <string name="alert_reset_image_title">Сброс изображение</string>
-    <string name="alert_reset_image_body">Вы уверены, что хотите сбросить файл?</string>
     <string name="dialogue_scanning_media_title">Сканирование Медиа</string>
     <string name="dialogue_scanning_media_body">Пожалуйста, подождите&#8230;</string>
     <string name="toast_scanning_media_not_found">Нет сохраненное изображение найдено</string>
@@ -78,4 +77,11 @@
     
     <string name="action_like">Как и мы</string>
     <string name="label_message_eraser">Выберите этот вариант, еще раз, чтобы отключить ластик</string>
+    
+    <string name="msg_external_storage_error">Попробуйте выбрать изображение с телефона или внешней памяти</string>
+    <string name="msg_general_error">Это действие не поддерживается Вашим устройством</string>
+    
+    <string name="label_reset_foreground">Сброс переднем плане только</string>
+    <string name="label_reset_background">Сброс только фон</string>
+    <string name="label_reset_all">Сбросить все</string>
 </resources>

@@ -7,7 +7,6 @@
     <string name="action_view_image">Vedere le foto</string>
     <string name="action_save_and_share_image">Salvare e condividere</string>
     <string name="alert_reset_image_title">Ripristina immagine</string>
-    <string name="alert_reset_image_body">Sei sicuro di voler ripristinare l\'immagine?</string>
     <string name="dialogue_scanning_media_title">scansione media</string>
     <string name="dialogue_scanning_media_body">attendere prego&#8230;</string>
     <string name="toast_scanning_media_not_found">Nessuna immagine salvata trovata</string>
@@ -77,4 +76,11 @@
     
     <string name="action_like">come noi</string>
     <string name="label_message_eraser">Scegliere questa opzione per disabilitare gomma</string>
+    
+    <string name="msg_external_storage_error">Provare a selezionare l\'immagine dal telefono o memoria esterna</string>
+    <string name="msg_general_error">Questa azione non è supportata dal dispositivo</string>
+    
+    <string name="label_reset_foreground">Ripristino in primo piano solo</string>
+    <string name="label_reset_background">Solo fondo ripristino</string>
+    <string name="label_reset_all">Ripristina tutto</string>
 </resources>

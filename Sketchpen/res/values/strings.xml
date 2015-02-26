@@ -7,7 +7,6 @@
     <string name="action_view_image">View images</string>
     <string name="action_save_and_share_image">Save and share</string>
     <string name="alert_reset_image_title">Reset Image</string>
-    <string name="alert_reset_image_body">Are you sure you want to reset image?</string>
     <string name="dialogue_scanning_media_title">Scanning Media</string>
     <string name="dialogue_scanning_media_body">Please wait&#8230;</string>
     <string name="toast_scanning_media_not_found">No saved image found</string>
@@ -78,4 +77,16 @@
     
     <string name="action_like">Like us</string>
     <string name="label_message_eraser">Choose this option again to disable eraser</string>
+    
+    <string name="msg_payment_canceled">You canceled the payment</string>
+    <string name="msg_payment_refunded">Payment failed, it will be refunded if paid</string>
+    <string name="msg_payment_done">Payment done successfully, Thank you!</string>
+    
+    <string name="msg_external_storage_error">Try to select image from phone/external memory</string>
+    <string name="msg_general_error">This action is not supported by your device</string>
+    
+    <string name="label_reset_foreground">Reset foreground only</string>
+    <string name="label_reset_background">Reset background only</string>
+    <string name="label_reset_all">Reset all</string>
+    
 </resources>

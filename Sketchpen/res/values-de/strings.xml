@@ -7,7 +7,6 @@
     <string name="action_view_image">Bilder anzeigen</string>
     <string name="action_save_and_share_image">Speicher und teile</string>
     <string name="alert_reset_image_title">Bild zurücksetzen</string>
-    <string name="alert_reset_image_body">Sind Sie sicher, dass Sie Bild zurücksetzen?</string>
     <string name="dialogue_scanning_media_title">Scannen von Medien</string>
     <string name="dialogue_scanning_media_body">Bitte warten&#8230;</string>
     <string name="toast_scanning_media_not_found">Kein gespeicherte Bild gefunden</string>
@@ -77,4 +76,11 @@
     
     <string name="action_like">Wie wir</string>
     <string name="label_message_eraser">Wählen Sie diese Option wieder zu deaktivieren, Radiergummi</string>
+    
+    <string name="msg_external_storage_error">Versuchen Sie Bild von Telefon oder externen Speicher wählen</string>
+    <string name="msg_general_error">Diese Aktion wird nicht von Ihrem Gerät unterstützt</string>
+    
+    <string name="label_reset_foreground">Nur zurücksetzen Vordergrund</string>
+    <string name="label_reset_background">Nur zurücksetzen Hintergrund</string>
+    <string name="label_reset_all">alles zurücksetzen</string>
 </resources>

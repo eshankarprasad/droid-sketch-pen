@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/D:/Projects/git_sketch/droid-sketch-pen/android-studio/sketchpen/src/main/res/values-id/strings.xml -->
+    <eat-comment/>
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_view_picture</item>
+        <item>@drawable/ic_action_save</item>
+        <item>@drawable/ic_action_share</item>
+        <item>@drawable/ic_action_insert</item>
+        <item>@drawable/ic_action_eraser</item>
+        <item>@drawable/ic_action_reset</item>
+        <item>@drawable/ic_action_rate</item>
+        <item>@drawable/ic_action_rate</item>
+        <item>@drawable/ic_action_like</item>
+    </array>
+    <string-array name="nav_drawer_items">
+        <item>@string/action_settings</item>
+        <item>@string/action_view_image</item>
+        <item>@string/action_save_image</item>
+        <item>@string/action_save_and_share_image</item>
+        <item>@string/action_insert_image</item>
+        <item>@string/action_eraser</item>
+        <item>@string/action_reset</item>
+        <item>@string/action_buy_ad_free</item>
+        <item>@string/action_rate</item>
+        <item>@string/action_like</item>
+    </string-array>
+    <string name="action_buy_ad_free">Beli Iklan gratis</string>
+    <string name="action_eraser">penghapus</string>
+    <string name="action_insert_image">menyisipkan gambar</string>
+    <string name="action_like">seperti kita</string>
+    <string name="action_rate">Penilaian dan review</string>
+    <string name="action_reset">menghapus semua</string>
+    <string name="action_save_and_share_image">Simpan dan berbagi</string>
+    <string name="action_save_image">Simpan gambar</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="action_view_image">Lihat gambar</string>
+    <string name="alert_close_app_body">Apakah Anda ingin menutup aplikasi ini?</string>
+    <string name="alert_close_app_title">Tutup aplikasi ini</string>
+    <string name="alert_rate_body">Apakah Anda ingin menilai aplikasi ini?</string>
+    <string name="alert_rate_title">Beri aplikasi ini</string>
+    <string name="alert_reset_image_title">Gambar ulang</string>
+    <string name="app_name">Sketsa Pena</string>
+    <string name="button_label_default">ulang pengaturan</string>
+    <string name="chooser_share_title">saham</string>
+    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="dialogue_scanning_media_body">Please wait…</string>
+    <string name="dialogue_scanning_media_title">Scanning Media</string>
+    <string name="eraser_active">aktif</string>
+    <string name="eraser_inactive">non-aktif</string>
+    <string name="label_backcolor">kembali Warna</string>
+    <string name="label_default_eraser_size">12</string>
+    <string name="label_default_size">12</string>
+    <string name="label_eraser">ukuran penghapus</string>
+    <string name="label_forecolor">Warna Fore</string>
+    <string name="label_message_eraser">Pilih opsi ini lagi untuk menonaktifkan penghapus</string>
+    <string name="label_reset_all">Ulang semua</string>
+    <string name="label_reset_background">Ulang latar belakang hanya</string>
+    <string name="label_reset_foreground">Ulang latar hanya</string>
+    <string name="label_show_circle">Tampilkan lingkaran</string>
+    <string name="label_size">ukuran tak</string>
+    <string name="msg_external_storage_error">Cobalah untuk memilih gambar dari telepon atau memori eksternal</string>
+    <string name="msg_general_error">Tindakan ini tidak didukung oleh perangkat Anda</string>
+    <string name="msg_payment_canceled">Anda membatalkan pembayaran</string>
+    <string name="msg_payment_done">Pembayaran dilakukan dengan sukses, terima kasih!</string>
+    <string name="msg_payment_refunded">Pembayaran gagal, itu akan dikembalikan jika dibayar</string>
+    <string name="share_image_text">Gambar ini dihasilkan oleh sketsa pena.\nSebuah berat aplikasi Android gratis dan ringan.\nSilahkan kunjungi link di bawah ini untuk menginstal…\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
+    <string name="toast_message_file_not_found">Tidak ada gambar yang disimpan ditemukan</string>
+    <string name="toast_save_image_error">Kesalahan terjadi selama menyimpan gambar</string>
+    <string name="toast_save_image_success">gambar yang disimpan</string>
+    <string name="toast_scanning_media_not_found">Tidak ada gambar yang disimpan ditemukan</string>
+</resources>

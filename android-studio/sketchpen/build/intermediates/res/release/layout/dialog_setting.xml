@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:gravity="center"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/label_show_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:gravity="center_vertical"
+        android:text="@string/label_show_circle" />
+
+    <ToggleButton
+        android:id="@+id/button_show_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="@dimen/number_picker_margin"
+        android:padding="0dp" />
+
+    <TextView
+        android:id="@+id/label_forecolor"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/button_show_circle"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:gravity="center_vertical"
+        android:text="@string/label_forecolor" />
+
+    <LinearLayout
+        android:id="@+id/layout_forecolor"
+        android:layout_width="64dp"
+        android:layout_height="44dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/button_show_circle"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="@dimen/number_picker_margin"
+        android:background="@android:color/black"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/button_forecolor"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@android:color/black" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/label_backcolor"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/layout_forecolor"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:gravity="center_vertical"
+        android:text="@string/label_backcolor" />
+
+    <LinearLayout
+        android:id="@+id/layout_backcolor"
+        android:layout_width="64dp"
+        android:layout_height="44dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/layout_forecolor"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="@dimen/number_picker_margin"
+        android:background="@android:color/black"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/button_backcolor"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:background="@android:color/white" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/label_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_backcolor"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:gravity="center_vertical"
+        android:text="@string/label_size" />
+
+    <SeekBar
+        android:id="@+id/seekbar_stroke_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_size"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:layout_marginRight="@dimen/number_picker_margin"
+        android:max="100" />
+
+    <TextView
+        android:id="@+id/label_eraser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seekbar_stroke_size"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:gravity="center_vertical"
+        android:text="@string/label_eraser" />
+
+    <SeekBar
+        android:id="@+id/seekbar_eraser_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_eraser"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/number_picker_margin"
+        android:layout_marginRight="@dimen/number_picker_margin"
+        android:max="100" />
+
+    <View
+        android:id="@+id/seperator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/seekbar_eraser_size" />
+
+    <Button
+        android:id="@+id/button_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seperator"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:text="@string/button_label_default"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/list_item_title" />
+    
+    <TextView
+        android:id="@+id/label_app_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_default"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+</RelativeLayout><!-- From: file:/D:/Projects/git_sketch/droid-sketch-pen/android-studio/sketchpen/src/main/res/layout/dialog_setting.xml -->

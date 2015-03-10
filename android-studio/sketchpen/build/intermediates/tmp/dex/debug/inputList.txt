@@ -1,0 +1,4 @@
+D:\Projects\git_sketch\droid-sketch-pen\android-studio\sketchpen\build\intermediates\classes\debug
+D:\Projects\git_sketch\droid-sketch-pen\android-studio\sketchpen\build\intermediates\pre-dexed\debug\classes-33fc47b56aa3a39d53008dcd67888d32695641f8.jar
+D:\Projects\git_sketch\droid-sketch-pen\android-studio\sketchpen\build\intermediates\pre-dexed\debug\GoogleAdMobAdsSdk-6.4.1-72fd9624c2dee1e3bf0d362440ab2427eb21f96b.jar
+D:\Projects\git_sketch\droid-sketch-pen\android-studio\sketchpen\build\intermediates\pre-dexed\debug\support-v4-19.1.0-a690e097f341d46e46ea5d53341b34fda9af9d84.jar

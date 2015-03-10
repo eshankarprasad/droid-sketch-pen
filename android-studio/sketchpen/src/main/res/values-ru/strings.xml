@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Эскиз Пен</string>
+    <string name="action_reset">Стереть все</string>
+    <string name="action_save_image">Сохранить изображение</string>
+    <string name="action_view_image">Просмотр изображений</string>
+    <string name="action_save_and_share_image">Сохранить и поделиться</string>
+    <string name="alert_reset_image_title">Сброс изображение</string>
+    <string name="dialogue_scanning_media_title">Сканирование Медиа</string>
+    <string name="dialogue_scanning_media_body">Пожалуйста, подождите&#8230;</string>
+    <string name="toast_scanning_media_not_found">Нет сохраненное изображение найдено</string>
+    <string name="share_image_text">Это изображение генерируется Эскиз Пен.\nБесплатный и легкий вес Android-приложение.\nПожалуйста, посетите ниже ссылку, чтобы инсталлировать&#8230;\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
+	<string name="chooser_share_title">доля</string>
+	<string name="toast_save_image_error">Ошибка при сохранении изображения</string>
+	<string name="toast_save_image_success">Сохранено Изображение</string>
+
+	<string name="action_settings">настройки</string>
+	<string name="label_forecolor">Передние Цвет</string>
+	<string name="label_show_circle">Показать круг</string>
+	<string name="label_backcolor">Вернуться Цвет</string>
+	<string name="label_default_size">12</string>
+	<string name="button_label_default">Сброс настроек</string>
+	
+	<string name="alert_rate_title">Оценить это приложение</string>
+	<string name="alert_rate_body">Вы хотите, чтобы оценить это приложение?</string>
+
+	<string name="alert_close_app_title">Закрыть приложение</string>
+	<string name="alert_close_app_body">Вы хотите, чтобы закрыть это приложение?</string>
+	
+	<string name="action_insert_image">Вставьте изображение</string>
+	
+	<!-- Slider menu start  -->
+	
+	<string name="action_rate">Рейтинг и обзор</string>
+	<string name="action_eraser">ластик</string>
+	<string name="eraser_active">активный</string>
+	<string name="eraser_inactive">неактивный</string>
+	<string name="toast_message_file_not_found">Нет сохраненного изображения не найден</string>
+	<string name="label_size">размер хода</string>
+    <string name="label_eraser">размер Ластик</string>
+    <string name="label_default_eraser_size">12</string>
+	
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+    
+    <string name="action_buy_ad_free">Купить объявление бесплатно</string>
+    
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >@string/action_settings</item>
+        <item >@string/action_view_image</item>
+        <item >@string/action_save_image</item>
+        <item >@string/action_save_and_share_image</item>
+        <item >@string/action_insert_image</item>
+        <item >@string/action_eraser</item>
+        <item >@string/action_reset</item>
+        <item >@string/action_buy_ad_free</item>
+        <item >@string/action_rate</item>
+        <item >@string/action_like</item>
+    </string-array>
+    
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_action_settings</item>
+        <item>@drawable/ic_action_view_picture</item>
+        <item>@drawable/ic_action_save</item>
+        <item>@drawable/ic_action_share</item>
+        <item>@drawable/ic_action_insert</item>
+        <item>@drawable/ic_action_eraser</item>
+        <item>@drawable/ic_action_reset</item>
+        <item>@drawable/ic_action_rate</item>
+        <item>@drawable/ic_action_rate</item>
+        <item>@drawable/ic_action_like</item>
+    </array>
+    
+    <string name="action_like">Как и мы</string>
+    <string name="label_message_eraser">Выберите этот вариант, еще раз, чтобы отключить ластик</string>
+
+    <string name="msg_payment_canceled">Вы отменили оплату</string>
+    <string name="msg_payment_refunded">Оплата не удалось, она будет возвращена, если они выплачены</string>
+    <string name="msg_payment_done">Оплата осуществляется успешно, спасибо!</string>
+    
+    <string name="msg_external_storage_error">Попробуйте выбрать изображение с телефона или внешней памяти</string>
+    <string name="msg_general_error">Это действие не поддерживается Вашим устройством</string>
+    
+    <string name="label_reset_foreground">Сброс переднем плане только</string>
+    <string name="label_reset_background">Сброс только фон</string>
+    <string name="label_reset_all">Сбросить все</string>
+</resources>

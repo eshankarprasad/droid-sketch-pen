@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Kroki Kalem</string>
+    <string name="action_reset">Tüm silmek</string>
+    <string name="action_save_image">Görüntü kaydetmek</string>
+    <string name="action_view_image">Görüntüleri</string>
+    <string name="action_save_and_share_image">Kaydetmek ve paylaşmak</string>
+    <string name="alert_reset_image_title">Resmi sıfırla</string>
+    <string name="dialogue_scanning_media_title">Tarama Medya</string>
+    <string name="dialogue_scanning_media_body">Lütfen bekleyin&#8230;</string>
+    <string name="toast_scanning_media_not_found">Bulunamadı kaydedilen bir görüntü</string>
+    <string name="share_image_text">Bu görüntü kroki Kalem tarafından oluşturulan.\nÜcretsiz ve hafif Android uygulaması.\nYüklemek için aşağıdaki bağlantıyı ziyaret edin&#8230;\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
+    <string name="chooser_share_title">Hisse</string>
+    <string name="toast_save_image_error">Hata görüntüyü kaydederken sırasında orrurred</string>
+    <string name="toast_save_image_success">Kaydedilen görüntü</string>
+    
+    <string name="action_settings">Ayarlar</string>
+	<string name="label_forecolor">ön plan Renk</string>
+	<string name="label_show_circle">Göster daire</string>
+	<string name="label_backcolor">Geri Renk</string>
+	<string name="label_default_size">12</string>
+	<string name="button_label_default">Ayarlarını sıfırla</string>
+	
+	<string name="alert_rate_title">Bu uygulamayı değerlendir</string>
+	<string name="alert_rate_body">Bu uygulama oranı istiyor musunuz?</string>
+	
+	<string name="alert_close_app_title">Bu uygulamayı kapatın</string>
+	<string name="alert_close_app_body">Bu uygulamayı kapatmak istiyor musunuz?</string>
+	
+	<string name="action_insert_image">Görüntüsü ekleme</string>
+	
+	<!-- Slider menu start  -->
+	
+	<string name="action_rate">Değerlendirme ve incelemesi</string>
+	<string name="action_eraser">Silgi</string>
+	<string name="eraser_active">Aktif</string>
+	<string name="eraser_inactive">Pasif</string>
+	<string name="toast_message_file_not_found">Hiçbir kaydedilen bir görüntü bulundu</string>
+	<string name="label_size">Kontur boyutu</string>
+    <string name="label_eraser">Silgi boyutu</string>
+    <string name="label_default_eraser_size">12</string>
+	
+    <string name="action_buy_ad_free">Satın Reklam ücretsiz</string>
+    
+    <string name="action_like">Bizim gibi</string>
+    <string name="label_message_eraser">Silgi devre dışı bırakmak için bu seçeneği tekrar seçin</string>
+    <string name="msg_external_storage_error">Telefona veya harici bellekten görüntüyü seçmek için çalışın</string>
+    <string name="msg_general_error">Bu eylem cihazınız tarafından desteklenmiyor</string>
+    
+    <string name="label_reset_foreground">Sıfırlama sadece ön plana</string>
+    <string name="label_reset_background">Sıfırlama yalnızca arka plan</string>
+    <string name="label_reset_all">Tümünü sıfırla</string>
+
+    <string name="action_enable_eraser">Etkinleştirmek silgi</string>
+    <string name="action_disable_eraser">Alıkoymak silgi</string>
+    <string name="label_message_eraser_on">Silgi etkin</string>
+    <string name="label_message_eraser_off">Silgi engelli</string>
+
+    <string name="msg_payment_canceled">Ödeme iptal</string>
+    <string name="msg_payment_refunded">Ödeme ödenen eğer iade edilecektir, başarısız</string>
+    <string name="msg_payment_done">Ödeme başarıyla bitmiş, teşekkür ederiz!</string>
+</resources>

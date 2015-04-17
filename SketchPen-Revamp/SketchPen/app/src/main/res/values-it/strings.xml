@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Sketch Pen</string>
+    <string name="action_reset">Cancella tutto</string>
+    <string name="action_save_image">Salva l\'immagine</string>
+    <string name="action_view_image">Vedere le foto</string>
+    <string name="action_save_and_share_image">Salvare e condividere</string>
+    <string name="alert_reset_image_title">Ripristina immagine</string>
+    <string name="dialogue_scanning_media_title">Scansione media</string>
+    <string name="dialogue_scanning_media_body">Attendere prego&#8230;</string>
+    <string name="toast_scanning_media_not_found">Nessuna immagine salvata trovata</string>
+    <string name="share_image_text">Questa immagine è generata da Sketch Pen.\nUn peso applicazione Android libero e leggero.\nSi prega di visitare sotto il collegamento per installare&#8230;\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
+	<string name="chooser_share_title">Quota</string>
+	<string name="toast_save_image_error">Si è verificato un errore durante il salvataggio dell\'immagine</string>
+	<string name="toast_save_image_success">Immagine salvata</string>
+	
+	<string name="action_settings">Impostazioni</string>
+	<string name="label_forecolor">Fore Colore</string>
+	<string name="label_show_circle">Mostra cerchio</string>
+	<string name="label_backcolor">Colore Indietro</string>
+	<string name="label_default_size">12</string>
+	<string name="button_label_default">Ripristinare le impostazioni</string>
+	
+	<string name="alert_rate_title">Vota questa app</string>
+	<string name="alert_rate_body">Vuoi votare questa app?</string>
+	
+	<string name="alert_close_app_title">Chiudere questa applicazione</string>
+	<string name="alert_close_app_body">Vuoi chiudere questa applicazione?</string>
+	
+	<string name="action_insert_image">Inserisci immagine</string>
+	
+	<!-- Slider menu start  -->
+	<string name="action_rate">Valutazione e revisione</string>
+	<string name="action_eraser">Gomma</string>
+	<string name="eraser_active">Attivo</string>
+	<string name="eraser_inactive">Inattivo</string>
+	<string name="toast_message_file_not_found">Nessuna immagine salvata viene trovato</string>
+	<string name="label_size">Dimensioni del tratto</string>
+    <string name="label_eraser">Dimensione della gomma</string>
+    <string name="label_default_eraser_size">12</string>
+    
+    <string name="action_buy_ad_free">Acquista annuncio gratuito</string>
+    
+    <string name="action_like">Come noi</string>
+    <string name="label_message_eraser">Scegliere questa opzione per disabilitare gomma</string>
+    
+    <string name="msg_external_storage_error">Provare a selezionare l\'immagine dal telefono o memoria esterna</string>
+    <string name="msg_general_error">Questa azione non è supportata dal dispositivo</string>
+    
+    <string name="label_reset_foreground">Ripristino in primo piano solo</string>
+    <string name="label_reset_background">Solo fondo ripristino</string>
+    <string name="label_reset_all">Ripristina tutto</string>
+
+    <string name="action_enable_eraser">Permettere gomma</string>
+    <string name="action_disable_eraser">Disabilita gomma</string>
+    <string name="label_message_eraser_on">Gomma abilitato</string>
+    <string name="label_message_eraser_off">Gomma disabile</string>
+
+    <string name="msg_payment_canceled">Pagamento annullata</string>
+    <string name="msg_payment_refunded">Mancato pagamento, verrà rimborsato se pagato</string>
+    <string name="msg_payment_done">Il pagamento effettuato con successo, grazie!</string>
+</resources>

@@ -39,4 +39,7 @@
 
     <item android:id="@+id/action_like" android:title="@string/action_like"
         android:orderInCategory="112" app:showAsAction="collapseActionView" />
+
+    <item android:id="@+id/action_about" android:title="@string/action_about"
+        android:orderInCategory="113" app:showAsAction="collapseActionView" />
 </menu>

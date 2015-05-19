@@ -24,10 +24,7 @@
 	
 	<string name="alert_rate_title">Vota questa app</string>
 	<string name="alert_rate_body">Vuoi votare questa app?</string>
-	
-	<string name="alert_close_app_title">Chiudere questa applicazione</string>
-	<string name="alert_close_app_body">Vuoi chiudere questa applicazione?</string>
-	
+	<string name="msg_close_app">Premere di nuovo per uscire</string>
 	<string name="action_insert_image">Inserisci immagine</string>
 	
 	<!-- Slider menu start  -->
@@ -60,4 +57,5 @@
     <string name="msg_payment_canceled">Pagamento annullata</string>
     <string name="msg_payment_refunded">Mancato pagamento, verrà rimborsato se pagato</string>
     <string name="msg_payment_done">Il pagamento effettuato con successo, grazie!</string>
+    <string name="action_about">Su</string>
 </resources>

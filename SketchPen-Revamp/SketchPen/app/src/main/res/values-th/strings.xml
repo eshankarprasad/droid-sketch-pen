@@ -21,13 +21,9 @@
 	<string name="label_backcolor">สีกลับ</string>
 	<string name="label_default_size">12</string>
 	<string name="button_label_default">รีเซ็ตการตั้งค่า</string>
-	
 	<string name="alert_rate_title">ตรวจสอบอัตรานี้</string>
 	<string name="alert_rate_body">คุณต้องการที่จะตรวจสอบอัตรานี้</string>
-	
-	<string name="alert_close_app_title">ปิดโปรแกรมนี้</string>
-	<string name="alert_close_app_body">คุณต้องการที่จะปิดโปรแกรมนี้</string>
-	
+	<string name="msg_close_app">กดอีกครั้งเพื่อออกจาก</string>
 	<string name="action_insert_image">แทรกภาพ</string>
 	
 	<!-- Slider menu start  -->
@@ -60,4 +56,5 @@
     <string name="msg_payment_canceled">ชำระเงินยกเลิก</string>
     <string name="msg_payment_refunded">วิธีการชำระเงินล้มเหลวก็จะได้รับเงินคืนหากมีการจ่าย</string>
     <string name="msg_payment_done">วิธีการชำระเงินทำประสบความสำเร็จขอขอบคุณ!</string>
+    <string name="action_about">เกี่ยวกับ</string>
 </resources>

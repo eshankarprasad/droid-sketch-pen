@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Sketsa Pena</string>
-    <string name="action_reset">menghapus semua</string>
+    <string name="action_reset">Menghapus semua</string>
     <string name="action_save_image">Simpan gambar</string>
     <string name="action_view_image">Lihat gambar</string>
     <string name="action_save_and_share_image">Simpan dan berbagi</string>
@@ -11,39 +11,37 @@
     <string name="dialogue_scanning_media_body">Please wait&#8230;</string>
     <string name="toast_scanning_media_not_found">Tidak ada gambar yang disimpan ditemukan</string>
     <string name="share_image_text">Gambar ini dihasilkan oleh sketsa pena.\nSebuah berat aplikasi Android gratis dan ringan.\nSilahkan kunjungi link di bawah ini untuk menginstal&#8230;\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
-	<string name="chooser_share_title">saham</string>
+	<string name="chooser_share_title">Saham</string>
 	<string name="toast_save_image_error">Kesalahan terjadi selama menyimpan gambar</string>
-	<string name="toast_save_image_success">gambar yang disimpan</string>
+	<string name="toast_save_image_success">Gambar yang disimpan</string>
 	
 	<string name="action_settings">Pengaturan</string>
 	<string name="label_forecolor">Warna Fore</string>
 	<string name="label_show_circle">Tampilkan lingkaran</string>
-	<string name="label_backcolor">kembali Warna</string>
+	<string name="label_backcolor">Kembali Warna</string>
 	<string name="label_default_size">12</string>
-	<string name="button_label_default">ulang pengaturan</string>
+	<string name="button_label_default">Ulang pengaturan</string>
 	
 	<string name="alert_rate_title">Beri aplikasi ini</string>
 	<string name="alert_rate_body">Apakah Anda ingin menilai aplikasi ini?</string>
-	
-	<string name="alert_close_app_title">Tutup aplikasi ini</string>
-	<string name="alert_close_app_body">Apakah Anda ingin menutup aplikasi ini?</string>
+	<string name="msg_close_app">Tekan lagi untuk keluar</string>
 	
 	<string name="action_insert_image">menyisipkan gambar</string>
 	
 	<!-- Slider menu start  -->
 	
 	<string name="action_rate">Penilaian dan review</string>
-	<string name="action_eraser">penghapus</string>
-	<string name="eraser_active">aktif</string>
-	<string name="eraser_inactive">non-aktif</string>
+	<string name="action_eraser">Penghapus</string>
+	<string name="eraser_active">Aktif</string>
+	<string name="eraser_inactive">Non-aktif</string>
 	<string name="toast_message_file_not_found">Tidak ada gambar yang disimpan ditemukan</string>
-	<string name="label_size">ukuran tak</string>
-    <string name="label_eraser">ukuran penghapus</string>
+	<string name="label_size">Ukuran tak</string>
+    <string name="label_eraser">Ukuran penghapus</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">Beli Iklan gratis</string>
 
-    <string name="action_like">seperti kita</string>
+    <string name="action_like">Seperti kita</string>
     <string name="label_message_eraser">Pilih opsi ini lagi untuk menonaktifkan penghapus</string>
     
     <string name="msg_external_storage_error">Cobalah untuk memilih gambar dari telepon atau memori eksternal</string>
@@ -53,12 +51,13 @@
     <string name="label_reset_background">Ulang latar belakang hanya</string>
     <string name="label_reset_all">Ulang semua</string>
 
-    <string name="action_enable_eraser">memungkinkan penghapus</string>
-    <string name="action_disable_eraser">melumpuhkan penghapus</string>
-    <string name="label_message_eraser_on">penghapus diaktifkan</string>
-    <string name="label_message_eraser_off">penghapus cacat</string>
+    <string name="action_enable_eraser">Memungkinkan penghapus</string>
+    <string name="action_disable_eraser">Melumpuhkan penghapus</string>
+    <string name="label_message_eraser_on">Penghapus diaktifkan</string>
+    <string name="label_message_eraser_off">Penghapus cacat</string>
 
     <string name="msg_payment_canceled">Pembayaran dibatalkan</string>
     <string name="msg_payment_refunded">Pembayaran gagal, itu akan dikembalikan jika dibayar</string>
     <string name="msg_payment_done">Pembayaran dilakukan dengan sukses, terima kasih!</string>
+    <string name="action_about">Tentang</string>
 </resources>

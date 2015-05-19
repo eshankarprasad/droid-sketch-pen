@@ -21,13 +21,10 @@
 	<string name="label_backcolor">Вернуться Цвет</string>
 	<string name="label_default_size">12</string>
 	<string name="button_label_default">Сброс настроек</string>
-	
+
 	<string name="alert_rate_title">Оценить это приложение</string>
 	<string name="alert_rate_body">Вы хотите, чтобы оценить это приложение?</string>
-
-	<string name="alert_close_app_title">Закрыть приложение</string>
-	<string name="alert_close_app_body">Вы хотите, чтобы закрыть это приложение?</string>
-	
+	<string name="msg_close_app">Нажмите еще раз, чтобы выйти</string>
 	<string name="action_insert_image">Вставьте изображение</string>
 	
 	<!-- Slider menu start  -->
@@ -61,4 +58,5 @@
     <string name="msg_payment_canceled">Операция отменена</string>
     <string name="msg_payment_refunded">Оплата не удалось, она будет возвращена, если они выплачены</string>
     <string name="msg_payment_done">Оплата осуществляется успешно, спасибо!</string>
+    <string name="action_about">O</string>
 </resources>

@@ -24,9 +24,7 @@
 	
 	<string name="alert_rate_title">Bewerten Sie diese App</string>
 	<string name="alert_rate_body">Wissen Sie, diese App zu bewerten wollen?</string>
-	
-	<string name="alert_close_app_title">Schließen Sie diese Anwendung</string>
-	<string name="alert_close_app_body">Haben Sie diese Anwendung schließen?</string>
+	<string name="msg_close_app">Drücken Sie zum Beenden erneut</string>
 	
 	<string name="action_insert_image">Bild einfügen</string>
 	
@@ -60,4 +58,5 @@
     <string name="msg_payment_canceled">Zahlung annulliert</string>
     <string name="msg_payment_refunded">Zahlung versäumt, es wird zurückerstattet, wenn bezahlt werden</string>
     <string name="msg_payment_done">Zahlung erfolgreich durchgeführt, Danke!</string>
+    <string name="action_about">über</string>
 </resources>

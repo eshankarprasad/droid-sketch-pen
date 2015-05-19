@@ -24,10 +24,7 @@
 	
 	<string name="alert_rate_title">Bu uygulamayı değerlendir</string>
 	<string name="alert_rate_body">Bu uygulama oranı istiyor musunuz?</string>
-	
-	<string name="alert_close_app_title">Bu uygulamayı kapatın</string>
-	<string name="alert_close_app_body">Bu uygulamayı kapatmak istiyor musunuz?</string>
-	
+	<string name="msg_close_app">Çıkmak için tekrar basın</string>
 	<string name="action_insert_image">Görüntüsü ekleme</string>
 	
 	<!-- Slider menu start  -->
@@ -60,4 +57,5 @@
     <string name="msg_payment_canceled">Ödeme iptal</string>
     <string name="msg_payment_refunded">Ödeme ödenen eğer iade edilecektir, başarısız</string>
     <string name="msg_payment_done">Ödeme başarıyla bitmiş, teşekkür ederiz!</string>
+    <string name="action_about">Yaklaşık</string>
 </resources>

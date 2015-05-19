@@ -24,8 +24,7 @@
 	<string name="alert_rate_title">Rate this app</string>
 	<string name="alert_rate_body">Do you want to rate this app?</string>
 	
-	<string name="alert_close_app_title">Close this app</string>
-	<string name="alert_close_app_body">Do you want to close this app?</string>
+	<string name="msg_close_app">Press again to exit</string>
 	
 	<string name="action_insert_image">Insert image</string>
 	
@@ -60,5 +59,6 @@
     <string name="msg_payment_canceled">You canceled the payment</string>
     <string name="msg_payment_refunded">Payment failed, it will be refunded if paid</string>
     <string name="msg_payment_done">Payment done successfully, Thank you!</string>
+    <string name="action_about">About</string>
     
 </resources>

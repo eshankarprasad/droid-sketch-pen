@@ -839,7 +839,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                         backPressCount = 0;
                     }
                 }
-            }, 3000);
+            }, Constants.DURATION_EXIT_APP);
         }
     }
 }

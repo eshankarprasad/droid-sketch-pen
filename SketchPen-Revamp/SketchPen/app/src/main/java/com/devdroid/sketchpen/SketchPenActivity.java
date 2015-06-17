@@ -69,8 +69,6 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
     // Production
     private static final String ITEM_SKU = "com.devdroid.sketchpen.adfree";
-    private static final int REQUEST_SELECT_PICTURE = 1;
-
     private int backPressCount;
     private DrawingView drawingView;
     private Paint mPaint;
@@ -553,7 +551,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                     .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempImageFile));
 
             // Start the Intent
-            startActivityForResult(intent, REQUEST_SELECT_PICTURE);
+            startActivityForResult(intent, Constants.REQUEST_SELECT_PICTURE);
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
             Utils.showToast(SketchPenActivity.this, getString(R.string.msg_general_error), Toast.LENGTH_LONG);
@@ -565,7 +563,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
         if (resultCode == RESULT_OK) {
 
-            if (requestCode == REQUEST_SELECT_PICTURE) {
+            if (requestCode == Constants.REQUEST_SELECT_PICTURE) {
 
                 refreshGallery(Utils.rootDirectoryPath() + Constants.TEMP_FILE_NAME);
 

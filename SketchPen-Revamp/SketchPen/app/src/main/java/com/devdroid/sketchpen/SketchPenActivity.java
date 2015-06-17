@@ -38,7 +38,6 @@ import android.widget.Toast;
 import com.devdroid.sketchpen.utility.Constants;
 import com.devdroid.sketchpen.utility.DrawingView;
 import com.devdroid.sketchpen.utility.Utils;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -628,8 +627,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 }
             }
         };
-        Utils.showAlert(SketchPenActivity.this, listener, null, new CharSequence[]
-                {getString(R.string.label_reset_foreground), getString(R.string.label_reset_background), getString(R.string.label_reset_all)});
+        Utils.showAlert(SketchPenActivity.this, listener, null, getString(R.string.label_reset_foreground), getString(R.string.label_reset_background), getString(R.string.label_reset_all));
     }
 
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
@@ -745,6 +743,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 @Override
                 public void run() {
                     loadAd(showAd);
+                    initInterstitial();
                 }
             });
         }
@@ -760,57 +759,21 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
             // Initiate a generic request to load it with an ad
             AdRequest adRequest = Utils.newAdRequestInstance();
             adView.loadAd(adRequest);
-
-            if (showAd != 0) {
-                // User launch app other than very first time
-                displayInterstitial();
-            }
         }
 
         FrameLayout layout = (FrameLayout) drawingView.getParent();
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-        if (Constants.SHOW_AD) {
-            layout.addView(adView, params);
-        }
+        layout.addView(adView, params);
     }
 
-    // Invoke displayInterstitial() when you are ready to display an interstitial.
-    public void displayInterstitial() {
+    // Invoke initInterstitial() when you are ready to display an interstitial.
+    public void initInterstitial() {
 
         interstitial = new InterstitialAd(SketchPenActivity.this);  //(SketchPenActivity.this, "a1530ed9c34caf8");
         interstitial.setAdUnitId(Constants.AD_UNIT_ID_INTERSTITIAL);
         AdRequest adRequest = Utils.newAdRequestInstance();
-        if (Constants.SHOW_AD) {
-            interstitial.loadAd(adRequest);
-        }
-        interstitial.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                super.onAdLeftApplication();
-            }
-
-            @Override
-            public void onAdOpened() {
-                super.onAdOpened();
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                interstitial.show();
-            }
-        });
+        interstitial.loadAd(adRequest);
     }
 
     @Override
@@ -854,11 +817,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         if (adView != null) {
             adView.destroy();
         }
-
-        interstitial = null;
-
         if (mHelper != null) mHelper.dispose();
-        mHelper = null;
     }
 
     @Override
@@ -867,6 +826,9 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         backPressCount++;
 
         if (backPressCount > 1) {
+            if (interstitial != null) {
+                interstitial.show();
+            }
             super.onBackPressed();
         } else {
             Utils.showToast(SketchPenActivity.this, getString(R.string.msg_close_app), Toast.LENGTH_SHORT);
@@ -877,7 +839,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                         backPressCount = 0;
                     }
                 }
-            }, 3000);
+            }, Constants.DURATION_EXIT_APP);
         }
     }
 }

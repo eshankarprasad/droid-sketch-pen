@@ -1,13 +1,10 @@
 package com.devdroid.sketchpen.utility;
 
-import com.google.android.gms.ads.InterstitialAd;
-
 public class Constants {
 
 	public static final String TAG = "SketchPen";
 
     public static final boolean DEBUG = false;
-    public static final boolean SHOW_AD = true;
 
     public static final String KEY_IMAGE_COUNTER = "saved_image_count";
 	public static final String KEY_BG_COLOR = "bgcolor";

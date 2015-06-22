@@ -17,7 +17,8 @@ public class Constants {
 	public static final String KEY_ITEM_PURCHASED = "item_purchased";
 
     public static final int DEFAULT_STROKE_SIZE = 12;
-    public static final int DEFAULT_ERASER_SIZE = 50;
+    public static final int DEFAULT_ERASER_SIZE = 100;
+	public static final float ALPHA_LEVEL = 0.5f;
 
     public static final String AD_UNIT_ID_BANNER = "ca-app-pub-1782443214800184/3456231350";
     public static final String AD_UNIT_ID_INTERSTITIAL = "ca-app-pub-1782443214800184/5451818152";

@@ -9,25 +9,33 @@
         <RadioGroup
             android:id="@+id/radiogroup_color"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:orientation="horizontal"
-            android:padding="10dp"
-            android:background="@color/primary_light_green">
+            android:showDividers="middle">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Fore Color"
                 android:checked="true"
                 android:id="@+id/radio_forecolor"
-                android:layout_marginRight="50dp"/>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/selector_color_header"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@android:color/black"/>
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Back Color"
                 android:checked="false"
-                android:id="@+id/radio_backcolor"/>
+                android:id="@+id/radio_backcolor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/selector_color_header"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@android:color/black"/>
 
         </RadioGroup>
 

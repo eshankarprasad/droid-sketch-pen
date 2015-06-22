@@ -6,15 +6,25 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,11 +87,8 @@ public class Utils {
         }
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnected()) {
-            return true;
-        }
+        return activeNetwork != null && activeNetwork.isConnected();
 
-        return false;
     }
 
     public static void showToast(Context context, String message, int timeout) {
@@ -238,5 +245,87 @@ public class Utils {
         }
 
         return myFile.getAbsolutePath();
+    }
+
+    public static void expandOrCollapse(final Activity activity, final View v, String exp_or_colpse) {
+        TranslateAnimation anim = null;
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            v.setZ(1000.0f);
+        } else {
+            v.bringToFront();
+            v.invalidate();
+        }
+        if(exp_or_colpse.equals("expand")) {
+            anim = new TranslateAnimation(0.0f, 0.0f, -v.getHeight(), 0.0f);
+            Animation.AnimationListener collapselistener= new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    v.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    /*new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!activity.isFinishing()) {
+                                expandOrCollapse(activity, v, "collapse");
+                            }
+                        }
+                    }, 3000);*/
+
+                }
+            };
+
+            if (v.getVisibility() != View.VISIBLE) {
+                anim.setAnimationListener(collapselistener);
+                anim.setDuration(300);
+                anim.setInterpolator(new AccelerateInterpolator(0.5f));
+                v.startAnimation(anim);
+            }
+        } else {
+            anim = new TranslateAnimation(0.0f, 0.0f, 0.0f, -v.getHeight());
+            Animation.AnimationListener collapselistener= new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    v.setVisibility(View.GONE);
+                }
+            };
+
+            if (v.getVisibility() == View.VISIBLE) {
+                anim.setAnimationListener(collapselistener);
+                anim.setDuration(300);
+                anim.setInterpolator(new AccelerateInterpolator(0.5f));
+                v.startAnimation(anim);
+            }
+        }
+    }
+
+    public static Bitmap getScaledBitmap(Bitmap originalImage, int width, int height) {
+        Bitmap background = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        float originalWidth = originalImage.getWidth(), originalHeight = originalImage.getHeight();
+        Canvas canvas = new Canvas(background);
+        float scale = width/originalWidth;
+        float xTranslation = 0.0f, yTranslation = (height - originalHeight * scale)/2.0f;
+        Matrix transformation = new Matrix();
+        transformation.postTranslate(xTranslation, yTranslation);
+        transformation.preScale(scale, scale);
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        canvas.drawBitmap(originalImage, transformation, paint);
+        return background;
     }
 }

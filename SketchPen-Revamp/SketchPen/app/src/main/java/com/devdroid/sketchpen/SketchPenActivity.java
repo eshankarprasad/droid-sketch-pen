@@ -1,6 +1,7 @@
 package com.devdroid.sketchpen;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
@@ -13,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,14 +24,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -81,22 +86,33 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     private InterstitialAd interstitial;
     private boolean flagAdFree;
     private IabHelper mHelper;
+    private ImageView imageView;
+    private Toolbar toolbar;
+    private boolean isAnimating;
+    private HorizontalScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         sdk = android.os.Build.VERSION.SDK_INT;
 
-        if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
+        /*if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
 
             // Enabling full screen mode
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
+        }*/
 
         setContentView(R.layout.activity_sketch_pen);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_sketchpen);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
 
         mHelper = new IabHelper(this, Constants.BASE64_ENCODED_PUBLIC_KEY);
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -108,6 +124,25 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 }
             }
         });
+
+        /*imageView = (ImageView) findViewById(R.id.imageview);
+        imageView.setOnTouchListener(new OnSwipeTouchListener(SketchPenActivity.this) {
+            public void onSwipeTop() {
+                Toast.makeText(SketchPenActivity.this, "top", Toast.LENGTH_SHORT).show();
+                SketchPenActivity.this.getActionBar().show();
+            }
+            public void onSwipeRight() {
+                Toast.makeText(SketchPenActivity.this, "right", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeLeft() {
+                Toast.makeText(SketchPenActivity.this, "left", Toast.LENGTH_SHORT).show();
+            }
+            public void onSwipeBottom() {
+                Toast.makeText(SketchPenActivity.this, "bottom", Toast.LENGTH_SHORT).show();
+                SketchPenActivity.this.getActionBar().hide();
+            }
+        });*/
+
         loadDrawingView();
     }
 
@@ -124,13 +159,13 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
         if (eraserEnabled) {
 
-            menu.getItem(0).setVisible(false); // "Color" will be hiden
-            menu.getItem(2).setVisible(false); // "Enable eraser" will be hiden
-            menu.getItem(3).setVisible(true);  // "Disable eraser" will be shown
+            menu.getItem(1).setVisible(false); // "Color" will be hiden
+            menu.getItem(3).setVisible(false); // "Enable eraser" will be hiden
+            menu.getItem(4).setVisible(true);  // "Disable eraser" will be shown
         } else {
-            menu.getItem(0).setVisible(true); // "Color" will be shown
-            menu.getItem(2).setVisible(true);  // "Enable eraser" will be shown
-            menu.getItem(3).setVisible(false); // "Disable eraser" will be hidden
+            menu.getItem(1).setVisible(true);  // "Color" will be shown
+            menu.getItem(3).setVisible(true);  // "Enable eraser" will be shown
+            menu.getItem(4).setVisible(false); // "Disable eraser" will be hidden
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -147,13 +182,10 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         if (item.getItemId() == R.id.action_stroke_color) {
             //Toast.makeText(SketchPenActivity.this, "Stroke color.", Toast.LENGTH_SHORT).show();
             showStrokeColorDialog(SketchPenActivity.this);
-            return true;
         } else if (item.getItemId() == R.id.action_stroke_size) {
             showStrokeSizeDialog(SketchPenActivity.this);
-            return true;
         } else if (item.getItemId() == R.id.action_view_images) {
             viewImages();
-            return true;
         } else if (item.getItemId() == R.id.action_save_image) {
             if (!"".equals(saveImage())) {
                 Utils.showToast(SketchPenActivity.this, getString(R.string.toast_save_image_success), Toast.LENGTH_SHORT);
@@ -186,9 +218,39 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if (item.getItemId() == R.id.action_fullscreen) {
+
+            if (isAnimating) return true;
+            isAnimating = true;
+            Utils.expandOrCollapse(SketchPenActivity.this, scrollView, "collapse");
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!isFinishing()) {
+                        Utils.expandOrCollapse(SketchPenActivity.this, findViewById(R.id.card_show_toolbar), "expand");
+                        isAnimating = false;
+                    }
+                }
+            }, 500);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showToolbar(View view) {
+
+        if (isAnimating) return;
+        isAnimating = true;
+        Utils.expandOrCollapse(SketchPenActivity.this, view, "collapse");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isFinishing()) {
+                    Utils.expandOrCollapse(SketchPenActivity.this, scrollView, "expand");
+                    isAnimating = false;
+                }
+            }
+        }, 500);
     }
 
     private void showStrokeColorDialog(SketchPenActivity activity) {
@@ -244,7 +306,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         dialogColorPicker.show();
     }
 
-    private void showStrokeSizeDialog(FragmentActivity activity) {
+    private void showStrokeSizeDialog(Activity activity) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -493,7 +555,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         mPaint.setAntiAlias(true);
         eraserEnabled = true;
         Utils.showToast(SketchPenActivity.this, getString(R.string.label_message_eraser_on), Toast.LENGTH_SHORT);
-        invalidateOptionsMenu();
+        getSupportActionBar().invalidateOptionsMenu();
     }
 
     private void disableEraser() {
@@ -508,7 +570,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         drawingView.setShowCircle(showCircle == 1);
         mPaint.setXfermode(null);
         eraserEnabled = false;
-        invalidateOptionsMenu();
+        getSupportActionBar().invalidateOptionsMenu();
         Utils.showToast(SketchPenActivity.this, getString(R.string.label_message_eraser_off), Toast.LENGTH_SHORT);
     }
 
@@ -563,12 +625,18 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
         if (resultCode == RESULT_OK) {
 
-            if (requestCode == Constants.REQUEST_SELECT_PICTURE) {
+            if (requestCode == Constants.REQUEST_SELECT_PICTURE && data != null) {
 
                 refreshGallery(Utils.rootDirectoryPath() + Constants.TEMP_FILE_NAME);
 
                 try {
                     Bitmap photo = BitmapFactory.decodeFile(Utils.rootDirectoryPath() + Constants.TEMP_FILE_NAME);
+                    if (photo == null) {
+                        Uri uri = data.getData();
+                        photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        Point p = Utils.getScreenSize(SketchPenActivity.this);
+                        photo = Utils.getScaledBitmap(photo, p.x, p.y);
+                    }
                     if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         drawingView.setBackgroundDrawable(new BitmapDrawable(photo));
                     } else {
@@ -605,7 +673,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                             drawingView.setBackground(null);
                         }
 
-                        Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, 0);
+                        Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, Color.WHITE);
                         int bgColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR);
                         drawingView.setBackgroundColor(bgColor);
                         break;
@@ -618,7 +686,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                             drawingView.setBackground(null);
                         }
 
-                        Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, 0);
+                        Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, Color.WHITE);
                         int backColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR);
                         drawingView.setBackgroundColor(backColor);
                         break;
@@ -687,8 +755,8 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     };
 
     private void loadDrawingView() {
-        Utils.dLog("loadDrawingView");
 
+        Utils.dLog("loadDrawingView");
         drawingView = new DrawingView(SketchPenActivity.this);
 
         int bgColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR);
@@ -745,6 +813,28 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 }
             });
         }
+
+        scrollView = (HorizontalScrollView) findViewById(R.id.scrollview);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (!isFinishing()) {
+                    scrollView.smoothScrollTo(scrollView.getMaxScrollAmount(), 0);
+                    Utils.dLog(scrollView.getMaxScrollAmount() + " :Max Scroll Amount");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (!isFinishing()) {
+                                scrollView.smoothScrollTo(0, 0);
+                                Utils.dLog(scrollView.getMaxScrollAmount() + " :Max Scroll Amount");
+                            }
+                        }
+                    }, 500);
+                }
+            }
+        }, 1000);
     }
 
     private void loadAd(final Long showAd) {
@@ -752,6 +842,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         adView = new AdView(SketchPenActivity.this);
         adView.setAdUnitId(Constants.AD_UNIT_ID_BANNER);
         adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAlpha(Constants.ALPHA_LEVEL);
         // Create the interstitial.
         if (Utils.hasConnection(SketchPenActivity.this)) {
             // Initiate a generic request to load it with an ad

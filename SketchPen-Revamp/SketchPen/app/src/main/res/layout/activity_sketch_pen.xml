@@ -1,8 +1,76 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=".SketchPenActivity">
 
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" android:layout_alignWithParentIfMissing="true"/>
+
+    <HorizontalScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_sketchpen"
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/ActionBarPopupThemeOverlay"
+            android:layout_width="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:titleTextAppearance="@style/Toolbartitle"
+            app:subtitleTextAppearance="@style/ToolbarSubtitle"
+            app:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:alpha="0.7"
+            android:scrollbarAlwaysDrawHorizontalTrack="true" />
+    </HorizontalScrollView>
+
+    <!--<TextView
+        android:id="@+id/textview_show_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Click here to show toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        android:background="@color/primaryColor_500"
+        android:textColor="@android:color/white"
+        android:alpha="0.7"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:onClick="showToolbar"
+        android:layout_alignWithParentIfMissing="true"/>-->
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_show_toolbar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="@android:color/holo_green_light"
+        android:visibility="invisible"
+        android:foregroundGravity="center"
+        android:clickable="true"
+        android:onClick="showToolbar"
+        android:layout_margin="10dp"
+        android:alpha="0.7"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="25dp">
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Tools"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/white"
+            android:shadowColor="@android:color/holo_green_dark"
+            android:shadowRadius="10"/>-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_action_settings"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"/>
+    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

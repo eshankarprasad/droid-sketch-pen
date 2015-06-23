@@ -91,6 +91,11 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     private boolean isAnimating;
     private HorizontalScrollView scrollView;
 
+    public static Intent getIntent(Activity activity) {
+        Intent intent = new Intent(activity, SketchPenActivity.class);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

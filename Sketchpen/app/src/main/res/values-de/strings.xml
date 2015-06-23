@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Skizze Kugelschreiber</string>
+    <string name="action_reset">Löschen Sie alle</string>
+    <string name="action_save_image">Bild speichern</string>
+    <string name="action_view_image">Bilder anzeigen</string>
+    <string name="action_save_and_share_image">Speicher und teile</string>
+    <string name="alert_reset_image_title">Bild zurücksetzen</string>
+    <string name="dialogue_scanning_media_title">Scannen von Medien</string>
+    <string name="dialogue_scanning_media_body">Bitte warten&#8230;</string>
+    <string name="toast_scanning_media_not_found">Kein gespeicherte Bild gefunden</string>
+    <string name="share_image_text">Dieses Bild ist Sketch Pen erzeugt.\nEine freie und leichte Android-Anwendung.\nBitte besuchen Sie folgenden Link, um zu installieren&#8230;\n\nhttp://play.google.com/store/apps/details?id=com.devdroid.sketchpen</string>
+	<string name="chooser_share_title">Aktie</string>
+	<string name="toast_save_image_error">Fehler beim Speichern aufgetreten Bild</string>
+	<string name="toast_save_image_success">Bild gespeichert</string>
+	
+	<string name="action_settings">Einstellungen</string>
+	<string name="label_forecolor">Vordergrundfarbe</string>
+	<string name="label_show_circle">Kreis anzeigen</string>
+	<string name="label_backcolor">Zurück Farbe</string>
+	<string name="label_default_size">12</string>
+	<string name="button_label_default">Einstellungen zurücksetzen</string>
+	
+	<string name="alert_rate_title">Bewerten Sie diese App</string>
+	<string name="alert_rate_body">Wissen Sie, diese App zu bewerten wollen?</string>
+	<string name="msg_close_app">Drücken Sie zum Beenden erneut</string>
+	
+	<string name="action_insert_image">Bild einfügen</string>
+	
+	<!-- Slider menu start  -->
+	<string name="action_rate">Bewertung und Kommentar</string>
+	<string name="action_eraser">Radiergummi</string>
+	<string name="eraser_active">aktiv</string>
+	<string name="eraser_inactive">inaktiv</string>
+	<string name="toast_message_file_not_found">Kein gespeicherte Bild gefunden</string>
+	<string name="label_size">Schlaganfall Größe</string>
+    <string name="label_eraser">Radiergummi Größe</string>
+    <string name="label_default_eraser_size">12</string>
+    
+    <string name="action_buy_ad_free">Kaufen Ad free</string>
+    
+    <string name="action_like">Wie wir</string>
+    <string name="label_message_eraser">Wählen Sie diese Option wieder zu deaktivieren, Radiergummi</string>
+    
+    <string name="msg_external_storage_error">Versuchen Sie Bild von Telefon oder externen Speicher wählen</string>
+    <string name="msg_general_error">Diese Aktion wird nicht von Ihrem Gerät unterstützt</string>
+    
+    <string name="label_reset_foreground">Nur zurücksetzen Vordergrund</string>
+    <string name="label_reset_background">Nur zurücksetzen Hintergrund</string>
+    <string name="label_reset_all">alles zurücksetzen</string>
+
+    <string name="action_enable_eraser">Aktivieren Radiergummi</string>
+    <string name="action_disable_eraser">Deaktivieren Radiergummi</string>
+    <string name="label_message_eraser_on">Radiergummi aktiviert</string>
+    <string name="label_message_eraser_off">Radiergummi deaktiviert</string>
+
+    <string name="msg_payment_canceled">Zahlung annulliert</string>
+    <string name="msg_payment_refunded">Zahlung versäumt, es wird zurückerstattet, wenn bezahlt werden</string>
+    <string name="msg_payment_done">Zahlung erfolgreich durchgeführt, Danke!</string>
+    <string name="action_about">über</string>
+</resources>

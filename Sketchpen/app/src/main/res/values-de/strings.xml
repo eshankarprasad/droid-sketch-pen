@@ -59,4 +59,6 @@
     <string name="msg_payment_refunded">Zahlung versäumt, es wird zurückerstattet, wenn bezahlt werden</string>
     <string name="msg_payment_done">Zahlung erfolgreich durchgeführt, Danke!</string>
     <string name="action_about">über</string>
+
+    <string name="title_welldone">Gut gemacht!\nStarten Sie jetzt kritzeln</string>
 </resources>

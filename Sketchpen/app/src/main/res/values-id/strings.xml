@@ -60,4 +60,6 @@
     <string name="msg_payment_refunded">Pembayaran gagal, itu akan dikembalikan jika dibayar</string>
     <string name="msg_payment_done">Pembayaran dilakukan dengan sukses, terima kasih!</string>
     <string name="action_about">Tentang</string>
+
+    <string name="title_welldone">Bagus sekali!\nMulai menuliskan sekarang</string>
 </resources>

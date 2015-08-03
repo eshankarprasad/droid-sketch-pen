@@ -58,4 +58,6 @@
     <string name="msg_payment_refunded">Ödeme ödenen eğer iade edilecektir, başarısız</string>
     <string name="msg_payment_done">Ödeme başarıyla bitmiş, teşekkür ederiz!</string>
     <string name="action_about">Yaklaşık</string>
+
+    <string name="title_welldone">Aferin!\nBaşlangıç Şimdi karalamak</string>
 </resources>

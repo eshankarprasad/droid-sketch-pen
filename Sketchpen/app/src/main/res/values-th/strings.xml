@@ -57,4 +57,6 @@
     <string name="msg_payment_refunded">วิธีการชำระเงินล้มเหลวก็จะได้รับเงินคืนหากมีการจ่าย</string>
     <string name="msg_payment_done">วิธีการชำระเงินทำประสบความสำเร็จขอขอบคุณ!</string>
     <string name="action_about">เกี่ยวกับ</string>
+
+    <string name="title_welldone">ทำได้ดี!\nเริ่มต้นเขียนลวก ๆ ในขณะนี้</string>
 </resources>

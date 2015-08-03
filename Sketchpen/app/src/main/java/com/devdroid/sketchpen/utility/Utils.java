@@ -36,35 +36,42 @@ import java.io.File;
 
 public class Utils {
 
-    public static void saveIntegerPreferences(Context context, String key,
-                                              Long value) {
-        SharedPreferences sPrefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    public static void saveLongPreferences(Context context, String key, long value) {
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sPrefs.edit();
         editor.putLong(key, value);
         editor.commit();
     }
 
-    public static void saveIntegerPreferences(Context context, String key,
-                                              Integer value) {
-        SharedPreferences sPrefs = PreferenceManager
-                .getDefaultSharedPreferences(context);
+    public static void saveIntegerPreferences(Context context, String key, int value) {
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sPrefs.edit();
         editor.putInt(key, value);
         editor.commit();
     }
 
-    public static Long getLongPreferences(Context context, String key) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        Long savedPref = sharedPreferences.getLong(key, 0);
+    public static void saveBooleanPreferences(Context context, String key, boolean value) {
+        SharedPreferences sPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sPrefs.edit();
+        editor.putBoolean(key, value);
+        editor.commit();
+    }
+
+    public static long getLongPreferences(Context context, String key) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        long savedPref = sharedPreferences.getLong(key, 0);
         return savedPref;
     }
 
-    public static Integer getIntegerPreferences(Context context, String key) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        Integer savedPref = sharedPreferences.getInt(key, 0);
+    public static boolean getBooleanPreferences(Context context, String key) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean savedPref = sharedPreferences.getBoolean(key, false);
+        return savedPref;
+    }
+
+    public static int getIntegerPreferences(Context context, String key) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        int savedPref = sharedPreferences.getInt(key, 0);
         return savedPref;
     }
 

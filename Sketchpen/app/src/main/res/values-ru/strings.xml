@@ -59,4 +59,6 @@
     <string name="msg_payment_refunded">Оплата не удалось, она будет возвращена, если они выплачены</string>
     <string name="msg_payment_done">Оплата осуществляется успешно, спасибо!</string>
     <string name="action_about">O</string>
+
+    <string name="title_welldone">Хорошо!\nНачать строчить в настоящее время</string>
 </resources>

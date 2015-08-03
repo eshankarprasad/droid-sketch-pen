@@ -58,4 +58,6 @@
     <string name="msg_payment_refunded">Mancato pagamento, verrà rimborsato se pagato</string>
     <string name="msg_payment_done">Il pagamento effettuato con successo, grazie!</string>
     <string name="action_about">Su</string>
+
+    <string name="title_welldone">Ben fatto!\nInizio scribble ora</string>
 </resources>

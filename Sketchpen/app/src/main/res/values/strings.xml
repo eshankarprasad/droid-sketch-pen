@@ -60,5 +60,6 @@
     <string name="msg_payment_refunded">Payment failed, it will be refunded if paid</string>
     <string name="msg_payment_done">Payment done successfully, Thank you!</string>
     <string name="action_about">About</string>
-    
+
+    <string name="title_welldone">Well done!\nStart scribble now</string>
 </resources>

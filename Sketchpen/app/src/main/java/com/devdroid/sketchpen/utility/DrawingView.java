@@ -149,7 +149,7 @@ public class DrawingView extends View {
 		    actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
 		}
 		
-		mCanvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, width, height-actionBarHeight), canvasPaint);
+		mCanvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(0, 0, width, height), canvasPaint);
 		/*Drawable drawable = new BitmapDrawable(bitmap)
 		super.setb;*/
 	}

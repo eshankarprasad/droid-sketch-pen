@@ -37,9 +37,18 @@
             android:screenOrientation="sensorPortrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TutorialActivity"
+            android:theme="@style/TransparentTheme"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.soundcloud.android.crop.CropImageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

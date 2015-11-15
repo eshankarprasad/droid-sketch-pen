@@ -2,10 +2,8 @@
 <resources>
 
     <string name="app_name">Sketsa Pena</string>
-    <string name="action_reset">Menghapus semua</string>
     <string name="action_save_image">Simpan gambar</string>
-    <string name="action_view_image">Lihat gambar</string>
-    <string name="action_save_and_share_image">Simpan dan berbagi</string>
+    <string name="action_view_image">Sketch saya</string>
     <string name="alert_reset_image_title">Gambar ulang</string>
     <string name="dialogue_scanning_media_title">Scanning Media</string>
     <string name="dialogue_scanning_media_body">Please wait&#8230;</string>
@@ -35,8 +33,8 @@
 	<string name="eraser_active">Aktif</string>
 	<string name="eraser_inactive">Non-aktif</string>
 	<string name="toast_message_file_not_found">Tidak ada gambar yang disimpan ditemukan</string>
-	<string name="label_size">Ukuran tak</string>
-    <string name="label_eraser">Ukuran penghapus</string>
+	<string name="label_stroke_size">Ukuran tak</string>
+    <string name="label_eraser_size">Ukuran penghapus</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">Beli Iklan gratis</string>
@@ -62,4 +60,8 @@
     <string name="action_about">Tentang</string>
 
     <string name="title_welldone">Bagus sekali!\nMulai menuliskan sekarang</string>
+    <string name="action_fullscreen">Layar penuh</string>
+    <string name="action_reset">Atur ulang</string>
+    <string name="action_save_and_share_image">Bagikan</string>
+    <string name="label_change_color">Ganti Warna</string>
 </resources>

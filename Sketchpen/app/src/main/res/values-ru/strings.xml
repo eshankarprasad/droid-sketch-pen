@@ -2,10 +2,8 @@
 <resources>
 
     <string name="app_name">Эскиз Пен</string>
-    <string name="action_reset">Стереть все</string>
     <string name="action_save_image">Сохранить изображение</string>
-    <string name="action_view_image">Просмотр изображений</string>
-    <string name="action_save_and_share_image">Сохранить и поделиться</string>
+    <string name="action_view_image">Мой Эскиз</string>
     <string name="alert_reset_image_title">Сброс изображение</string>
     <string name="dialogue_scanning_media_title">Сканирование Медиа</string>
     <string name="dialogue_scanning_media_body">Пожалуйста, подождите&#8230;</string>
@@ -34,8 +32,8 @@
 	<string name="eraser_active">активный</string>
 	<string name="eraser_inactive">неактивный</string>
 	<string name="toast_message_file_not_found">Нет сохраненного изображения не найден</string>
-	<string name="label_size">размер хода</string>
-    <string name="label_eraser">размер Ластик</string>
+	<string name="label_stroke_size">размер хода</string>
+    <string name="label_eraser_size">размер Ластик</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">Купить объявление бесплатно</string>
@@ -61,4 +59,9 @@
     <string name="action_about">O</string>
 
     <string name="title_welldone">Хорошо!\nНачать строчить в настоящее время</string>
+
+    <string name="action_fullscreen">Полноэкранный</string>
+    <string name="action_reset">сброс</string>
+    <string name="action_save_and_share_image">поделиться</string>
+    <string name="label_change_color">Изменение цвета</string>
 </resources>

@@ -24,7 +24,6 @@
     </style>
 
     <style name="TransparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -34,7 +33,34 @@
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+    </style>
 
+    <style name="ToolbarButtonStyle">
+        <item name="android:layout_width">@dimen/toolbar_button_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:background">@drawable/selector_toolbar_button</item>
+        <item name="android:onClick">onClick</item>
+        <item name="android:longClickable">true</item>
+    </style>
+    <style name="ToolbarImageStyle">
+        <item name="android:layout_width">@dimen/toolbar_image_size</item>
+        <item name="android:layout_height">@dimen/toolbar_image_size</item>
+        <item name="android:minHeight">@dimen/toolbar_image_size</item>
+        <item name="android:minWidth">@dimen/toolbar_image_size</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="ToolbarTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/toolbar_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 </resources>

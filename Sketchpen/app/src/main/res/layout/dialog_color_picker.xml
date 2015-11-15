@@ -14,7 +14,7 @@
             android:showDividers="middle">
 
             <RadioButton
-                android:text="Fore Color"
+                android:text="@string/label_forecolor"
                 android:checked="true"
                 android:id="@+id/radio_forecolor"
                 android:layout_width="0dp"
@@ -26,7 +26,7 @@
                 android:textColor="@android:color/black"/>
 
             <RadioButton
-                android:text="Back Color"
+                android:text="@string/label_backcolor"
                 android:checked="false"
                 android:id="@+id/radio_backcolor"
                 android:layout_width="0dp"

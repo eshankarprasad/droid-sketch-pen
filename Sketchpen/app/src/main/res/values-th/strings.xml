@@ -2,10 +2,8 @@
 <resources>
 
     <string name="app_name">ร่างปากกา</string>
-    <string name="action_reset">ลบทุก</string>
     <string name="action_save_image">บันทึกภาพ</string>
-    <string name="action_view_image">ดูภาพ</string>
-    <string name="action_save_and_share_image">บันทึกและแบ่งปัน</string>
+    <string name="action_view_image">ร่างของฉัน</string>
     <string name="alert_reset_image_title">ตั้งค่าภาพ</string>
     <string name="dialogue_scanning_media_title">สแกนสื่อ</string>
     <string name="dialogue_scanning_media_body">กรุณารอสักครู่&#8230;</string>
@@ -32,8 +30,8 @@
 	<string name="eraser_active">คล่องแคล่ว</string>
 	<string name="eraser_inactive">เฉื่อยชา</string>
 	<string name="toast_message_file_not_found">ไม่มีภาพที่บันทึกไว้พบว่า</string>
-	<string name="label_size">ขนาดโรคหลอดเลือดสมอง</string>
-    <string name="label_eraser">ขนาดยางลบ</string>
+	<string name="label_stroke_size">ขนาดโรคหลอดเลือดสมอง</string>
+    <string name="label_eraser_size">ขนาดยางลบ</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">ซื้อโฆษณาฟรี</string>
@@ -59,4 +57,9 @@
     <string name="action_about">เกี่ยวกับ</string>
 
     <string name="title_welldone">ทำได้ดี!\nเริ่มต้นเขียนลวก ๆ ในขณะนี้</string>
+
+    <string name="action_fullscreen">เต็มจอ</string>
+    <string name="action_reset">ตั้งใหม่</string>
+    <string name="action_save_and_share_image">หุ้น</string>
+    <string name="label_change_color">เปลี่ยนสี</string>
 </resources>

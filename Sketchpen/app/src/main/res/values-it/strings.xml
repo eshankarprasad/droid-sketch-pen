@@ -2,10 +2,8 @@
 <resources>
 
     <string name="app_name">Sketch Pen</string>
-    <string name="action_reset">Cancella tutto</string>
     <string name="action_save_image">Salva l\'immagine</string>
-    <string name="action_view_image">Vedere le foto</string>
-    <string name="action_save_and_share_image">Salvare e condividere</string>
+    <string name="action_view_image">Mio Sketch</string>
     <string name="alert_reset_image_title">Ripristina immagine</string>
     <string name="dialogue_scanning_media_title">Scansione media</string>
     <string name="dialogue_scanning_media_body">Attendere prego&#8230;</string>
@@ -33,8 +31,8 @@
 	<string name="eraser_active">Attivo</string>
 	<string name="eraser_inactive">Inattivo</string>
 	<string name="toast_message_file_not_found">Nessuna immagine salvata viene trovato</string>
-	<string name="label_size">Dimensioni del tratto</string>
-    <string name="label_eraser">Dimensione della gomma</string>
+	<string name="label_stroke_size">Dimensioni del tratto</string>
+    <string name="label_eraser_size">Dimensione della gomma</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">Acquista annuncio gratuito</string>
@@ -60,4 +58,9 @@
     <string name="action_about">Su</string>
 
     <string name="title_welldone">Ben fatto!\nInizio scribble ora</string>
+
+    <string name="action_fullscreen">A schermo intero</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_save_and_share_image">Quota</string>
+    <string name="label_change_color">Cambia colore</string>
 </resources>

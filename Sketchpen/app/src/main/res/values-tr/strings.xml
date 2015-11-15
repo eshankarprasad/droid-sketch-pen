@@ -2,10 +2,8 @@
 <resources>
 
     <string name="app_name">Kroki Kalem</string>
-    <string name="action_reset">Tüm silmek</string>
     <string name="action_save_image">Görüntü kaydetmek</string>
-    <string name="action_view_image">Görüntüleri</string>
-    <string name="action_save_and_share_image">Kaydetmek ve paylaşmak</string>
+    <string name="action_view_image">Benim Kroki</string>
     <string name="alert_reset_image_title">Resmi sıfırla</string>
     <string name="dialogue_scanning_media_title">Tarama Medya</string>
     <string name="dialogue_scanning_media_body">Lütfen bekleyin&#8230;</string>
@@ -34,8 +32,8 @@
 	<string name="eraser_active">Aktif</string>
 	<string name="eraser_inactive">Pasif</string>
 	<string name="toast_message_file_not_found">Hiçbir kaydedilen bir görüntü bulundu</string>
-	<string name="label_size">Kontur boyutu</string>
-    <string name="label_eraser">Silgi boyutu</string>
+	<string name="label_stroke_size">Kontur boyutu</string>
+    <string name="label_eraser_size">Silgi boyutu</string>
     <string name="label_default_eraser_size">12</string>
 	
     <string name="action_buy_ad_free">Satın Reklam ücretsiz</string>
@@ -60,4 +58,8 @@
     <string name="action_about">Yaklaşık</string>
 
     <string name="title_welldone">Aferin!\nBaşlangıç Şimdi karalamak</string>
+    <string name="action_fullscreen">Tam ekran</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_save_and_share_image">Hisse</string>
+    <string name="label_change_color">Değişiklik renk</string>
 </resources>

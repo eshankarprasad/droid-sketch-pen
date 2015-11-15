@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Sketch Pen</string>
-    <string name="action_reset">Erase all</string>
-    <string name="action_save_image">Save image</string>
-    <string name="action_view_image">View images</string>
-    <string name="action_save_and_share_image">Save and share</string>
     <string name="alert_reset_image_title">Reset Image</string>
     <string name="dialogue_scanning_media_title">Scanning Media</string>
     <string name="dialogue_scanning_media_body">Please wait&#8230;</string>
@@ -26,7 +22,7 @@
 	
 	<string name="msg_close_app">Press again to exit</string>
 	
-	<string name="action_insert_image">Insert image</string>
+	<string name="action_insert_image">Insert Image</string>
 	
 
 	<!-- Slider menu start  -->
@@ -35,8 +31,8 @@
 	<string name="eraser_active">Active</string>
 	<string name="eraser_inactive">Inactive</string>
 	<string name="toast_message_file_not_found">No saved image is found</string>
-	<string name="label_size">Stroke size</string>
-    <string name="label_eraser">Eraser size</string>
+	<string name="label_stroke_size">Stroke size</string>
+    <string name="label_eraser_size">Eraser size</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">Buy Ad free</string>
@@ -60,6 +56,13 @@
     <string name="msg_payment_refunded">Payment failed, it will be refunded if paid</string>
     <string name="msg_payment_done">Payment done successfully, Thank you!</string>
     <string name="action_about">About</string>
-
     <string name="title_welldone">Well done!\nStart scribble now</string>
+
+    <string name="action_save_image">Save Image</string>
+    <string name="action_view_image">My Sketches</string>
+
+    <string name="action_fullscreen">Full Screen</string>
+    <string name="action_reset">Reset</string>
+    <string name="action_save_and_share_image">Share</string>
+    <string name="label_change_color">Change Color</string>
 </resources>

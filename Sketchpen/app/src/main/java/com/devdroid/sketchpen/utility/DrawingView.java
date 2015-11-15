@@ -15,6 +15,9 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DrawingView extends View {
 
     public int width;
@@ -28,12 +31,14 @@ public class DrawingView extends View {
     private Path circlePath;
     private boolean showCircle;
 	private Paint canvasPaint;
+    private List<Integer> historyList;
     
     public DrawingView(Context c) {
         super(c);
         context=c;
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+        historyList = new ArrayList<>();
         circlePaint = new Paint();
         circlePath = new Path();
         circlePaint.setAntiAlias(true);
@@ -94,8 +99,22 @@ public class DrawingView extends View {
         circlePath.reset();
         // commit the path to our offscreen
         mCanvas.drawPath(mPath,  canvasPaint);
+        historyList.add(mCanvas.save());
+        //mCanvas.save();
         // kill this so we don't double draw
         mPath.reset();
+    }
+
+    public void undo() {
+
+        Utils.dLog(historyList.size() + " : History size");
+        if (historyList.size() > 0) {
+            int lastIndex = historyList.size()-1;
+            mCanvas.restoreToCount(historyList.get(lastIndex));
+            invalidate();
+            //mCanvas.restore();
+            historyList.remove(lastIndex);
+        }
     }
 
     @Override

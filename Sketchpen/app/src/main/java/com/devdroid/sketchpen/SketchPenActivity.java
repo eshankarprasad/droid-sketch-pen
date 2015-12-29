@@ -12,12 +12,14 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -116,97 +118,6 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         });
         loadDrawingView();
     }
-
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_sketch_pen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        if (eraserEnabled) {
-
-            menu.getItem(1).setVisible(false); // "Color" will be hiden
-            menu.getItem(3).setVisible(false); // "Enable eraser" will be hiden
-            menu.getItem(4).setVisible(true);  // "Disable eraser" will be shown
-        } else {
-            menu.getItem(1).setVisible(true);  // "Color" will be shown
-            menu.getItem(3).setVisible(true);  // "Enable eraser" will be shown
-            menu.getItem(4).setVisible(false); // "Disable eraser" will be hidden
-        }
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (item.getItemId() == R.id.action_stroke_color) {
-            //Toast.makeText(SketchPenActivity.this, "Stroke color.", Toast.LENGTH_SHORT).show();
-            showStrokeColorDialog(SketchPenActivity.this);
-        } else if (item.getItemId() == R.id.action_stroke_size) {
-            showStrokeSizeDialog(SketchPenActivity.this);
-        } else if (item.getItemId() == R.id.action_view_images) {
-            viewImages();
-        } else if (item.getItemId() == R.id.action_save_image) {
-            if (!"".equals(saveImage())) {
-                Utils.showToast(SketchPenActivity.this, getString(R.string.toast_save_image_success), Toast.LENGTH_SHORT);
-            }
-        } else if (item.getItemId() == R.id.action_save_share) {
-            saveImageAndShareWithFriend();
-        } else if (item.getItemId() == R.id.action_insert_image) {
-            insertImage();
-        } else if (item.getItemId() == R.id.action_reset) {
-            resetImage();
-        } else if (item.getItemId() == R.id.action_rate) {
-            rate();
-        } else if (item.getItemId() == R.id.action_like) {
-            like();
-        } else if (item.getItemId() == R.id.action_enable_eraser) {
-            enableEraser();
-        } else if (item.getItemId() == R.id.action_disable_eraser) {
-            disableEraser();
-        } else if (item.getItemId() == R.id.action_buy) {
-            if (Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_ITEM_PURCHASED) == 0) {
-                buyAdFree();
-            } else {
-                Utils.showToast(SketchPenActivity.this, "Already bought", Toast.LENGTH_LONG);
-            }
-        } else if (item.getItemId() == R.id.action_about) {
-            PackageManager manager = this.getPackageManager();
-            try {
-                PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-                Utils.showToast(SketchPenActivity.this, Constants.DEBUG ? "Debug\n" : "Release\n" + "Version Code: " + info.versionCode + "\nVersion Name: " + info.versionName, Toast.LENGTH_SHORT);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else if (item.getItemId() == R.id.action_fullscreen) {
-
-            if (isAnimating) return true;
-            isAnimating = true;
-            Utils.expandOrCollapse(SketchPenActivity.this, scrollView, "collapse");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (!isFinishing()) {
-                        Utils.expandOrCollapse(SketchPenActivity.this, findViewById(R.id.card_show_toolbar), "expand");
-                        isAnimating = false;
-                    }
-                }
-            }, 500);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     public void showToolbar(View view) {
 
@@ -564,42 +475,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     }
 
     private void insertImage() {
-
         Crop.pickImage(SketchPenActivity.this);
-
-        /*
-        File tempImageFile = new File(Utils.rootDirectoryPath(), Constants.TEMP_FILE_NAME);
-        if (!tempImageFile.exists()) {
-            try {
-                tempImageFile.createNewFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        int width = drawingView.getMeasuredWidth();
-        int height = drawingView.getMeasuredHeight();
-        try {
-            // Create intent to Open Image applications like Gallery, Google Photos
-            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.putExtra("crop", "true")
-                    .putExtra("aspectX", width)
-                    .putExtra("aspectY", height)
-                    .putExtra("outputX", width)
-                    .putExtra("outputY", height)
-                    .putExtra("scale", true)
-                    .putExtra("scaleUpIfNeeded", true)
-                    .putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString())
-                    .putExtra("return-data", false)
-                    .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempImageFile));
-
-            // Start the Intent
-            startActivityForResult(intent, Constants.REQUEST_SELECT_PICTURE);
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-            Utils.showToast(SketchPenActivity.this, getString(R.string.msg_general_error), Toast.LENGTH_LONG);
-        }
-        */
     }
 
     @Override
@@ -648,11 +524,31 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
     private void loadBackground(Uri uri) {
         try {
-            Bitmap  photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            Bitmap  myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            try {
+                ExifInterface exif = new ExifInterface(uri.getPath());
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                Utils.dLog("Exif: " + orientation);
+                Matrix matrix = new Matrix();
+                if (orientation == 6) {
+                    matrix.postRotate(90);
+                }
+                else if (orientation == 3) {
+                    matrix.postRotate(180);
+                }
+                else if (orientation == 8) {
+                    matrix.postRotate(270);
+                }
+                myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true); // rotating bitmap
+            }
+            catch (Exception e) {
+
+            }
+
             if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                drawingView.setBackgroundDrawable(new BitmapDrawable(photo));
+                drawingView.setBackgroundDrawable(new BitmapDrawable(myBitmap));
             } else {
-                drawingView.setBackground(new BitmapDrawable(photo));
+                drawingView.setBackground(new BitmapDrawable(myBitmap));
             }
         } catch (Exception e) {
             e.printStackTrace();

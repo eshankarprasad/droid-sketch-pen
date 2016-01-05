@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Skizze Kugelschreiber</string>
+    <string name="app_name">Skizze Stift</string>
     <string name="action_save_image">Bild speichern</string>
     <string name="action_view_image">Meine Skizze</string>
     <string name="alert_reset_image_title">Bild zurücksetzen</string>
@@ -38,7 +38,7 @@
     
     <string name="action_buy_ad_free">Kaufen Ad free</string>
     
-    <string name="action_like">Wie wir</string>
+    <string name="action_visit_sketchpen">Besuchen Skizze Stift</string>
     <string name="label_message_eraser">Wählen Sie diese Option wieder zu deaktivieren, Radiergummi</string>
     
     <string name="msg_external_storage_error">Versuchen Sie Bild von Telefon oder externen Speicher wählen</string>

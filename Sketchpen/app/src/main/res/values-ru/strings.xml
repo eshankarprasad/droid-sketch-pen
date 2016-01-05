@@ -38,7 +38,7 @@
     
     <string name="action_buy_ad_free">Купить объявление бесплатно</string>
 
-    <string name="action_like">Как и мы</string>
+    <string name="action_visit_sketchpen">посетить эскиз перо</string>
     <string name="label_message_eraser">Выберите этот вариант, еще раз, чтобы отключить ластик</string>
     
     <string name="msg_external_storage_error">Попробуйте выбрать изображение с телефона или внешней памяти</string>

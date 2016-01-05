@@ -4,12 +4,14 @@ android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
+    lintOptions { disable 'MissingTranslation', 'ExtraTranslation' }
+
     defaultConfig {
         applicationId "com.devdroid.sketchpen"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 44
-        versionName "4.2.3"
+        versionCode 47
+        versionName "4.2.6"
     }
     buildTypes {
         debug {
@@ -28,4 +30,5 @@ dependencies {
     compile 'com.larswerkman:HoloColorPicker:1.5'
     compile project(':crop-lib')
     compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
 }

@@ -38,7 +38,7 @@
 	
     <string name="action_buy_ad_free">Satın Reklam ücretsiz</string>
     
-    <string name="action_like">Bizim gibi</string>
+    <string name="action_visit_sketchpen">Kroki kalem ziyaret</string>
     <string name="label_message_eraser">Silgi devre dışı bırakmak için bu seçeneği tekrar seçin</string>
     <string name="msg_external_storage_error">Telefona veya harici bellekten görüntüyü seçmek için çalışın</string>
     <string name="msg_general_error">Bu eylem cihazınız tarafından desteklenmiyor</string>

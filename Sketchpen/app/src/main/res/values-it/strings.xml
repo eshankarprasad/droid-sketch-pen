@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Sketch Pen</string>
+    <string name="app_name">Schizzo a Penna</string>
     <string name="action_save_image">Salva l\'immagine</string>
     <string name="action_view_image">Mio Sketch</string>
     <string name="alert_reset_image_title">Ripristina immagine</string>
@@ -37,7 +37,7 @@
     
     <string name="action_buy_ad_free">Acquista annuncio gratuito</string>
     
-    <string name="action_like">Come noi</string>
+    <string name="action_visit_sketchpen">Visitare schizzo a penna</string>
     <string name="label_message_eraser">Scegliere questa opzione per disabilitare gomma</string>
     
     <string name="msg_external_storage_error">Provare a selezionare l\'immagine dal telefono o memoria esterna</string>

@@ -37,7 +37,7 @@
     
     <string name="action_buy_ad_free">Buy Ad free</string>
     
-    <string name="action_like">Like us</string>
+    <string name="action_visit_sketchpen">Visit Sketch Pen</string>
     <string name="label_message_eraser">Choose this option again to disable eraser</string>
     
     <string name="msg_external_storage_error">Try to select image from phone/external memory</string>
@@ -65,4 +65,6 @@
     <string name="action_reset">Reset</string>
     <string name="action_save_and_share_image">Share</string>
     <string name="label_change_color">Change Color</string>
+
+    <string name="facebook_app_id">792406584220842</string>
 </resources>

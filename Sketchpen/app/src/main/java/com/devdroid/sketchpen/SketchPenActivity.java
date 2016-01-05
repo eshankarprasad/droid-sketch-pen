@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -27,6 +28,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -34,6 +36,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -42,6 +45,15 @@ import android.widget.Toast;
 import com.devdroid.sketchpen.utility.Constants;
 import com.devdroid.sketchpen.utility.DrawingView;
 import com.devdroid.sketchpen.utility.Utils;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.share.widget.LikeView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -56,6 +68,9 @@ import com.soundcloud.android.crop.Crop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import util.IabHelper;
 import util.IabResult;
@@ -74,6 +89,23 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
     // Production
     private static final String ITEM_SKU = "com.devdroid.sketchpen.adfree";
+    LinearLayout btnLoginToLike;
+    LikeView likeView;
+    CallbackManager callbackManager;
+    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+        public void onConsumeFinished(Purchase purchase, IabResult result) {
+
+            if (result.isSuccess()) {
+
+                Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_done), Toast.LENGTH_LONG);
+                Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_ITEM_PURCHASED, 1);
+                finish();
+                startActivity(getIntent());
+            } else {
+                Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
+            }
+        }
+    };
     private int backPressCount;
     private DrawingView drawingView;
     private Paint mPaint;
@@ -86,8 +118,38 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     private InterstitialAd interstitial;
     private boolean flagAdFree;
     private IabHelper mHelper;
-    private ImageView imageView;
-    //private Toolbar toolbar;
+    IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result,
+                                             Inventory inventory) {
+
+            if (result.isFailure()) {
+                Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
+            } else {
+
+                mHelper.consumeAsync(inventory.getPurchase(ITEM_SKU),
+                        mConsumeFinishedListener);
+            }
+        }
+    };
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+
+            flagAdFree = false;
+            if (result.isFailure()) {
+                // TODO : future
+                if (result.getResponse() == -1005) {
+                    Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_canceled), Toast.LENGTH_LONG);
+
+                } else if (result.getResponse() == -1008) {
+                    Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_refunded), Toast.LENGTH_LONG);
+                }
+
+                return;
+            } else if (purchase.getSku().equals(ITEM_SKU)) {
+                consumeItem();
+            }
+        }
+    };
     private boolean isAnimating;
     private HorizontalScrollView scrollView;
 
@@ -102,9 +164,8 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sdk = android.os.Build.VERSION.SDK_INT;
         setContentView(R.layout.activity_sketch_pen);
-        /*toolbar = (Toolbar) findViewById(R.id.toolbar_sketchpen);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);*/
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         mHelper = new IabHelper(this, Constants.BASE64_ENCODED_PUBLIC_KEY);
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -116,7 +177,76 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 }
             }
         });
+
+        initInstances();
+        initCallbackManager();
+        refreshButtonsState();
+
         loadDrawingView();
+        //logKeyHash();
+    }
+
+    private void logKeyHash() {
+            try {
+                PackageInfo info = getPackageManager().getPackageInfo(
+                        "com.devdroid.sketchpen", PackageManager.GET_SIGNATURES);
+                for (Signature signature : info.signatures) {
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    Utils.eLog("KeyHash: " +  Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+            } catch (NoSuchAlgorithmException e) {
+            }
+    }
+
+    private void initInstances() {
+        btnLoginToLike = (LinearLayout) findViewById(R.id.btnLoginToLike);
+        likeView = (LikeView) findViewById(R.id.likeView);
+        likeView.setLikeViewStyle(LikeView.Style.STANDARD);
+        likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
+        likeView.setObjectIdAndType(Constants.FACEBOOK_PAGE_URL, LikeView.ObjectType.OPEN_GRAPH);
+
+        btnLoginToLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(SketchPenActivity.this, Arrays.asList("public_profile"));
+            }
+        });
+    }
+
+    private void initCallbackManager() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                refreshButtonsState();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+            }
+        });
+    }
+
+    private void refreshButtonsState() {
+        if (!isLoggedIn()) {
+            btnLoginToLike.setVisibility(View.VISIBLE);
+            likeView.setVisibility(View.GONE);
+        } else {
+            btnLoginToLike.setVisibility(View.GONE);
+            likeView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public boolean isLoggedIn() {
+        return AccessToken.getCurrentAccessToken() != null;
     }
 
     public void showToolbar(View view) {
@@ -501,6 +631,8 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         if (!mHelper.handleActivityResult(requestCode, resultCode, result)) {
             super.onActivityResult(requestCode, resultCode, result);
         }
+
+        callbackManager.onActivityResult(requestCode, resultCode, result);
     }
 
     private void beginCrop(Uri source) {
@@ -524,7 +656,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
     private void loadBackground(Uri uri) {
         try {
-            Bitmap  myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            Bitmap myBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
             try {
                 ExifInterface exif = new ExifInterface(uri.getPath());
                 int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
@@ -532,16 +664,13 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 Matrix matrix = new Matrix();
                 if (orientation == 6) {
                     matrix.postRotate(90);
-                }
-                else if (orientation == 3) {
+                } else if (orientation == 3) {
                     matrix.postRotate(180);
-                }
-                else if (orientation == 8) {
+                } else if (orientation == 8) {
                     matrix.postRotate(270);
                 }
                 myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, myBitmap.getWidth(), myBitmap.getHeight(), matrix, true); // rotating bitmap
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
 
             }
 
@@ -598,26 +727,6 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         Utils.showAlert(SketchPenActivity.this, listener, null, getString(R.string.label_reset_foreground), getString(R.string.label_reset_background), getString(R.string.label_reset_all));
     }
 
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-
-            flagAdFree = false;
-            if (result.isFailure()) {
-                // TODO : future
-                if (result.getResponse() == -1005) {
-                    Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_canceled), Toast.LENGTH_LONG);
-
-                } else if (result.getResponse() == -1008) {
-                    Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_refunded), Toast.LENGTH_LONG);
-                }
-
-                return;
-            } else if (purchase.getSku().equals(ITEM_SKU)) {
-                consumeItem();
-            }
-        }
-    };
-
     public void consumeItem() {
         if (mHelper == null) {
 
@@ -626,35 +735,6 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
             mHelper.queryInventoryAsync(mReceivedInventoryListener);
         }
     }
-
-    IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result,
-                                             Inventory inventory) {
-
-            if (result.isFailure()) {
-                Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
-            } else {
-
-                mHelper.consumeAsync(inventory.getPurchase(ITEM_SKU),
-                        mConsumeFinishedListener);
-            }
-        }
-    };
-
-    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        public void onConsumeFinished(Purchase purchase, IabResult result) {
-
-            if (result.isSuccess()) {
-
-                Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_done), Toast.LENGTH_LONG);
-                Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_ITEM_PURCHASED, 1);
-                finish();
-                startActivity(getIntent());
-            } else {
-                Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
-            }
-        }
-    };
 
     private void loadDrawingView() {
 
@@ -755,6 +835,10 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
     private void loadAd(final long showAd) {
 
+        if (Constants.DEBUG) {
+            return;
+        }
+
         adView = new AdView(SketchPenActivity.this);
         adView.setAdUnitId(Constants.AD_UNIT_ID_BANNER);
         adView.setAdSize(AdSize.SMART_BANNER);
@@ -774,7 +858,9 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
 
     // Invoke initInterstitial() when you are ready to display an interstitial.
     public void initInterstitial() {
-
+        if (Constants.DEBUG) {
+            return;
+        }
         interstitial = new InterstitialAd(SketchPenActivity.this);  //(SketchPenActivity.this, "a1530ed9c34caf8");
         interstitial.setAdUnitId(Constants.AD_UNIT_ID_INTERSTITIAL);
         AdRequest adRequest = Utils.newAdRequestInstance();
@@ -869,7 +955,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
             }
         };
         Utils.showAlert(SketchPenActivity.this, listener, null,
-                getString(R.string.action_like),
+                getString(R.string.action_visit_sketchpen),
                 getString(R.string.action_rate),
                 getString(R.string.action_buy_ad_free),
                 getString(R.string.action_about));
@@ -957,5 +1043,20 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     public boolean onLongClick(View view) {
         Utils.showToast(SketchPenActivity.this, (String) view.getTag(), Toast.LENGTH_SHORT);
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 }

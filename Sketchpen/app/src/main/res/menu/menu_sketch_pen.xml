@@ -40,7 +40,7 @@
     <item android:id="@+id/action_rate" android:title="@string/action_rate"
         android:orderInCategory="111" app:showAsAction="collapseActionView" />
 
-    <item android:id="@+id/action_like" android:title="@string/action_like"
+    <item android:id="@+id/action_like" android:title="@string/action_visit_sketchpen"
         android:orderInCategory="112" app:showAsAction="collapseActionView" />
 
     <item android:id="@+id/action_about" android:title="@string/action_about"

@@ -196,6 +196,50 @@
                     android:text="@string/action_reset"
                     style="@style/ToolbarTextStyle"/>
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+
+                <!-- Login Button in the same style as LikeView -->
+                <LinearLayout
+                    android:id="@+id/btnLoginToLike"
+                    android:background="@drawable/com_facebook_button_like_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clickable="true" >
+
+                    <ImageView
+                        android:src="@drawable/com_facebook_button_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="7.5dp"
+                        android:layout_marginBottom="7.5dp"/>
+
+                    <TextView
+                        android:id="@+id/tvLogin"
+                        android:text="Login"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <com.facebook.share.widget.LikeView
+                    android:id="@+id/likeView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/btn_more"
                 style="@style/ToolbarButtonStyle"

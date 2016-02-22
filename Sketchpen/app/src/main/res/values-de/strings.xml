@@ -52,6 +52,7 @@
     <string name="action_disable_eraser">Deaktivieren Radiergummi</string>
     <string name="label_message_eraser_on">Radiergummi aktiviert</string>
     <string name="label_message_eraser_off">Radiergummi deaktiviert</string>
+    <string name="label_message_fullscreen_eraser_on">Radiergummi wird nicht im Vollbildmodus arbeiten</string>
 
     <string name="msg_payment_canceled">Zahlung annulliert</string>
     <string name="msg_payment_refunded">Zahlung versäumt, es wird zurückerstattet, wenn bezahlt werden</string>

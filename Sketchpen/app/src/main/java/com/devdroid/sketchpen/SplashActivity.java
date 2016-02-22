@@ -22,6 +22,6 @@ public class SplashActivity extends Activity {
                     startActivity(SketchPenActivity.getIntent(SplashActivity.this));
                 }
             }
-        }, 3000);
+        }, 1500);
     }
 }

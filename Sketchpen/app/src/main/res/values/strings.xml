@@ -31,8 +31,8 @@
 	<string name="eraser_active">Active</string>
 	<string name="eraser_inactive">Inactive</string>
 	<string name="toast_message_file_not_found">No saved image is found</string>
-	<string name="label_stroke_size">Stroke size</string>
-    <string name="label_eraser_size">Eraser size</string>
+	<string name="label_stroke_size">Stroke Size</string>
+    <string name="label_eraser_size">Eraser Size</string>
     <string name="label_default_eraser_size">12</string>
     
     <string name="action_buy_ad_free">Buy Ad free</string>
@@ -51,6 +51,7 @@
     <string name="action_disable_eraser">Disable eraser</string>
     <string name="label_message_eraser_on">Eraser ON</string>
     <string name="label_message_eraser_off">Eraser OFF</string>
+    <string name="label_message_fullscreen_eraser_on">Eraser will not work in fullscreen mode</string>
 
     <string name="msg_payment_canceled">You canceled the payment</string>
     <string name="msg_payment_refunded">Payment failed, it will be refunded if paid</string>

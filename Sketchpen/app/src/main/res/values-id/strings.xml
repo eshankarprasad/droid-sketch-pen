@@ -53,6 +53,7 @@
     <string name="action_disable_eraser">Melumpuhkan penghapus</string>
     <string name="label_message_eraser_on">Penghapus diaktifkan</string>
     <string name="label_message_eraser_off">Penghapus cacat</string>
+    <string name="label_message_fullscreen_eraser_on">Penghapus tidak akan bekerja dalam mode fullscreen</string>
 
     <string name="msg_payment_canceled">Pembayaran dibatalkan</string>
     <string name="msg_payment_refunded">Pembayaran gagal, itu akan dikembalikan jika dibayar</string>

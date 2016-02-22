@@ -6,8 +6,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@android:color/holo_green_light</item>
-        <item name="colorPrimaryDark">@android:color/holo_green_light</item>
+        <item name="colorPrimary">@color/gray_concrete_light</item>
+        <item name="colorPrimaryDark">@color/gray_concrete_dark</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -44,7 +44,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
         <item name="android:padding">2dp</item>
-        <item name="android:background">@drawable/selector_toolbar_button</item>
+        <!--<item name="android:background">@drawable/selector_toolbar_button</item>-->
         <item name="android:onClick">onClick</item>
         <item name="android:longClickable">true</item>
     </style>

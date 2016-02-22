@@ -51,6 +51,7 @@
     <string name="action_disable_eraser">Disabilita gomma</string>
     <string name="label_message_eraser_on">Gomma abilitato</string>
     <string name="label_message_eraser_off">Gomma disabile</string>
+    <string name="label_message_fullscreen_eraser_on">Gomma non funzionerà in modalità a schermo intero</string>
 
     <string name="msg_payment_canceled">Pagamento annullata</string>
     <string name="msg_payment_refunded">Mancato pagamento, verrà rimborsato se pagato</string>

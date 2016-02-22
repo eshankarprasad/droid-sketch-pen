@@ -50,6 +50,7 @@
     <string name="action_disable_eraser">ปิดการใช้งาน ยางลบ</string>
     <string name="label_message_eraser_on">ยางลบ ที่เปิดใช้งาน</string>
     <string name="label_message_eraser_off">ยางลบ พิการ</string>
+    <string name="label_message_fullscreen_eraser_on">ยางลบจะไม่ทำงานในโหมดเต็มหน้าจอ</string>
 
     <string name="msg_payment_canceled">ชำระเงินยกเลิก</string>
     <string name="msg_payment_refunded">วิธีการชำระเงินล้มเหลวก็จะได้รับเงินคืนหากมีการจ่าย</string>

@@ -1,48 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".SketchPenActivity">
-    <!--<item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />-->
-
-    <item android:id="@+id/action_fullscreen" android:title="@string/action_fullscreen"
-        android:orderInCategory="100" app:showAsAction="always" android:icon="@drawable/ic_action_full_screen" />
-
-    <item android:id="@+id/action_stroke_color" android:title="@string/label_forecolor"
-        android:orderInCategory="101" app:showAsAction="always"  android:icon="@drawable/ic_action_color" />
-
-    <item android:id="@+id/action_stroke_size" android:title="@string/label_stroke_size"
-        android:orderInCategory="102" app:showAsAction="always" android:icon="@drawable/ic_action_size" />
-
-    <item android:id="@+id/action_enable_eraser" android:title="@string/action_enable_eraser"
-        android:orderInCategory="103" app:showAsAction="always" android:icon="@drawable/ic_action_eraser_state_off" />
-
-    <item android:id="@+id/action_disable_eraser" android:title="@string/action_disable_eraser"
-        android:orderInCategory="104" app:showAsAction="always" android:icon="@drawable/ic_action_eraser_state_on" />
-
-    <item android:id="@+id/action_view_images" android:title="@string/action_view_image"
-        android:orderInCategory="105" app:showAsAction="always" android:icon="@drawable/ic_action_picture"/>
-
-    <item android:id="@+id/action_insert_image" android:title="@string/action_insert_image"
-        android:orderInCategory="106" app:showAsAction="always" android:icon="@drawable/ic_action_new_picture" />
-
-    <item android:id="@+id/action_save_image" android:title="@string/action_save_image"
-        android:orderInCategory="107" app:showAsAction="always" android:icon="@drawable/ic_action_save"/>
-
-    <item android:id="@+id/action_save_share" android:title="@string/action_save_and_share_image"
-        android:orderInCategory="108" app:showAsAction="always" android:icon="@drawable/ic_action_share" />
-
-    <item android:id="@+id/action_reset" android:title="@string/action_reset"
-        android:orderInCategory="109" app:showAsAction="always" android:icon="@drawable/ic_action_refresh" />
-
-    <item android:id="@+id/action_buy" android:title="@string/action_buy_ad_free"
-        android:orderInCategory="110" app:showAsAction="collapseActionView" />
 
     <item android:id="@+id/action_rate" android:title="@string/action_rate"
-        android:orderInCategory="111" app:showAsAction="collapseActionView" />
+        android:orderInCategory="1" app:showAsAction="collapseActionView" />
 
-    <item android:id="@+id/action_like" android:title="@string/action_visit_sketchpen"
-        android:orderInCategory="112" app:showAsAction="collapseActionView" />
+    <item android:id="@+id/action_visit" android:title="@string/action_visit_sketchpen"
+        android:orderInCategory="2" app:showAsAction="collapseActionView" />
 
     <item android:id="@+id/action_about" android:title="@string/action_about"
-        android:orderInCategory="113" app:showAsAction="collapseActionView" />
+        android:orderInCategory="3" app:showAsAction="collapseActionView" />
 </menu>

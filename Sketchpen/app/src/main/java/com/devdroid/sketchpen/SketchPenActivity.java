@@ -19,17 +19,19 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -72,13 +74,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-import util.IabHelper;
+/*import util.IabHelper;
 import util.IabResult;
 import util.Inventory;
-import util.Purchase;
+import util.Purchase;*/
 
 @SuppressLint("NewApi")
-public class SketchPenActivity extends ActionBarActivity implements MediaScannerConnection.MediaScannerConnectionClient, View.OnClickListener, View.OnLongClickListener {
+public class SketchPenActivity extends AppCompatActivity implements MediaScannerConnection.MediaScannerConnectionClient,
+        View.OnClickListener, View.OnLongClickListener, Toolbar.OnMenuItemClickListener {
 
     private static final String TAG = SketchPenActivity.class.getSimpleName();
     // Test ITEM_SKU used for InAppPurchase the app
@@ -88,11 +91,11 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     //private static final String ITEM_SKU = "android.test.item_unavailable";
 
     // Production
-    private static final String ITEM_SKU = "com.devdroid.sketchpen.adfree";
+    //private static final String ITEM_SKU = "com.devdroid.sketchpen.adfree";
     LinearLayout btnLoginToLike;
     LikeView likeView;
     CallbackManager callbackManager;
-    IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
+    /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
 
             if (result.isSuccess()) {
@@ -105,7 +108,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
             }
         }
-    };
+    };*/
     private int backPressCount;
     private DrawingView drawingView;
     private Paint mPaint;
@@ -117,8 +120,8 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     private AdView adView;
     private InterstitialAd interstitial;
     private boolean flagAdFree;
-    private IabHelper mHelper;
-    IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+    //private IabHelper mHelper;
+    /*IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result,
                                              Inventory inventory) {
 
@@ -149,7 +152,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 consumeItem();
             }
         }
-    };
+    };*/
     private boolean isAnimating;
     private HorizontalScrollView scrollView;
 
@@ -164,10 +167,9 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sdk = android.os.Build.VERSION.SDK_INT;
         setContentView(R.layout.activity_sketch_pen);
-
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        mHelper = new IabHelper(this, Constants.BASE64_ENCODED_PUBLIC_KEY);
+        /*mHelper = new IabHelper(this, Constants.BASE64_ENCODED_PUBLIC_KEY);
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
                 if (!result.isSuccess()) {
@@ -176,9 +178,10 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                     Utils.dLog("In-app Billing is set up OK");
                 }
             }
-        });
+        });*/
 
         initInstances();
+
         initCallbackManager();
         refreshButtonsState();
 
@@ -187,20 +190,21 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     }
 
     private void logKeyHash() {
-            try {
-                PackageInfo info = getPackageManager().getPackageInfo(
-                        "com.devdroid.sketchpen", PackageManager.GET_SIGNATURES);
-                for (Signature signature : info.signatures) {
-                    MessageDigest md = MessageDigest.getInstance("SHA");
-                    md.update(signature.toByteArray());
-                    Utils.eLog("KeyHash: " +  Base64.encodeToString(md.digest(), Base64.DEFAULT));
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-            } catch (NoSuchAlgorithmException e) {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.devdroid.sketchpen", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Utils.eLog("KeyHash: " + Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
+        } catch (PackageManager.NameNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
+        }
     }
 
     private void initInstances() {
+
         btnLoginToLike = (LinearLayout) findViewById(R.id.btnLoginToLike);
         likeView = (LikeView) findViewById(R.id.likeView);
         likeView.setLikeViewStyle(LikeView.Style.STANDARD);
@@ -549,7 +553,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         mPaint.setAntiAlias(true);
         eraserEnabled = true;
-        Utils.showToast(SketchPenActivity.this, getString(R.string.label_message_eraser_on), Toast.LENGTH_SHORT);
+        Utils.showDroidMessage(SketchPenActivity.this, getString(R.string.label_message_eraser_on), Toast.LENGTH_SHORT);
         toggleEraser();
     }
 
@@ -559,25 +563,25 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         View btnEraser = findViewById(R.id.btn_eraser);
         View btnChangeColor = findViewById(R.id.btn_color);
         TextView txtStrokeSize = (TextView) findViewById(R.id.txt_stroke_size);
-        TransitionDrawable transition = (TransitionDrawable) btnEraser.getBackground();
+        //TransitionDrawable transition = (TransitionDrawable) btnEraser.getBackground();
         if (eraserEnabled) {
             imgEraser.setImageResource(R.drawable.ic_action_eraser_state_on);
             txtEraser.setText(R.string.label_message_eraser_on);
             btnEraser.setTag(getString(R.string.label_message_eraser_on));
             txtStrokeSize.setText(R.string.label_eraser_size);
             btnChangeColor.setVisibility(View.GONE);
-            transition.startTransition(1500);
+            //transition.startTransition(1500);
         } else {
             imgEraser.setImageResource(R.drawable.ic_action_eraser_state_off);
             txtEraser.setText(R.string.label_message_eraser_off);
             btnEraser.setTag(getString(R.string.label_message_eraser_off));
             txtStrokeSize.setText(R.string.label_stroke_size);
             btnChangeColor.setVisibility(View.VISIBLE);
-            transition.reverseTransition(1500);
+            //transition.reverseTransition(1500);
         }
     }
 
-    private void disableEraser() {
+    private void disableEraser(boolean displayMessage) {
 
         int foreColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_FORE_COLOR);
         int width = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_STROKE_SIZE);
@@ -590,7 +594,9 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         mPaint.setXfermode(null);
         eraserEnabled = false;
         toggleEraser();
-        Utils.showToast(SketchPenActivity.this, getString(R.string.label_message_eraser_off), Toast.LENGTH_SHORT);
+        if (displayMessage) {
+            Utils.showDroidMessage(SketchPenActivity.this, getString(R.string.label_message_eraser_off), Toast.LENGTH_SHORT);
+        }
     }
 
     private void startScan() {
@@ -628,9 +634,9 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
             Utils.showToast(SketchPenActivity.this, getString(R.string.title_welldone), Toast.LENGTH_SHORT);
         }
 
-        if (!mHelper.handleActivityResult(requestCode, resultCode, result)) {
+        /*if (!mHelper.handleActivityResult(requestCode, resultCode, result)) {
             super.onActivityResult(requestCode, resultCode, result);
-        }
+        }*/
 
         callbackManager.onActivityResult(requestCode, resultCode, result);
     }
@@ -727,16 +733,20 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         Utils.showAlert(SketchPenActivity.this, listener, null, getString(R.string.label_reset_foreground), getString(R.string.label_reset_background), getString(R.string.label_reset_all));
     }
 
-    public void consumeItem() {
+    /*public void consumeItem() {
         if (mHelper == null) {
 
             Utils.showToast(SketchPenActivity.this, getString(R.string.msg_general_error), Toast.LENGTH_SHORT);
         } else {
             mHelper.queryInventoryAsync(mReceivedInventoryListener);
         }
-    }
+    }*/
 
     private void loadDrawingView() {
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.menu_sketch_pen);
+        toolbar.setOnMenuItemClickListener(this);
 
         initLongClickableViews();
 
@@ -890,7 +900,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         }
     }
 
-    private void buyAdFree() {
+    /*private void buyAdFree() {
 
         if (flagAdFree) {
             return;
@@ -899,7 +909,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         flagAdFree = true;
         mHelper.launchPurchaseFlow(this, ITEM_SKU, 10001,
                 mPurchaseFinishedListener, "mypurchasetoken");
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
@@ -908,7 +918,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         if (adView != null) {
             adView.destroy();
         }
-        if (mHelper != null) mHelper.dispose();
+        //if (mHelper != null) mHelper.dispose();
     }
 
     @Override
@@ -934,22 +944,17 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
         }
     }
 
-    private void showRestOptionDialog() {
+    /*private void showRestOptionDialog() {
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                // The 'which' argument contains the index position
-                // of the selected item
                 switch (which) {
-                    case 0: // Like on facebook
-                        like();
-                        break;
-                    case 1: // Rate on Play Store
+                    case 0: // Rate on Play Store
                         rate();
                         break;
-                    case 2: // Buy Ad Free
-                        buyAdFree();
+                    case 1: // Visit page
+                        like();
                         break;
-                    case 3: // About Us
+                    case 2: // About Us
                         aboutUs();
                 }
             }
@@ -959,13 +964,13 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 getString(R.string.action_rate),
                 getString(R.string.action_buy_ad_free),
                 getString(R.string.action_about));
-    }
+    }*/
 
     private void aboutUs() {
         PackageManager manager = this.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            Utils.showToast(SketchPenActivity.this, Constants.DEBUG ? "Debug\n" : "Release\n" + "Version Code: " + info.versionCode + "\nVersion Name: " + info.versionName, Toast.LENGTH_SHORT);
+            Utils.showDroidMessage(SketchPenActivity.this, Constants.DEBUG ? "Debug\n" : "Release\n" + "Version Code: " + info.versionCode + "\nVersion Name: " + info.versionName, Toast.LENGTH_SHORT);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -981,7 +986,8 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 if (!isFinishing()) {
                     Utils.expandOrCollapse(SketchPenActivity.this, findViewById(R.id.card_show_toolbar), "expand");
                     if (eraserEnabled) {
-                        Utils.showToast(SketchPenActivity.this, getString(R.string.label_message_eraser_on), Toast.LENGTH_SHORT);
+                        Utils.showDroidMessage(SketchPenActivity.this, getString(R.string.label_message_fullscreen_eraser_on), Toast.LENGTH_SHORT);
+                        disableEraser(false);
                     }
                     isAnimating = false;
                 }
@@ -1004,7 +1010,7 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
                 break;
             case R.id.btn_eraser:
                 if (eraserEnabled) {
-                    disableEraser();
+                    disableEraser(true);
                 } else {
                     enableEraser();
                 }
@@ -1028,13 +1034,12 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
             case R.id.btn_reset:
                 resetImage();
                 break;
-            case R.id.btn_more:
+            /*case R.id.btn_more:
                 showRestOptionDialog();
-                break;
+                break;*/
             /*case R.id.btn_undo:
                 drawingView.undo();
                 break;*/
-
         }
         view.setEnabled(true);
     }
@@ -1055,8 +1060,24 @@ public class SketchPenActivity extends ActionBarActivity implements MediaScanner
     @Override
     protected void onPause() {
         super.onPause();
-
         // Logs 'app deactivate' App Event.
         AppEventsLogger.deactivateApp(this);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_rate: // Rate on Play Store
+                rate();
+                break;
+            case R.id.action_visit: // Visit page
+                like();
+                break;
+            case R.id.action_about: // About Us
+                aboutUs();
+                break;
+        }
+        return false;
     }
 }

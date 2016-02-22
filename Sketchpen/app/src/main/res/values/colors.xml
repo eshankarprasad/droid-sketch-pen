@@ -21,4 +21,31 @@
     <color name="buttonClickedBg">#cecece</color>
     <color name="buttonUnClickedBg">#f8f8f8</color>
     <color name="buttonBorder">#bebebe</color>
+
+    <color name="toolbar_bg">#80ccd1d9</color>
+
+    <color name="blue_amazon_light">#3498db</color>
+    <color name="blue_amazon_dark">#1565C0</color>
+
+    <color name="blue_turquoise_light">#59cdb5</color>
+    <color name="blue_turquoise_dark">#16a085</color>
+
+    <color name="green_emerald_light">#2ecc71</color>
+    <color name="green_emerald_dark">#27ae60</color>
+
+    <color name="red_electric_crimson_light">#f7213b</color>
+    <color name="red_electric_crimson_dark">#ce002c</color>
+
+    <color name="yellow_sunflower_light">#f1c40f</color>
+    <color name="yellow_sunflower_dark">#f39c12</color>
+
+    <color name="gray_clouds_light">#f5f7fa</color>
+    <color name="gray_clouds_dark">#e6e9ed</color>
+
+    <color name="gray_concrete_light">#ccd1d9</color>
+    <color name="gray_concrete_dark">#aab2bd</color>
+
+    <color name="gray_charcoal_light">#656d78</color>
+    <color name="gray_charcoal_dark">#434a54</color>
+
 </resources>

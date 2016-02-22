@@ -52,6 +52,7 @@
     <string name="action_disable_eraser">запрещать ластик</string>
     <string name="label_message_eraser_on">ластик включен</string>
     <string name="label_message_eraser_off">ластик инвалид</string>
+    <string name="label_message_fullscreen_eraser_on">ластик не будет работать в полноэкранном режиме</string>
 
     <string name="msg_payment_canceled">Операция отменена</string>
     <string name="msg_payment_refunded">Оплата не удалось, она будет возвращена, если они выплачены</string>

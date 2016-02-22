@@ -3,6 +3,7 @@ package com.devdroid.sketchpen.utility;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -17,11 +18,16 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -334,5 +340,91 @@ public class Utils {
         paint.setFilterBitmap(true);
         canvas.drawBitmap(originalImage, transformation, paint);
         return background;
+    }
+
+    public static void showDroidMessage(Context context, String text, int duration) {
+        if (context instanceof Activity) {
+            if (!((Activity) context).isFinishing()) {
+                getToastDialog(context, text).show();
+                return;
+            }
+        } else if (context instanceof FragmentActivity) {
+
+            if (!((FragmentActivity) context).isFinishing()) {
+                getToastDialog(context, text).show();
+                return;
+            }
+
+
+        } else {
+            Toast toast = Toast.makeText(context, text, duration);
+            View layout = LayoutInflater.from(context).inflate(R.layout.toast_old, null);
+
+            DisplayMetrics dm = new DisplayMetrics();
+            if (context instanceof Activity) {
+                // MyLog.e(TAG, "instance of activity");
+                ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+            } else if (context instanceof FragmentActivity) {
+                ((FragmentActivity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+            }
+            // RelativeLayout toastLayout = (RelativeLayout)
+            // layout.findViewById(R.id.toastLayout);
+            // MyLog.e(TAG, "Width: " + dm.widthPixels);
+            ((TextView) layout.findViewById(R.id.toastMsg)).setWidth(dm.widthPixels - 50);
+            ((TextView) layout.findViewById(R.id.toastMsg)).setHeight(dm.heightPixels / 10);
+            ((TextView) layout.findViewById(R.id.toastMsg)).setText(text);
+            toast.setView(layout);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+            return;
+        }
+    }
+
+    public static Dialog getToastDialog(final Context context, String dialogTitle) {
+
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        ///dialog.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_dialog_title_bar);
+        dialog.setContentView(R.layout.toast);
+        dialog.findViewById(R.id.toastLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        //dialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialog;
+        TextView dialogTitleTV = (TextView) dialog.findViewById(R.id.toastMsg);
+        dialogTitleTV.setText(dialogTitle);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+
+		/*new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+
+             if(dialog!=null&&dialog.isShowing()&&(!((Activity) context).isFinishing()))
+				try {
+					dialog.dismiss();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}, Config.TOAST_TIME_DURATION);
+		 */
+		/*final TextView dialogDone = (TextView) dialog.findViewById(R.id.done);
+		dialogTitleTV.setText(dialogTitle);
+		dialogDone.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+
+			}
+		});*/
+
+        return dialog;
     }
 }

@@ -51,6 +51,7 @@
     <string name="action_disable_eraser">Alıkoymak silgi</string>
     <string name="label_message_eraser_on">Silgi etkin</string>
     <string name="label_message_eraser_off">Silgi engelli</string>
+    <string name="label_message_fullscreen_eraser_on">Silgi tam ekran modunda çalışmaz</string>
 
     <string name="msg_payment_canceled">Ödeme iptal</string>
     <string name="msg_payment_refunded">Ödeme ödenen eğer iade edilecektir, başarısız</string>

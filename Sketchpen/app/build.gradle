@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.2"
 
     lintOptions { disable 'MissingTranslation', 'ExtraTranslation' }
 
     defaultConfig {
         applicationId "com.devdroid.sketchpen"
-        minSdkVersion 15
+        minSdkVersion 11
         targetSdkVersion 22
-        versionCode 47
-        versionName "4.2.6"
+        versionCode 49
+        versionName "4.2.8"
     }
     buildTypes {
         debug {

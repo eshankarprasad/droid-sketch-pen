@@ -22,7 +22,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -56,10 +55,12 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.share.widget.LikeView;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
@@ -155,6 +156,7 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
     };*/
     private boolean isAnimating;
     private HorizontalScrollView scrollView;
+    private AdRequest request;
 
     public static Intent getIntent(Activity activity) {
         Intent intent = new Intent(activity, SketchPenActivity.class);
@@ -269,6 +271,12 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         }, 500);
     }
 
+    private void showStrokeColorDialog(boolean activity) {
+        Intent intent = new Intent(this, ChooseColorActivity.class);
+        startActivityForResult(intent, Constants.REQUEST_CHOOSE_COLOR);
+        Utils.animateActivity(this, "up");
+    }
+
     private void showStrokeColorDialog(SketchPenActivity activity) {
 
         int foreColor = Color.BLACK;
@@ -328,7 +336,15 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
                 }
             }
         });
+
         dialogColorPicker.show();
+    }
+
+    private void showStrokeSizeDialog(boolean enableEraser) {
+        Intent intent = new Intent(this, StrokeSizeActivity.class);
+        intent.putExtra(Constants.KEY_ERASER_ENABLE_DISABLE, enableEraser);
+        startActivityForResult(intent, Constants.REQUEST_STROKE_SIZE);
+        Utils.animateActivity(this, "up");
     }
 
     private void showStrokeSizeDialog(Activity activity) {
@@ -336,7 +352,28 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_stroke_size);
-        dialog.show();
+
+        NativeExpressAdView adView = (NativeExpressAdView) dialog.findViewById(R.id.adView);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                Utils.dLog("onAdClosed");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Utils.dLog("onAdFailedToLoad");
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Utils.dLog("onAdLoaded");
+            }
+        });
+        adView.loadAd(request);
 
         TextView textViewTitle = (TextView) dialog.findViewById(R.id.textview_size_label);
         if (eraserEnabled) {
@@ -388,6 +425,8 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
                 }
             }
         });
+
+        dialog.show();
     }
 
     private void viewImages() {
@@ -632,6 +671,8 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
             // Replacing 0 value with 1, app is launched already
             Utils.saveLongPreferences(SketchPenActivity.this, Constants.KEY_RATE_YOUR_APP_TIME, 1L);
             Utils.showToast(SketchPenActivity.this, getString(R.string.title_welldone), Toast.LENGTH_SHORT);
+        } else if (requestCode == Constants.REQUEST_STROKE_SIZE && resultCode == RESULT_OK) {
+            mPaint.setStrokeWidth(Utils.getIntegerPreferences(this, eraserEnabled ? Constants.KEY_ERASER_SIZE : Constants.KEY_STROKE_SIZE));
         }
 
         /*if (!mHelper.handleActivityResult(requestCode, resultCode, result)) {
@@ -845,10 +886,6 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
 
     private void loadAd(final long showAd) {
 
-        if (Constants.DEBUG) {
-            return;
-        }
-
         adView = new AdView(SketchPenActivity.this);
         adView.setAdUnitId(Constants.AD_UNIT_ID_BANNER);
         adView.setAdSize(AdSize.SMART_BANNER);
@@ -868,9 +905,6 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
 
     // Invoke initInterstitial() when you are ready to display an interstitial.
     public void initInterstitial() {
-        if (Constants.DEBUG) {
-            return;
-        }
         interstitial = new InterstitialAd(SketchPenActivity.this);  //(SketchPenActivity.this, "a1530ed9c34caf8");
         interstitial.setAdUnitId(Constants.AD_UNIT_ID_INTERSTITIAL);
         AdRequest adRequest = Utils.newAdRequestInstance();
@@ -970,7 +1004,7 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         PackageManager manager = this.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            Utils.showDroidMessage(SketchPenActivity.this, Constants.DEBUG ? "Debug\n" : "Release\n" + "Version Code: " + info.versionCode + "\nVersion Name: " + info.versionName, Toast.LENGTH_SHORT);
+            Utils.showDroidMessage(SketchPenActivity.this, BuildConfig.DEBUG ? "Debug\n" : "Release\n" + "Version Code: " + info.versionCode + "\nVersion Name: " + info.versionName, Toast.LENGTH_SHORT);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -1003,10 +1037,11 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
                 doFullScreen();
                 break;
             case R.id.btn_color:
-                showStrokeColorDialog(SketchPenActivity.this);
+                showStrokeColorDialog(this);
                 break;
             case R.id.btn_stroke_size:
-                showStrokeSizeDialog(SketchPenActivity.this);
+                //showStrokeSizeDialog(SketchPenActivity.this);
+                showStrokeSizeDialog(eraserEnabled);
                 break;
             case R.id.btn_eraser:
                 if (eraserEnabled) {

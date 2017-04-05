@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="10dp"
     android:orientation="vertical">
 
@@ -42,4 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="200" />
+
+    <com.google.android.gms.ads.NativeExpressAdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adUnitId="ca-app-pub-1782443214800184/4717089358"
+        ads:adSize="FULL_WIDTHx250">
+    </com.google.android.gms.ads.NativeExpressAdView>
+
 </LinearLayout>

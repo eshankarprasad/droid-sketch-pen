@@ -35,7 +35,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.devdroid.sketchpen.BuildConfig;
 import com.devdroid.sketchpen.R;
+import com.devdroid.sketchpen.SplashActivity;
 import com.google.android.gms.ads.AdRequest;
 
 import java.io.File;
@@ -174,13 +176,13 @@ public class Utils {
     }
 
     public static void eLog(String string) {
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.e(Constants.TAG, string);
         }
     }
 
     public static void dLog(String string) {
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.d(Constants.TAG, string);
         }
     }
@@ -188,7 +190,7 @@ public class Utils {
     public static AdRequest newAdRequestInstance() {
 
         AdRequest adRequest = null;
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             adRequest = new AdRequest.Builder().addTestDevice(Constants.AD_TEST_DEVICE).build();
         } else {
             adRequest = new AdRequest.Builder().build();
@@ -393,6 +395,11 @@ public class Utils {
                 dialog.dismiss();
             }
         });
+
+        /*if (context instanceof SplashActivity) {
+            ((SplashActivity) context).finish();
+        }*/
+
         //dialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialog;
         TextView dialogTitleTV = (TextView) dialog.findViewById(R.id.toastMsg);
         dialogTitleTV.setText(dialogTitle);
@@ -426,5 +433,26 @@ public class Utils {
 		});*/
 
         return dialog;
+    }
+
+    public static void animateActivity(Activity activity, String action) {
+        if (action.equalsIgnoreCase("next")) {
+            //activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.zero);
+        } else if (action.equalsIgnoreCase("back")) {
+            //activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            activity.overridePendingTransition(R.anim.zero, R.anim.slide_out_right);
+        } else if (action.equalsIgnoreCase("up")) {
+            //activity.overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+            activity.overridePendingTransition(R.anim.bottom_in_animation, R.anim.zero);
+        } else if (action.equalsIgnoreCase("down")) {
+            //activity.overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
+            //activity.overridePendingTransition(0, R.anim.push_down_out);
+            activity.overridePendingTransition(R.anim.zero, R.anim.bottom_out_animation);
+        } else if (action.equalsIgnoreCase("fadein")) {
+            activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        } else if (action.equalsIgnoreCase("zero")) {
+            activity.overridePendingTransition(R.anim.zero, R.anim.zero);
+        }
     }
 }

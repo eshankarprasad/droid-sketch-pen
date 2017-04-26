@@ -20,6 +20,7 @@ public class StrokeSizeActivity extends AppCompatActivity {
     private SeekBar seekBarStrokeSize;
     private TextView textViewStrokeSize;
     private boolean eraserEnabled;
+    private NativeExpressAdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class StrokeSizeActivity extends AppCompatActivity {
         eraserEnabled = getIntent().getBooleanExtra(Constants.KEY_ERASER_ENABLE_DISABLE, false);
 
         AdRequest request = Utils.newAdRequestInstance();
-        NativeExpressAdView adView = (NativeExpressAdView) findViewById(R.id.adView);
+        adView = (NativeExpressAdView) findViewById(R.id.adView);
         adView.loadAd(request);
 
         TextView textViewTitle = (TextView) findViewById(R.id.textview_size_label);
@@ -106,5 +107,13 @@ public class StrokeSizeActivity extends AppCompatActivity {
     public void finish() {
         super.finish();
         Utils.animateActivity(this, "down");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (adView != null) {
+            adView.destroy();
+        }
     }
 }

@@ -7,40 +7,14 @@
     android:orientation="vertical"
     tools:context="com.devdroid.sketchpen.StrokeSizeActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginBottom="32dp"
-        android:background="@color/toolbar_bg"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp">
-
-        <ImageView
-            android:id="@+id/btn_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/ic_close"
-            android:onClick="finishActivity"/>
-
-        <TextView
-            android:id="@+id/textview_size_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/btn_close"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/gray_charcoal_dark" />
-
-    </RelativeLayout>
+    <include layout="@layout/custom_action_bar"/>
 
     <TextView
         android:id="@+id/textview_size"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/round_background"
         android:gravity="center"
@@ -135,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="FULL_WIDTHx250"
-        ads:adUnitId="ca-app-pub-1782443214800184/4717089358" />
+        ads:adUnitId="ca-app-pub-1782443214800184/7712314552" />
 
 </LinearLayout>
 

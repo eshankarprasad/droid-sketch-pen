@@ -65,7 +65,7 @@
             <LinearLayout
                 android:id="@+id/btn_fullscreen"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/action_fullscreen">
 
                 <ImageView
@@ -83,7 +83,7 @@
             <LinearLayout
                 android:id="@+id/btn_stroke_size"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/label_stroke_size">
 
                 <ImageView
@@ -101,7 +101,7 @@
             <LinearLayout
                 android:id="@+id/btn_eraser"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/label_message_eraser_off">
 
                 <ImageView
@@ -118,25 +118,43 @@
             <LinearLayout
                 android:id="@+id/btn_color"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/label_change_color">
 
                 <ImageView
                     android:id="@+id/img_color"
                     style="@style/ToolbarImageStyle"
-                    android:src="@drawable/ic_action_color" />
+                    android:src="@drawable/ic_action_stroke_color" />
 
                 <TextView
                     android:id="@+id/txt_color"
                     style="@style/ToolbarTextStyle"
-                    android:text="@string/label_change_color" />
+                    android:text="@string/label_forecolor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_bg_color"
+                style="@style/ToolbarButtonStyle"
+                android:foreground="?attr/selectableItemBackground"
+                android:tag="@string/label_change_color">
+
+                <ImageView
+                    android:id="@+id/img_bg_color"
+                    style="@style/ToolbarImageStyle"
+                    android:src="@drawable/ic_action_back_color" />
+
+                <TextView
+                    android:id="@+id/txt_bg_color"
+                    style="@style/ToolbarTextStyle"
+                    android:text="@string/label_backcolor" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/btn_view_image"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/action_view_image">
 
                 <ImageView
@@ -153,7 +171,7 @@
             <LinearLayout
                 android:id="@+id/btn_insert_image"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/action_insert_image">
 
                 <ImageView
@@ -170,7 +188,7 @@
             <LinearLayout
                 android:id="@+id/btn_save_image"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/action_save_image">
 
                 <ImageView
@@ -187,7 +205,7 @@
             <LinearLayout
                 android:id="@+id/btn_share"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/action_save_and_share_image">
 
                 <ImageView
@@ -204,7 +222,7 @@
             <LinearLayout
                 android:id="@+id/btn_reset"
                 style="@style/ToolbarButtonStyle"
-                android:background="?attr/selectableItemBackground"
+                android:foreground="?attr/selectableItemBackground"
                 android:tag="@string/action_reset">
 
                 <ImageView
@@ -221,7 +239,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent">
+                android:foreground="@android:color/transparent">
 
                 <!-- Login Button in the same style as LikeView -->
                 <LinearLayout
@@ -305,7 +323,7 @@
         android:layout_width="@dimen/fullscreen_button_size"
         android:layout_height="@dimen/fullscreen_button_size"
         android:layout_margin="16dp"
-        android:background="?attr/selectableItemBackground"
+        android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
         android:onClick="showToolbar"
         android:visibility="invisible">

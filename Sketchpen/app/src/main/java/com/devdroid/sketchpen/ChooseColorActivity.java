@@ -2,14 +2,21 @@ package com.devdroid.sketchpen;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ViewUtils;
+import android.view.View;
 import android.view.Window;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.devdroid.sketchpen.utility.Constants;
 import com.devdroid.sketchpen.utility.Utils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
@@ -18,31 +25,59 @@ import com.larswerkman.holocolorpicker.ValueBar;
 
 public class ChooseColorActivity extends AppCompatActivity {
 
+    private NativeExpressAdView adView;
+    private ColorPicker picker;
+    private boolean isBackgroundColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_color);
 
-        int foreColor = Color.BLACK;
+        isBackgroundColor = getIntent().getBooleanExtra(Constants.KEY_BG_COLOR, false);
+
+        AdRequest request = Utils.newAdRequestInstance();
+        adView = (NativeExpressAdView) findViewById(R.id.adView);
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Utils.dLog("onAdLoaded");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                Utils.dLog("onAdFailedToLoad");
+            }
+        });
+        adView.loadAd(request);
+
+        int color = isBackgroundColor ? Color.WHITE : Color.BLACK;
 
         try {
-            foreColor = Utils.getIntegerPreferences(this, Constants.KEY_FORE_COLOR);
+            color = Utils.getIntegerPreferences(this, isBackgroundColor ? Constants.KEY_BG_COLOR : Constants.KEY_FORE_COLOR);
         } catch (ClassCastException e) {
             e.printStackTrace();
-            foreColor = (int) Utils.getLongPreferences(this, Constants.KEY_FORE_COLOR);
+            color = (int) Utils.getLongPreferences(this, isBackgroundColor ? Constants.KEY_BG_COLOR : Constants.KEY_FORE_COLOR);
         }
 
 
-        foreColor = foreColor == 0 ? foreColor = Color.BLACK : foreColor;
+        color = color == 0 ? color = Color.BLACK : color;
 
-        final RadioGroup optionColor = (RadioGroup) findViewById(R.id.radiogroup_color);
-
-        final ColorPicker picker = (ColorPicker) findViewById(R.id.picker);
+        picker = (ColorPicker) findViewById(R.id.picker);
 
         SVBar svBar = (SVBar) findViewById(R.id.svbar);
         OpacityBar opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
         SaturationBar saturationBar = (SaturationBar) findViewById(R.id.saturationbar);
         ValueBar valueBar = (ValueBar) findViewById(R.id.valuebar);
+        picker.setColor(color);
+
+        TextView textViewTitle = (TextView) findViewById(R.id.textview_size_label);
+        textViewTitle.setText(R.string.label_forecolor);
+
+        View applyButton = findViewById(R.id.btn_apply);
+        applyButton.setVisibility(View.VISIBLE);
 
         picker.addSVBar(svBar);
         picker.addOpacityBar(opacityBar);
@@ -50,9 +85,9 @@ public class ChooseColorActivity extends AppCompatActivity {
         picker.addValueBar(valueBar);
 
         //To set the old selected color u can do it like this
-        picker.setColor(foreColor);
-        picker.setOldCenterColor(foreColor);
-        picker.setNewCenterColor(foreColor);
+        picker.setColor(color);
+        picker.setOldCenterColor(color);
+        picker.setNewCenterColor(color);
 
         //to turn of showing the old color
         picker.setShowOldCenterColor(true);
@@ -77,10 +112,35 @@ public class ChooseColorActivity extends AppCompatActivity {
         });*/
 
     }
+    
+    public void applyAndFinishActivity(View applyButton) {
+
+        if (isBackgroundColor) {
+            Utils.saveIntegerPreferences(this, Constants.KEY_BG_COLOR, picker.getColor());
+        } else {
+            Utils.saveIntegerPreferences(this, Constants.KEY_FORE_COLOR, picker.getColor());
+        }
+        Intent intent = new Intent();
+        intent.putExtra(Constants.KEY_BG_COLOR, isBackgroundColor);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public void finishActivity(View closeButton) {
+        finish();
+    }
 
     @Override
     public void finish() {
         super.finish();
         Utils.animateActivity(this, "down");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (adView != null) {
+            adView.destroy();
+        }
     }
 }

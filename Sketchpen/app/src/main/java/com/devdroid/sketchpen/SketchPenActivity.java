@@ -271,8 +271,9 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         }, 500);
     }
 
-    private void showStrokeColorDialog(boolean activity) {
+    private void showStrokeColorDialog(boolean isBackgroundColor) {
         Intent intent = new Intent(this, ChooseColorActivity.class);
+        intent.putExtra(Constants.KEY_BG_COLOR, isBackgroundColor);
         startActivityForResult(intent, Constants.REQUEST_CHOOSE_COLOR);
         Utils.animateActivity(this, "up");
     }
@@ -673,6 +674,29 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
             Utils.showToast(SketchPenActivity.this, getString(R.string.title_welldone), Toast.LENGTH_SHORT);
         } else if (requestCode == Constants.REQUEST_STROKE_SIZE && resultCode == RESULT_OK) {
             mPaint.setStrokeWidth(Utils.getIntegerPreferences(this, eraserEnabled ? Constants.KEY_ERASER_SIZE : Constants.KEY_STROKE_SIZE));
+        } else if (requestCode == Constants.REQUEST_CHOOSE_COLOR && resultCode == RESULT_OK) {
+            boolean isBackgroundColor = result.getBooleanExtra(Constants.KEY_BG_COLOR, false);
+            int color = isBackgroundColor ? Color.WHITE : Color.BLACK;
+            try {
+                color = Utils.getIntegerPreferences(this, isBackgroundColor ? Constants.KEY_BG_COLOR : Constants.KEY_FORE_COLOR);
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+                color = (int) Utils.getLongPreferences(this, isBackgroundColor ? Constants.KEY_BG_COLOR : Constants.KEY_FORE_COLOR);
+            }
+
+            if (isBackgroundColor) {
+                drawingView.setBackgroundColor(color);
+                findViewById(R.id.img_bg_color).setBackgroundColor(color);
+            } else {
+                mPaint.setColor(color);
+                findViewById(R.id.img_color).setBackgroundColor(color);
+            }
+
+            /*Bitmap sourceBitmap = Utils.convertDrawableToBitmap(getDrawable(R.drawable.ic_action_back_color));
+            Bitmap mFinalBitmap = Utils.changeImageColor(sourceBitmap, color);
+            ImageView imageView = (ImageView) findViewById(R.id.img_bg_color);
+            imageView.setImageDrawable(null);
+            imageView.setImageBitmap(mFinalBitmap);*/
         }
 
         /*if (!mHelper.handleActivityResult(requestCode, resultCode, result)) {
@@ -811,6 +835,9 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         foreColor = foreColor == 0 ? Color.BLACK : foreColor;
         width = width == 0 ? Constants.DEFAULT_STROKE_SIZE : width;
 
+        findViewById(R.id.img_bg_color).setBackgroundColor(bgColor);
+        findViewById(R.id.img_color).setBackgroundColor(foreColor);
+
         drawingView.setBackgroundColor(bgColor);
         drawingView.setShowCircle(showCircle == 1);
         mPaint = new Paint();
@@ -875,6 +902,7 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
     private void initLongClickableViews() {
         findViewById(R.id.btn_fullscreen).setOnLongClickListener(SketchPenActivity.this);
         findViewById(R.id.btn_color).setOnLongClickListener(SketchPenActivity.this);
+        findViewById(R.id.btn_bg_color).setOnLongClickListener(SketchPenActivity.this);
         findViewById(R.id.btn_stroke_size).setOnLongClickListener(SketchPenActivity.this);
         findViewById(R.id.btn_eraser).setOnLongClickListener(SketchPenActivity.this);
         findViewById(R.id.btn_view_image).setOnLongClickListener(SketchPenActivity.this);
@@ -1037,7 +1065,10 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
                 doFullScreen();
                 break;
             case R.id.btn_color:
-                showStrokeColorDialog(this);
+                showStrokeColorDialog(false);
+                break;
+            case R.id.btn_bg_color:
+                showStrokeColorDialog(true);
                 break;
             case R.id.btn_stroke_size:
                 //showStrokeSizeDialog(SketchPenActivity.this);

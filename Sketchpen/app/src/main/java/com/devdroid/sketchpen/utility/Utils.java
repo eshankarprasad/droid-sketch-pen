@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,14 +20,13 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,10 +39,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.devdroid.sketchpen.BuildConfig;
 import com.devdroid.sketchpen.R;
-import com.devdroid.sketchpen.SplashActivity;
+import com.devdroid.sketchpen.Session;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import java.io.File;
 
@@ -199,17 +202,44 @@ public class Utils {
 
     public static AdRequest newAdRequestInstance() {
 
-        AdRequest adRequest = null;
+        AdRequest adRequest;
         if (BuildConfig.DEBUG) {
-            adRequest = new AdRequest.Builder().addTestDevice(Constants.AD_TEST_DEVICE).build();
+            adRequest = new AdRequest.Builder().addTestDevice(Constants.AD_TEST_DEVICE).
+                    addTestDevice("610F44636AB95889807E9BD761B4BC57")
+                    .addTestDevice("B755A56C78773AF4EC468832AF73BB22").build();
         } else {
             adRequest = new AdRequest.Builder().build();
         }
         return adRequest;
     }
 
+    public static void forceCrash() {
+        Crashlytics.getInstance().crash();
+    }
+
+    public static void logEvent(Activity activity, String name) {
+        Bundle bundle = new Bundle();
+        bundle.putString("Name", BuildConfig.DEBUG ? "DEBUG: " + name : name);
+        ((Session) activity.getApplication()).getGAInstance().logEvent("Action", bundle);
+    }
+
+    public static AdView createAdView(Activity activity, String unitId, AdSize adSize) {
+        AdView adView = new AdView(activity);
+        adView.setAdUnitId(unitId);
+        adView.setAdSize(adSize);
+        // Create the interstitial.
+
+        if (Utils.hasConnection(activity)) {
+            // Initiate a generic request to load it with an ad
+            AdRequest adRequest = Utils.newAdRequestInstance();
+            adView.loadAd(adRequest);
+        }
+        return adView;
+    }
+
     /**
      * Display alert with single option button
+     *
      * @param activity
      * @param title
      * @param message
@@ -219,7 +249,7 @@ public class Utils {
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(message)
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                .setNegativeButton(android.R.string.no, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Do nothing here; it will close the dialog self
@@ -230,29 +260,36 @@ public class Utils {
 
     /**
      * Display alert with two option buttons i.e. yes and no
+     *
      * @param activity
      * @param title
      * @param message
      * @param listener
      */
-    public static void showAlert(Activity activity, String title, String message, DialogInterface.OnClickListener listener) {
-
-        new AlertDialog.Builder(activity)
+    public static void showAlert(Activity activity, String title, String message,
+                                 OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(message)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
                 .setPositiveButton(android.R.string.yes, listener)
-                .setNegativeButton(android.R.string.no, listener)
-                .setIcon(android.R.drawable.ic_dialog_alert).show();
+                .setNegativeButton(android.R.string.no, listener);
+
+        if (!activity.isFinishing()) {
+            builder.show();
+        }
     }
 
     /**
      * Display alert with multiple option buttons
+     *
      * @param activity
      * @param listener
      * @param title
      * @param options
      */
-    public static void showAlert(Activity activity, DialogInterface.OnClickListener listener, String title, CharSequence... options) {
+    public static void showAlert(Activity activity, OnClickListener listener, String title, CharSequence... options) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         if (title != null && title.equals("")) {
@@ -265,7 +302,7 @@ public class Utils {
     public static String rootDirectoryPath() {
 
         File myFile = new File(Environment.getExternalStorageDirectory().getPath() + "/sketchpen");
-        if(!myFile.exists()) {
+        if (!myFile.exists()) {
             myFile.mkdir();
         }
 
@@ -281,9 +318,9 @@ public class Utils {
             v.bringToFront();
             v.invalidate();
         }
-        if(exp_or_colpse.equals("expand")) {
+        if (exp_or_colpse.equals("expand")) {
             anim = new TranslateAnimation(0.0f, 0.0f, -v.getHeight(), 0.0f);
-            Animation.AnimationListener collapselistener= new Animation.AnimationListener() {
+            Animation.AnimationListener collapselistener = new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
                     v.setVisibility(View.VISIBLE);
@@ -315,7 +352,7 @@ public class Utils {
             }
         } else {
             anim = new TranslateAnimation(0.0f, 0.0f, 0.0f, -v.getHeight());
-            Animation.AnimationListener collapselistener= new Animation.AnimationListener() {
+            Animation.AnimationListener collapselistener = new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
                 }
@@ -343,8 +380,8 @@ public class Utils {
         Bitmap background = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         float originalWidth = originalImage.getWidth(), originalHeight = originalImage.getHeight();
         Canvas canvas = new Canvas(background);
-        float scale = width/originalWidth;
-        float xTranslation = 0.0f, yTranslation = (height - originalHeight * scale)/2.0f;
+        float scale = width / originalWidth;
+        float xTranslation = 0.0f, yTranslation = (height - originalHeight * scale) / 2.0f;
         Matrix transformation = new Matrix();
         transformation.postTranslate(xTranslation, yTranslation);
         transformation.preScale(scale, scale);

@@ -2,7 +2,6 @@ package com.devdroid.sketchpen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -12,6 +11,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -26,46 +26,39 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devdroid.sketchpen.utility.Constants;
 import com.devdroid.sketchpen.utility.DrawingView;
 import com.devdroid.sketchpen.utility.Utils;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.share.widget.LikeView;
-import com.google.android.gms.ads.AdListener;
+import com.facebook.share.ShareApi;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.ShareOpenGraphAction;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.NativeExpressAdView;
-import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.OpacityBar;
-import com.larswerkman.holocolorpicker.SVBar;
-import com.larswerkman.holocolorpicker.SaturationBar;
-import com.larswerkman.holocolorpicker.ValueBar;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -73,43 +66,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
-/*import util.IabHelper;
-import util.IabResult;
-import util.Inventory;
-import util.Purchase;*/
 
 @SuppressLint("NewApi")
 public class SketchPenActivity extends AppCompatActivity implements MediaScannerConnection.MediaScannerConnectionClient,
         View.OnClickListener, View.OnLongClickListener, Toolbar.OnMenuItemClickListener {
 
     private static final String TAG = SketchPenActivity.class.getSimpleName();
-    // Test ITEM_SKU used for InAppPurchase the app
-    //private static final String ITEM_SKU = "android.test.purchased";
-    //private static final String ITEM_SKU = "android.test.cancelled";
-    //private static final String ITEM_SKU = "android.test.refunded";
-    //private static final String ITEM_SKU = "android.test.item_unavailable";
 
-    // Production
-    //private static final String ITEM_SKU = "com.devdroid.sketchpen.adfree";
-    LinearLayout btnLoginToLike;
-    LikeView likeView;
-    CallbackManager callbackManager;
-    /*IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
-        public void onConsumeFinished(Purchase purchase, IabResult result) {
-
-            if (result.isSuccess()) {
-
-                Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_done), Toast.LENGTH_LONG);
-                Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_ITEM_PURCHASED, 1);
-                finish();
-                startActivity(getIntent());
-            } else {
-                Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
-            }
-        }
-    };*/
     private int backPressCount;
     private DrawingView drawingView;
     private Paint mPaint;
@@ -120,43 +83,10 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
     private boolean eraserEnabled;
     private AdView adView;
     private InterstitialAd interstitial;
-    private boolean flagAdFree;
-    //private IabHelper mHelper;
-    /*IabHelper.QueryInventoryFinishedListener mReceivedInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-        public void onQueryInventoryFinished(IabResult result,
-                                             Inventory inventory) {
-
-            if (result.isFailure()) {
-                Utils.showToast(SketchPenActivity.this, result.getMessage(), Toast.LENGTH_LONG);
-            } else {
-
-                mHelper.consumeAsync(inventory.getPurchase(ITEM_SKU),
-                        mConsumeFinishedListener);
-            }
-        }
-    };
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-
-            flagAdFree = false;
-            if (result.isFailure()) {
-                // TODO : future
-                if (result.getResponse() == -1005) {
-                    Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_canceled), Toast.LENGTH_LONG);
-
-                } else if (result.getResponse() == -1008) {
-                    Utils.showToast(SketchPenActivity.this, getString(R.string.msg_payment_refunded), Toast.LENGTH_LONG);
-                }
-
-                return;
-            } else if (purchase.getSku().equals(ITEM_SKU)) {
-                consumeItem();
-            }
-        }
-    };*/
     private boolean isAnimating;
     private HorizontalScrollView scrollView;
-    private AdRequest request;
+    private CallbackManager callbackManager;
+    private ShareDialog fbShareDialog;
 
     public static Intent getIntent(Activity activity) {
         Intent intent = new Intent(activity, SketchPenActivity.class);
@@ -168,27 +98,98 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sdk = android.os.Build.VERSION.SDK_INT;
+
+        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this) != ConnectionResult.SUCCESS) {
+            GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
+        }
+
         setContentView(R.layout.activity_sketch_pen);
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
-        /*mHelper = new IabHelper(this, Constants.BASE64_ENCODED_PUBLIC_KEY);
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                if (!result.isSuccess()) {
-                    Utils.eLog("In-app Billing setup failed: " + result);
-                } else {
-                    Utils.dLog("In-app Billing is set up OK");
-                }
+
+
+        callbackManager = CallbackManager.Factory.create();
+        fbShareDialog = new ShareDialog(this);
+        // this part is optional
+        fbShareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Utils.dLog("onSuccess");
             }
-        });*/
 
-        initInstances();
+            @Override
+            public void onCancel() {
+                Utils.dLog("onCancel");
+            }
 
-        initCallbackManager();
-        refreshButtonsState();
+            @Override
+            public void onError(FacebookException error) {
+                Utils.showAlert(SketchPenActivity.this, "App not found", "Launch Facebook app and login to use this feature. Do you wish to install?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                // Launch play store
+                                Uri uri = Uri.parse("market://details?id=com.facebook.katana");
+                                Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                                try {
+                                    startActivity(myAppLinkToMarket);
+                                } catch (ActivityNotFoundException e) {
+                                    Toast.makeText(SketchPenActivity.this, "Unable to find market app", Toast.LENGTH_LONG).show();
+                                }
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                // Cancel
+
+                        }
+                    }
+                });
+            }
+        });
 
         loadDrawingView();
         //logKeyHash();
+    }
+
+    private void showFbShareDialog() {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            String path = saveImage();
+            File image = new File(path);
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(),bmOptions);
+
+            SharePhoto photo = new SharePhoto.Builder()
+                    .setBitmap(bitmap)
+                    .setUserGenerated(true)
+                    .build();
+
+            SharePhotoContent content = new SharePhotoContent.Builder()
+                    .addPhoto(photo)
+                    .build();
+            fbShareDialog.show(content);
+
+            image.delete();
+            refreshGallery(path);
+        }
+    }
+
+    private void showFbShareDialogForAppSharing() {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent fbSharecontent = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()))
+                    .setQuote("An easier way to scribble")
+                    .build();
+            fbShareDialog.show(fbSharecontent);
+        }
+    }
+
+    private void privacyPolicy() {
+        Uri uri = Uri.parse("https://sites.google.com/view/sketch-pen/privacy-policy");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(SketchPenActivity.this, "Your device does not have browser to launch Privacy Policy", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void logKeyHash() {
@@ -203,56 +204,6 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         } catch (PackageManager.NameNotFoundException e) {
         } catch (NoSuchAlgorithmException e) {
         }
-    }
-
-    private void initInstances() {
-
-        btnLoginToLike = (LinearLayout) findViewById(R.id.btnLoginToLike);
-        likeView = (LikeView) findViewById(R.id.likeView);
-        likeView.setLikeViewStyle(LikeView.Style.STANDARD);
-        likeView.setAuxiliaryViewPosition(LikeView.AuxiliaryViewPosition.INLINE);
-        likeView.setObjectIdAndType(Constants.FACEBOOK_PAGE_URL, LikeView.ObjectType.OPEN_GRAPH);
-
-        btnLoginToLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(SketchPenActivity.this, Arrays.asList("public_profile"));
-            }
-        });
-    }
-
-    private void initCallbackManager() {
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                refreshButtonsState();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-
-            }
-        });
-    }
-
-    private void refreshButtonsState() {
-        if (!isLoggedIn()) {
-            btnLoginToLike.setVisibility(View.VISIBLE);
-            likeView.setVisibility(View.GONE);
-        } else {
-            btnLoginToLike.setVisibility(View.GONE);
-            likeView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public boolean isLoggedIn() {
-        return AccessToken.getCurrentAccessToken() != null;
     }
 
     public void showToolbar(View view) {
@@ -278,156 +229,11 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         Utils.animateActivity(this, "up");
     }
 
-    private void showStrokeColorDialog(SketchPenActivity activity) {
-
-        int foreColor = Color.BLACK;
-
-        try {
-            foreColor = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_FORE_COLOR);
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-            foreColor = (int) Utils.getLongPreferences(SketchPenActivity.this, Constants.KEY_FORE_COLOR);
-        }
-
-
-        foreColor = foreColor == 0 ? foreColor = Color.BLACK : foreColor;
-
-        final Dialog dialogColorPicker = new Dialog(SketchPenActivity.this);
-        //dialogColorPicker.setTitle(getString(R.string.label_forecolor));
-        dialogColorPicker.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialogColorPicker.setContentView(R.layout.dialog_color_picker);
-
-        final RadioGroup optionColor = (RadioGroup) dialogColorPicker.findViewById(R.id.radiogroup_color);
-
-        final ColorPicker picker = (ColorPicker) dialogColorPicker.findViewById(R.id.picker);
-
-        SVBar svBar = (SVBar) dialogColorPicker.findViewById(R.id.svbar);
-        OpacityBar opacityBar = (OpacityBar) dialogColorPicker.findViewById(R.id.opacitybar);
-        SaturationBar saturationBar = (SaturationBar) dialogColorPicker.findViewById(R.id.saturationbar);
-        ValueBar valueBar = (ValueBar) dialogColorPicker.findViewById(R.id.valuebar);
-
-        picker.addSVBar(svBar);
-        picker.addOpacityBar(opacityBar);
-        picker.addSaturationBar(saturationBar);
-        picker.addValueBar(valueBar);
-
-        //To set the old selected color u can do it like this
-        picker.setColor(foreColor);
-        picker.setOldCenterColor(foreColor);
-        picker.setNewCenterColor(foreColor);
-
-        //to turn of showing the old color
-        picker.setShowOldCenterColor(true);
-
-        dialogColorPicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-
-                int radioButtonId = optionColor.getCheckedRadioButtonId();
-                switch (radioButtonId) {
-                    case R.id.radio_forecolor:
-                        Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_FORE_COLOR, picker.getColor());
-                        SketchPenActivity.this.mPaint.setColor(picker.getColor());
-                        break;
-                    case R.id.radio_backcolor:
-                        Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_BG_COLOR, picker.getColor());
-                        SketchPenActivity.this.drawingView.setBackgroundColor(picker.getColor());
-                        break;
-                }
-            }
-        });
-
-        dialogColorPicker.show();
-    }
-
     private void showStrokeSizeDialog(boolean enableEraser) {
         Intent intent = new Intent(this, StrokeSizeActivity.class);
         intent.putExtra(Constants.KEY_ERASER_ENABLE_DISABLE, enableEraser);
         startActivityForResult(intent, Constants.REQUEST_STROKE_SIZE);
         Utils.animateActivity(this, "up");
-    }
-
-    private void showStrokeSizeDialog(Activity activity) {
-
-        final Dialog dialog = new Dialog(activity);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_stroke_size);
-
-        NativeExpressAdView adView = (NativeExpressAdView) dialog.findViewById(R.id.adView);
-        adView.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                super.onAdClosed();
-                Utils.dLog("onAdClosed");
-            }
-
-            @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                Utils.dLog("onAdFailedToLoad");
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                Utils.dLog("onAdLoaded");
-            }
-        });
-        adView.loadAd(request);
-
-        TextView textViewTitle = (TextView) dialog.findViewById(R.id.textview_size_label);
-        if (eraserEnabled) {
-            textViewTitle.setText(getString(R.string.label_eraser_size));
-        } else {
-            textViewTitle.setText(getString(R.string.label_stroke_size));
-        }
-
-        final TextView textViewStrokeSize = (TextView) dialog.findViewById(R.id.textview_size);
-        final SeekBar seekBarStrokeSize = (SeekBar) dialog.findViewById(R.id.seekbar_size);
-
-        seekBarStrokeSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                textViewStrokeSize.setText((progress == 0 ? 1 : progress) + "");
-                if (progress == 0) {
-                    seekBar.setProgress(1);
-                }
-                SketchPenActivity.this.mPaint.setStrokeWidth(progress);
-            }
-        });
-
-        int savedStrokeSize = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_STROKE_SIZE);
-        int savedEraserSize = Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_ERASER_SIZE);
-
-        if (eraserEnabled) {
-            seekBarStrokeSize.setProgress(savedEraserSize == 0 ? Constants.DEFAULT_ERASER_SIZE : savedEraserSize);
-        } else {
-            seekBarStrokeSize.setProgress(savedStrokeSize == 0 ? Constants.DEFAULT_STROKE_SIZE : savedStrokeSize);
-        }
-
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (eraserEnabled) {
-                    Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_ERASER_SIZE, seekBarStrokeSize.getProgress());
-                } else {
-                    Utils.saveIntegerPreferences(SketchPenActivity.this, Constants.KEY_STROKE_SIZE, seekBarStrokeSize.getProgress());
-                }
-            }
-        });
-
-        dialog.show();
     }
 
     private void viewImages() {
@@ -510,7 +316,11 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         String imagePath = saveImage();
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType(Constants.FILE_TYPE);
-        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + imagePath));
+
+        Uri file = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", new File(imagePath));
+        //intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + imagePath));
+        intent.putExtra(Intent.EXTRA_STREAM, file);
+        Utils.dLog("imagePath: " + imagePath);
         //intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_image_text));
         startActivityForResult(Intent.createChooser(intent, getString(R.string.chooser_share_title)), Constants.REQUEST_SHARE_PICTURE);
     }
@@ -691,17 +501,7 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
                 mPaint.setColor(color);
                 findViewById(R.id.img_color).setBackgroundColor(color);
             }
-
-            /*Bitmap sourceBitmap = Utils.convertDrawableToBitmap(getDrawable(R.drawable.ic_action_back_color));
-            Bitmap mFinalBitmap = Utils.changeImageColor(sourceBitmap, color);
-            ImageView imageView = (ImageView) findViewById(R.id.img_bg_color);
-            imageView.setImageDrawable(null);
-            imageView.setImageBitmap(mFinalBitmap);*/
         }
-
-        /*if (!mHelper.handleActivityResult(requestCode, resultCode, result)) {
-            super.onActivityResult(requestCode, resultCode, result);
-        }*/
 
         callbackManager.onActivityResult(requestCode, resultCode, result);
     }
@@ -798,15 +598,6 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         Utils.showAlert(SketchPenActivity.this, listener, null, getString(R.string.label_reset_foreground), getString(R.string.label_reset_background), getString(R.string.label_reset_all));
     }
 
-    /*public void consumeItem() {
-        if (mHelper == null) {
-
-            Utils.showToast(SketchPenActivity.this, getString(R.string.msg_general_error), Toast.LENGTH_SHORT);
-        } else {
-            mHelper.queryInventoryAsync(mReceivedInventoryListener);
-        }
-    }*/
-
     private void loadDrawingView() {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -856,7 +647,7 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         if (Utils.getIntegerPreferences(SketchPenActivity.this, Constants.KEY_ITEM_PURCHASED) == 0) {
 
             if (!isFinishing()) {
-                loadAd(showAd);
+                loadAd();
                 initInterstitial();
             }
         }
@@ -912,13 +703,14 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         findViewById(R.id.btn_reset).setOnLongClickListener(SketchPenActivity.this);
     }
 
-    private void loadAd(final long showAd) {
+    private void loadAd() {
 
         adView = new AdView(SketchPenActivity.this);
-        adView.setAdUnitId(Constants.AD_UNIT_ID_BANNER);
+        adView.setAdUnitId(Constants.AD_UNIT_ID_BANNER_HOME);
         adView.setAdSize(AdSize.SMART_BANNER);
         adView.setAlpha(Constants.ALPHA_LEVEL);
         // Create the interstitial.
+
         if (Utils.hasConnection(SketchPenActivity.this)) {
             // Initiate a generic request to load it with an ad
             AdRequest adRequest = Utils.newAdRequestInstance();
@@ -962,17 +754,6 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
         }
     }
 
-    /*private void buyAdFree() {
-
-        if (flagAdFree) {
-            return;
-        }
-
-        flagAdFree = true;
-        mHelper.launchPurchaseFlow(this, ITEM_SKU, 10001,
-                mPurchaseFinishedListener, "mypurchasetoken");
-    }*/
-
     @Override
     protected void onDestroy() {
 
@@ -1005,28 +786,6 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
             }, Constants.DURATION_EXIT_APP);
         }
     }
-
-    /*private void showRestOptionDialog() {
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0: // Rate on Play Store
-                        rate();
-                        break;
-                    case 1: // Visit page
-                        like();
-                        break;
-                    case 2: // About Us
-                        aboutUs();
-                }
-            }
-        };
-        Utils.showAlert(SketchPenActivity.this, listener, null,
-                getString(R.string.action_visit_sketchpen),
-                getString(R.string.action_rate),
-                getString(R.string.action_buy_ad_free),
-                getString(R.string.action_about));
-    }*/
 
     private void aboutUs() {
         PackageManager manager = this.getPackageManager();
@@ -1100,14 +859,17 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
             case R.id.btn_reset:
                 resetImage();
                 break;
-            /*case R.id.btn_more:
-                showRestOptionDialog();
-                break;*/
+            case R.id.action_fb_post:
+                showFbShareDialog();
+                break;
             /*case R.id.btn_undo:
                 drawingView.undo();
                 break;*/
         }
         view.setEnabled(true);
+        if (view.getTag() != null) {
+            Utils.logEvent(this, view.getTag().toString());
+        }
     }
 
     @Override
@@ -1117,22 +879,7 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }
-
-    @Override
     public boolean onMenuItemClick(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.action_rate: // Rate on Play Store
                 rate();
@@ -1143,7 +890,14 @@ public class SketchPenActivity extends AppCompatActivity implements MediaScanner
             case R.id.action_about: // About Us
                 aboutUs();
                 break;
+            case R.id.action_privacy_policy: // About Us
+                privacyPolicy();
+                break;
+            case R.id.action_share_sketchpen: // About Us
+                showFbShareDialogForAppSharing();
+                break;
         }
+        Utils.logEvent(this, item.getTitle().toString());
         return false;
     }
 }

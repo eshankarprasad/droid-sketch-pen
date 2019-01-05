@@ -65,4 +65,8 @@
     <string name="action_reset">Rücksetzen</string>
     <string name="action_save_and_share_image">Teilen</string>
     <string name="label_change_color">Farbe ändern</string>
+
+    <string name="action_fb_post">Post an der Wand</string>
+    <string name="action_privacy_policy">Datenschutz-Bestimmungen</string>
+    <string name="action_share_sketchpen">Sag deinen Freunden</string>
 </resources>

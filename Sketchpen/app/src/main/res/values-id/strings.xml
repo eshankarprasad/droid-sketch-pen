@@ -65,4 +65,8 @@
     <string name="action_reset">Atur ulang</string>
     <string name="action_save_and_share_image">Bagikan</string>
     <string name="label_change_color">Ganti Warna</string>
+
+    <string name="action_fb_post">Posting di Dinding</string>
+    <string name="action_privacy_policy">Rahasia pribadi</string>
+    <string name="action_share_sketchpen">Beritahu Teman Anda</string>
 </resources>

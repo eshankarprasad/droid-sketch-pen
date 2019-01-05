@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollviewColorPicker"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -38,18 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Space
+        <LinearLayout
+            android:id="@+id/ad_container"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:minHeight="16dp"/>
-
-        <com.google.android.gms.ads.NativeExpressAdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            ads:adSize="FULL_WIDTHx320"
-            ads:adUnitId="ca-app-pub-1782443214800184/1805381751" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"/>
 
     </LinearLayout>
 

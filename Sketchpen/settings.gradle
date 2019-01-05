@@ -1,1 +1,1 @@
-include ':app', ':crop-lib'
+include ':app'

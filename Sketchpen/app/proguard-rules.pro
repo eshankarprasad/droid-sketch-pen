@@ -19,3 +19,11 @@
 # to avoid problem on Samsung 4.2.2 devices with appcompat v21
 # see https://code.google.com/p/android/issues/detail?id=78377
 -keep class !android.support.v7.internal.view.menu.**,android.support.** {*;}
+-keep class com.soundcloud.android.** {*;}
+-keep class com.google.firebase.** {*;}
+-keep class com.facebook.android.** {*;}
+-keep class com.larswerkman.** {*;}
+-keep class com.larswerkman.holocolorpicker.** {*;}
+-keep class com.crashlytics.sdk.android.** {*;}
+-keep class com.devdroid.sketchpen.** {*;}
+

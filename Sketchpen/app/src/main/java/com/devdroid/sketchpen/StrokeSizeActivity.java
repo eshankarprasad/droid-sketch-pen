@@ -1,26 +1,26 @@
 package com.devdroid.sketchpen;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.devdroid.sketchpen.utility.Constants;
 import com.devdroid.sketchpen.utility.Utils;
 import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.NativeExpressAdView;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 public class StrokeSizeActivity extends AppCompatActivity {
 
     private SeekBar seekBarStrokeSize;
     private TextView textViewStrokeSize;
     private boolean eraserEnabled;
-    private NativeExpressAdView adView;
+    private AdView adView1, adView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +28,6 @@ public class StrokeSizeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stroke_size);
 
         eraserEnabled = getIntent().getBooleanExtra(Constants.KEY_ERASER_ENABLE_DISABLE, false);
-
-        AdRequest request = Utils.newAdRequestInstance();
-        adView = (NativeExpressAdView) findViewById(R.id.adView);
-        adView.loadAd(request);
 
         TextView textViewTitle = (TextView) findViewById(R.id.textview_size_label);
         if (eraserEnabled) {
@@ -89,6 +85,41 @@ public class StrokeSizeActivity extends AppCompatActivity {
                 finish();
             }
         });
+        loadAd();
+    }
+
+    private void loadAd() {
+
+        adView1 = Utils.createAdView(this, Constants.AD_UNIT_ID_BANNER_STROKE_SIZE1, AdSize.MEDIUM_RECTANGLE);
+        adView2 = Utils.createAdView(this, Constants.AD_UNIT_ID_BANNER_STROKE_SIZE2, AdSize.SMART_BANNER);
+
+        LinearLayout layout = findViewById(R.id.ad_container);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
+        params.topMargin = 16;
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        layout.addView(adView1, params);
+        layout.addView(adView2, params);
+
+        adView1.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                repositionScrollView();
+            }
+        });
+    }
+
+    private void repositionScrollView() {
+        if (!isFinishing()) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (!isFinishing()) {
+                        findViewById(R.id.scrollviewStrokeSize).scrollTo(0, 0);
+                    }
+                }
+            }, 250);
+        }
     }
 
     private void saveStrokeSize() {
@@ -112,8 +143,11 @@ public class StrokeSizeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (adView != null) {
-            adView.destroy();
+        if (adView1 != null) {
+            adView1.destroy();
+        }
+        if (adView2 != null) {
+            adView2.destroy();
         }
     }
 }

@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".SketchPenActivity">
 
     <FrameLayout
@@ -11,14 +10,6 @@
         android:layout_height="match_parent"
         android:layout_alignWithParentIfMissing="true" />
 
-    <com.google.android.gms.ads.NativeExpressAdView
-        android:id="@+id/adViewGlobal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        ads:adUnitId="ca-app-pub-1782443214800184/4717089358"
-        ads:adSize="360x132">
-    </com.google.android.gms.ads.NativeExpressAdView>
-
     <HorizontalScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
@@ -26,41 +17,12 @@
         android:background="@color/toolbar_bg"
         android:scrollbars="none">
 
-        <!--<android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_sketchpen"
-            android:layout_height="wrap_content"
-            app:popupTheme="@style/ActionBarPopupThemeOverlay"
-            android:layout_width="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:titleTextAppearance="@style/Toolbartitle"
-            app:subtitleTextAppearance="@style/ToolbarSubtitle"
-            app:theme="@style/ThemeOverlay.AppCompat.Light"
-            android:alpha="0.7"
-            android:scrollbarAlwaysDrawHorizontalTrack="true" />-->
-
         <LinearLayout
             android:id="@+id/custom_toolbar_sketchpen"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
-            <!--<LinearLayout
-                android:id="@+id/btn_undo"
-                style="@style/ToolbarButtonStyle"
-                android:tag="@string/action_fullscreen">
-
-                <ImageView
-                    android:id="@+id/img_undo"
-                    style="@style/ToolbarImageStyle"
-                    android:src="@drawable/ic_action_full_screen" />
-
-                <TextView
-                    android:id="@+id/txt_undo"
-                    android:text="Undo"
-                    style="@style/ToolbarTextStyle"/>
-
-            </LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/btn_fullscreen"
@@ -236,87 +198,30 @@
                     android:text="@string/action_reset" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:foreground="@android:color/transparent">
+            <LinearLayout
+                android:id="@+id/action_fb_post"
+                style="@style/ToolbarButtonStyle"
+                android:foreground="?attr/selectableItemBackground"
+                android:tag="@string/action_fb_post">
 
-                <!-- Login Button in the same style as LikeView -->
-                <LinearLayout
-                    android:id="@+id/btnLoginToLike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/com_facebook_button_like_background"
-                    android:clickable="true"
-                    android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/img_test"
+                    style="@style/ToolbarImageStyle"
+                    android:src="@drawable/ic_fb_post" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="7.5dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="7.5dp"
-                        android:src="@drawable/com_facebook_button_icon" />
-
-                    <TextView
-                        android:id="@+id/tvLogin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Login"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <com.facebook.share.widget.LikeView
-                    android:id="@+id/likeView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_test"
+                    style="@style/ToolbarTextStyle"
+                    android:text="@string/action_fb_post" />
+            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <!--<LinearLayout
-                android:id="@+id/btn_more"
-                style="@style/ToolbarButtonStyle"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/selector_toolbar_button">
-
-                <ImageView
-                    android:id="@+id/img_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_action_overflow" />
-
-            </LinearLayout>-->
         </LinearLayout>
     </HorizontalScrollView>
-
-    <!--<TextView
-        android:id="@+id/textview_show_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Click here to show toolbar"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"
-        android:background="@color/primaryColor_500"
-        android:textColor="@android:color/white"
-        android:alpha="0.7"
-        android:layout_marginTop="5dp"
-        android:clickable="true"
-        android:onClick="showToolbar"
-        android:layout_alignWithParentIfMissing="true"/>-->
 
     <FrameLayout
         android:id="@+id/card_show_toolbar"
@@ -341,26 +246,5 @@
                 android:src="@drawable/ic_action_settings" />
         </LinearLayout>
     </FrameLayout>
-
-    <!--<android.support.v7.widget.CardView
-        android:id="@+id/card_show_toolbar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:alpha="0.7"
-        android:clickable="true"
-        android:foregroundGravity="center"
-        android:onClick="showToolbar"
-        android:visibility="invisible"
-        app:cardBackgroundColor="@android:color/holo_green_light"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="5dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_action_settings" />
-    </android.support.v7.widget.CardView>-->
 
 </RelativeLayout>

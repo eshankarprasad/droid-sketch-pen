@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "376646009305",
+    "firebase_url": "https://sketchpen-c67cf.firebaseio.com",
+    "project_id": "sketchpen-c67cf",
+    "storage_bucket": "sketchpen-c67cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376646009305:android:4ef8b5f36f88b395",
+        "android_client_info": {
+          "package_name": "com.devdroid.sketchpen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376646009305-f7bcsmmo3un57br7jd2kkuqesrjf200g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devdroid.sketchpen",
+            "certificate_hash": "97720274402c7652a352d5e367ee4408c33c8bc2"
+          }
+        },
+        {
+          "client_id": "376646009305-1shk9rcfq5nu1kehm0gnh3krgoucgaps.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devdroid.sketchpen",
+            "certificate_hash": "5dc31683db127504cfd526244cd76cd1ccfa9b5f"
+          }
+        },
+        {
+          "client_id": "376646009305-a9c9oqoll4c3n6tssjjrqek41f3j5reg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmlQGpwLkFWw59LCg_ny2BSEU3xHuRbQo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376646009305-a9c9oqoll4c3n6tssjjrqek41f3j5reg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

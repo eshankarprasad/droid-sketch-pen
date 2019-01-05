@@ -63,4 +63,8 @@
     <string name="action_reset">Reset</string>
     <string name="action_save_and_share_image">Hisse</string>
     <string name="label_change_color">Değişiklik renk</string>
+
+    <string name="action_fb_post">Duvara Gönder</string>
+    <string name="action_privacy_policy">Gizlilik Politikası</string>
+    <string name="action_share_sketchpen">Arkadaşlarına söyle</string>
 </resources>

@@ -8,6 +8,13 @@
     <item android:id="@+id/action_visit" android:title="@string/action_visit_sketchpen"
         android:orderInCategory="2" app:showAsAction="collapseActionView" />
 
-    <item android:id="@+id/action_about" android:title="@string/action_about"
+
+    <item android:id="@+id/action_privacy_policy" android:title="@string/action_privacy_policy"
         android:orderInCategory="3" app:showAsAction="collapseActionView" />
+
+    <item android:id="@+id/action_share_sketchpen" android:title="@string/action_share_sketchpen"
+        android:orderInCategory="4" app:showAsAction="collapseActionView" />
+
+    <item android:id="@+id/action_about" android:title="@string/action_about"
+        android:orderInCategory="5" app:showAsAction="collapseActionView" />
 </menu>

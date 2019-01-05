@@ -67,5 +67,12 @@
     <string name="action_save_and_share_image">Share</string>
     <string name="label_change_color">Change Color</string>
 
+    <string name="action_fb_post">Post on Wall</string>
+    <string name="action_privacy_policy">Privacy Policy</string>
+    <string name="action_share_sketchpen">Tell Your Friends</string>
+
     <string name="facebook_app_id">792406584220842</string>
+    <string name="admob_app_id">ca-app-pub-1782443214800184~9502764956</string>
+    <string name="fb_login_protocol_scheme">fb792406584220842</string>
+    <string name="default_notification_channel_id">sketchpen-c67cf</string>
 </resources>

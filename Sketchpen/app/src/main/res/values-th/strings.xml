@@ -63,4 +63,8 @@
     <string name="action_reset">ตั้งใหม่</string>
     <string name="action_save_and_share_image">หุ้น</string>
     <string name="label_change_color">เปลี่ยนสี</string>
+
+    <string name="action_fb_post">โพสต์บนกำแพง</string>
+    <string name="action_privacy_policy">นโยบายความเป็นส่วนตัว</string>
+    <string name="action_share_sketchpen">บอกเพื่อนของคุณ</string>
 </resources>

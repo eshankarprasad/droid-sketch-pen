@@ -64,4 +64,8 @@
     <string name="action_reset">Reset</string>
     <string name="action_save_and_share_image">Quota</string>
     <string name="label_change_color">Cambia colore</string>
+
+    <string name="action_fb_post">Posta sul muro</string>
+    <string name="action_privacy_policy">Politica sulla riservatezza</string>
+    <string name="action_share_sketchpen">Dillo ai tuoi amici</string>
 </resources>

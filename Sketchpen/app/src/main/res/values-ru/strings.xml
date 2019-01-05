@@ -65,4 +65,8 @@
     <string name="action_reset">сброс</string>
     <string name="action_save_and_share_image">поделиться</string>
     <string name="label_change_color">Изменение цвета</string>
+
+    <string name="action_fb_post">Сообщение на стене</string>
+    <string name="action_privacy_policy">политика конфиденциальности</string>
+    <string name="action_share_sketchpen">Расскажи своим друзьям</string>
 </resources>
